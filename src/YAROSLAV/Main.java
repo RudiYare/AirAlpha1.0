@@ -30,7 +30,8 @@ public class Main extends Application {
         Scene scene = new Scene(group, 500,500);
         BorderPane border = new BorderPane();
         border.setBottom(new Button("НАЖМИ"));
-        border.setMinSize(0,250);
+        border.setMinWidth(250);
+        border.setMinHeight(250);
         group.getChildren().addAll(border);
         primaryStage.setScene(scene);
         primaryStage.show();

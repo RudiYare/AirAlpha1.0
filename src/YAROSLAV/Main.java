@@ -20,22 +20,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Ellipse line = new Ellipse(350,350,100,100);
-        Rectangle rec = new Rectangle(0,0,50,50);
-        Text text = new Text(420,360,"ЗДАРОВА АРТЕМ!!!");
-        text.setStroke(Color.RED);
-        text.setFill(Color.GOLD);
-        text.setFont(Font.font(50));
-        line.setStroke(Color.RED);
-        rec.setStroke(Color.RED);
-        rec.setFill(Color.DEEPSKYBLUE);
-        line.setFill(Color.DEEPSKYBLUE);
+        primaryStage.setTitle("AIR ALFA 1.0");
+        primaryStage.setResizable(false);
         Group group = new Group();
-        Scene scene = new Scene(group, 1280, 720);
+        Scene scene = new Scene(group, 1024 , 720);
+        //primaryStage.setOpacity(25);
+        Text text = new Text  (100, 100, "ПОЕХАЛИ");
+        text.setFont(Font.font(50));
+        //text.setFill(Color.BLANCHEDALMOND);
         group.getChildren().add(text);
-       // group.getChildren().add(line);
-        //group.getChildren().add(rec);
-        primaryStage.setTitle("YARE MASTER");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

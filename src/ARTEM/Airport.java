@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Airport {
 
-    private int ID;
+    public int ID;
 
     // координаты аэропорта с карты
     private int x;
@@ -14,10 +14,9 @@ public class Airport {
     private ArrayList<Integer> related;
 
     // создание нового аэропорта
-    public Airport(int ID) {
-        this.x = 0; this.y = 0; this.ID = ID;
+    public Airport(int ID, int x, int y) {
+        this.x = x; this.y = y; this.ID = ID;
         this.related = new ArrayList<>();
-        this.related.add(ID);
     }
 
     // из текущего аэропорта теперь можно летать в аэропрот #ID
@@ -29,4 +28,7 @@ public class Airport {
         return Boolean.TRUE;
     }
 
+    public ArrayList<Integer> getRelated() {
+        return related;
+    }
 }

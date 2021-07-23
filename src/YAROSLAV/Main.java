@@ -33,7 +33,7 @@ public class Main extends Application {
 
         border.setMinWidth(500);
         border.setMinHeight(500);
-        border.setCenter(new Button("1"));
+        border.setCenter(new Button("TEMA"));
 
         group.getChildren().addAll(border);
         primaryStage.setScene(scene);

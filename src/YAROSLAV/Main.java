@@ -30,18 +30,16 @@ public class Main extends Application {
         Scene scene = new Scene(group, 500,500);
         BorderPane border = new BorderPane();
         border.setBottom(new Button("НАЖМИ"));
-        border.setMinWidth(250);
-        border.setMinHeight(250);
+
+        border.setMinWidth(0);
+        border.setMinHeight(0);
+
         group.getChildren().addAll(border);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     private void drawShapess(GraphicsContext gc){
-        BorderPane border = new BorderPane();
-        border.setBottom(new Button("НАЖМИ"));
-        border.setMinSize(100,100);
-        Group group = new Group();
-        group.getChildren().addAll(border);
+
 
     }
     private void drawShapess1(GraphicsContext gc){

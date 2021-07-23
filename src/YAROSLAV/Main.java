@@ -28,14 +28,22 @@ public class Main extends Application {
         Group group = new Group();
         primaryStage.setResizable(false);
         Scene scene = new Scene(group, 500,500);
+        Text text = new Text(250,250,"В чем сила, брат?");
+        group.getChildren().addAll(text);
         BorderPane border = new BorderPane();
-        border.setBottom(new Button("НАЖМИ"));
-
-        border.setMinWidth(500);
-        border.setMinHeight(500);
-        border.setCenter(new Button("TEMA"));
-
+        border.setMinWidth(250);
+        border.setMinHeight(250);
+        border.setLeft(new Button("В деньгах"));
+        border.getLeft();
         group.getChildren().addAll(border);
+
+        BorderPane border1 = new BorderPane();
+        border1.setMinHeight(250);
+        border1.setMinWidth(250);
+
+        border.setRight(new Button("В правде"));
+        group.getChildren().addAll(border1);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

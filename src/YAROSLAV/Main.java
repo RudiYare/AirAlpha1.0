@@ -23,6 +23,7 @@ public class Main extends Application {
         primaryStage.setTitle("AIR ALFA 1.0");
         primaryStage.setResizable(false);
         Group group = new Group();
+        primaryStage.setFullScreen(true);
         Scene scene = new Scene(group, 1024 , 720);
         //primaryStage.setOpacity(25);
         Text text = new Text  (100, 100, "ПОЕХАЛИ");

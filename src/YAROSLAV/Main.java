@@ -28,7 +28,7 @@ public class Main extends Application {
         Group group = new Group();
         primaryStage.setResizable(false);
         Scene scene = new Scene(group, 500,500);
-        Text text = new Text(250,250,"В чем СИЛА, брат?");
+        Text text = new Text(250,250,"В чем сила, брат?");
         group.getChildren().addAll(text);
         BorderPane border = new BorderPane();
         border.setMinWidth(250);

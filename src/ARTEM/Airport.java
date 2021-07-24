@@ -20,7 +20,7 @@ public class Airport {
     }
 
     // из текущего аэропорта теперь можно летать в аэропрот #ID
-    public Boolean new_flight(int ID) {
+    public Boolean newFlight(int ID) {
         if (this.related.contains(ID)) {
             return Boolean.FALSE;
         }

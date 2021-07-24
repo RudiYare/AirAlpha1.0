@@ -33,7 +33,9 @@ public class Main extends Application {
         BorderPane border = new BorderPane();
         border.setMinWidth(250);
         border.setMinHeight(250);
-        border.setLeft(new Button("В деньгах"));
+        Button newBtn = new Button("В деньгах");
+        border.setLeft(newBtn);
+        border.setBottom(newBtn);
         border.getLeft();
         group.getChildren().addAll(border);
 

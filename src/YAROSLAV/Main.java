@@ -34,11 +34,9 @@ public class Main extends Application {
 
         Button but1 = new Button("НАЖМИ НА ГАЗ");
         group.getChildren().add(but1);
-        but1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("НАЖАЛОСЬ!");
-            }
+        but1.setOnAction(actionEvent -> {
+            System.out.println("НАЖАЛОСЬ!");
+            System.out.println("УРА");
         });
         primaryStage.setScene(scene1);
         primaryStage.show();

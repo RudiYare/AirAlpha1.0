@@ -8,20 +8,27 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Main extends Application {
-    public Main() {
+
+
+    public static void main(String[] args)  {
+
+            launch(args);
+
+
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception  {
         primaryStage.setResizable(false);
         Group group = new Group();
         Scene scene1 = new Scene(group, 500.0D, 500.0D);
@@ -31,10 +38,11 @@ public class Main extends Application {
         Button but2 = new Button("Rammstain");
         but2.setLayoutX(50.0D);
         but2.setLayoutY(50.0D);
-        group.getChildren().addAll(new Node[]{but1, but2});
+        group.getChildren().addAll(but1, but2);
         but1.setOnAction((actionEvent) -> {
-            Text text = new Text(0.0D, 20.0D, "EEEEE");
-            Scene scene2 = new Scene(new Group(new Node[]{text}), 200.0D, 200.0D);
+            int x = 1;
+            Text text = new Text(0.0D, 20.0D, Integer.toString(x));
+            Scene scene2 = new Scene(new Group(text), 200.0D, 200.0D);
             Stage stage2 = new Stage();
             stage2.setScene(scene2);
             stage2.setResizable(false);
@@ -42,15 +50,29 @@ public class Main extends Application {
             stage2.initOwner(primaryStage);
             stage2.show();
         });
-        but2.setOnAction((actionEvent) -> {
-            Text text = new Text(0.0D, 20.0D, "ДЕБИЛ, В АД НАУЙ!");
-            Scene scene2 = new Scene(new Group(new Node[]{text}), 200.0D, 200.0D);
-            Stage stage2 = new Stage();
-            stage2.setScene(scene2);
-            stage2.setResizable(false);
-            stage2.initModality(Modality.WINDOW_MODAL);
-            stage2.initOwner(primaryStage);
-            stage2.show();
+        but2.setOnAction((actionEvent )-> {
+            Text text = new Text(0.0D, 20.0D, "ДЕБИЛ, В АД !");
+
+            try {
+                Image img = new Image(new FileInputStream("src/YAROSLAV/unknown.png"));
+
+                ImageView imgv = new ImageView(img);
+                imgv.setFitHeight(500);
+                imgv.setFitWidth(500);
+
+                Scene scene2 = new Scene(new Group(imgv), 500.0D, 500.0D);
+                Stage stage2 = new Stage();
+                stage2.setTitle("Rammstain");
+                stage2.setScene(scene2);
+                stage2.setResizable(false);
+                stage2.initModality(Modality.WINDOW_MODAL);
+                stage2.initOwner(primaryStage);
+                stage2.show();
+            }
+            catch (Exception e){
+
+            }
+
         });
         primaryStage.setScene(scene1);
         primaryStage.show();

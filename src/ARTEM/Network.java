@@ -8,12 +8,13 @@ public class Network {
     private Map<Integer, Timeline> timelines;
 
     private Map<Integer, Boolean> used;
-    private ArrayList<Integer> airportsIDs;
+    private ArrayList<Integer> airports_IDs;
+    private ArrayList<Integer> timelines_IDs;
 
     public Network() {
         airports = new HashMap<Integer, Airport>();
         used = new HashMap<Integer, Boolean>();
-        airportsIDs = new ArrayList<>();
+        airports_IDs = new ArrayList<>();
     }
 
     public Boolean addNewAirport(Airport single_airport) {
@@ -22,6 +23,7 @@ public class Network {
         }
         final int ID = single_airport.ID;
         airports.put(ID, single_airport);
+        airports_IDs.add(ID);
         used.put(ID, Boolean.FALSE);
         return Boolean.TRUE;
 
@@ -43,7 +45,7 @@ public class Network {
     }
 
     public Boolean is_reachable(Airport x, Airport y) {
-        for (int u : airportsIDs) {
+        for (int u : airports_IDs) {
             used.put(u, Boolean.FALSE);
         }
         dfs(x.ID);
@@ -64,7 +66,7 @@ public class Network {
         }
         final int ID = flight.ID;
         timelines.put(ID, flight);
-        used.put(ID, Boolean.FALSE);
+        timelines_IDs.add(ID);
         return Boolean.TRUE;
     }
 }

@@ -3,6 +3,8 @@
 package YAROSLAV;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,13 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
-import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -35,7 +38,7 @@ public class Main extends Application {
         @Override
         public void replaceText(int i, int i1, String s) {
             String old = getText();
-            if ("".equals(s) || s.matches("[a-z]*")|| s.matches("[A-Z]*")|| s.matches("[а-я]*")|| s.matches("[А-Я]*")){
+            if ( s.matches("[a-z]*")|| s.matches("[A-Z]*")|| s.matches("[а-я]*")|| s.matches("[А-Я]*")){
                 super.replaceText(i,i1,s);
 
             }
@@ -52,11 +55,14 @@ public class Main extends Application {
         tf.setPromptText("Введите имя:");
         tf.setLayoutX(0);
         tf.setLayoutY(20);
-
-
-        tf.setOnAction(ActionEvent ->{
-            if (!(tf.getText().matches("[^a-zA-Z]*"))){
-               tf.clear();
+        Text text_bg = new Text("");
+        tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)){
+                    text_bg.setFill(Color.RED);
+                text_bg.setText("КНОПКА ДЛЯ ЭТОГО ЕСТЬ, ДЕБИЛ!");
+                }
             }
         });
 
@@ -65,9 +71,9 @@ public class Main extends Application {
         but.setMinHeight(30);
         but.setLayoutX(105);
         but.setLayoutY(20);
-        Text text_bg = new Text("");
     text_bg.setLayoutX(0);
     text_bg.setLayoutY(70);
+
         but.setOnAction(ActionEvent ->{
             Group group2 = new Group();
             if (tf.getText().isEmpty()){

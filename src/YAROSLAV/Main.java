@@ -8,6 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -15,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
+import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -27,54 +31,66 @@ public class Main extends Application {
 
 
     }
-
+    private class NameTextField extends TextField{
+        @Override
+        public void replaceText(int i, int i1, String s) {
+            String old = getText();
+            if ("".equals(s) || s.matches("[a-z]*")|| s.matches("[A-Z]*")|| s.matches("[а-я]*")|| s.matches("[А-Я]*")){
+                super.replaceText(i,i1,s);
+                String newText = super.getText();
+            }
+        }
+    }
     public void start(Stage primaryStage) throws Exception  {
+        Group group1 = new Group();
+        Scene scene_main = new Scene(group1,500,500);
         primaryStage.setResizable(false);
-        Group group = new Group();
-        Scene scene1 = new Scene(group, 500.0D, 500.0D);
-        Button but1 = new Button("Rammstein");
-        but1.setLayoutX(0.0D);
-        but1.setLayoutY(0.0D);
-        Button but2 = new Button("Rammstain");
-        but2.setLayoutX(50.0D);
-        but2.setLayoutY(50.0D);
-        group.getChildren().addAll(but1, but2);
-        but1.setOnAction((actionEvent) -> {
-            int x = 1;
-            Text text = new Text(0.0D, 20.0D, Integer.toString(x));
-            Scene scene2 = new Scene(new Group(text), 200.0D, 200.0D);
-            Stage stage2 = new Stage();
-            stage2.setScene(scene2);
-            stage2.setResizable(false);
-            stage2.initModality(Modality.WINDOW_MODAL);
-            stage2.initOwner(primaryStage);
-            stage2.show();
-        });
-        but2.setOnAction((actionEvent )-> {
-            Text text = new Text(0.0D, 20.0D, "ДЕБИЛ, В АД !");
+        primaryStage.setTitle("Text");
+        NameTextField tf = new NameTextField();
+        tf.setMaxWidth(100);
+        tf.setMinHeight(30);
+        tf.setPromptText("Введите имя:");
+        tf.setLayoutX(0);
+        tf.setLayoutY(20);
 
-            try {
-                Image img = new Image(new FileInputStream("src/YAROSLAV/unknown.png"));
 
-                ImageView imgv = new ImageView(img);
-                imgv.setFitHeight(500);
-                imgv.setFitWidth(500);
-
-                Scene scene2 = new Scene(new Group(imgv), 500.0D, 500.0D);
-                Stage stage2 = new Stage();
-                stage2.setTitle("Rammstain");
-                stage2.setScene(scene2);
-                stage2.setResizable(false);
-                stage2.initModality(Modality.WINDOW_MODAL);
-                stage2.initOwner(primaryStage);
-                stage2.show();
+        tf.setOnAction(ActionEvent ->{
+            if (!(tf.getText().matches("[^a-zA-Z]*"))){
+               tf.clear();
             }
-            catch (Exception e){
-
-            }
-
         });
-        primaryStage.setScene(scene1);
+
+        Button but = new Button("Готово");
+        group1.getChildren().add(tf);
+        but.setMinHeight(30);
+        but.setLayoutX(105);
+        but.setLayoutY(20);
+        Text text_bg = new Text("");
+    text_bg.setLayoutX(0);
+    text_bg.setLayoutY(70);
+        but.setOnAction(ActionEvent ->{
+            Group group2 = new Group();
+            if (tf.getText().isEmpty()){
+             text_bg.setText("Ошибка");
+             text_bg.setFill(Color.RED);
+            }else {
+                text_bg.setText("");
+                Text text = new Text("Привет," + tf.getText() + "!");
+                text.setLayoutX(0);
+                text.setLayoutY(20);
+                group2.getChildren().add(text);
+                Scene scene_sec = new Scene(group2, 250, 250);
+                Stage stage_sec = new Stage();
+                stage_sec.initOwner(primaryStage);
+                stage_sec.setResizable(false);
+                stage_sec.initModality(Modality.APPLICATION_MODAL);
+                stage_sec.setScene(scene_sec);
+                stage_sec.show();
+            }
+        });
+        group1.getChildren().add(but);
+        group1.getChildren().add(text_bg);
+        primaryStage.setScene(scene_main);
         primaryStage.show();
     }
 }

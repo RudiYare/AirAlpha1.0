@@ -37,7 +37,7 @@ public class Main extends Application {
             String old = getText();
             if ("".equals(s) || s.matches("[a-z]*")|| s.matches("[A-Z]*")|| s.matches("[а-я]*")|| s.matches("[А-Я]*")){
                 super.replaceText(i,i1,s);
-                String newText = super.getText();
+
             }
         }
     }

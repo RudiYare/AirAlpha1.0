@@ -1,5 +1,6 @@
 package ARTEM;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Network {
@@ -13,6 +14,7 @@ public class Network {
 
     public Network() {
         airports = new HashMap<Integer, Airport>();
+        timelines = new HashMap<Integer, Timeline>();
         used = new HashMap<Integer, Boolean>();
         airports_IDs = new ArrayList<>();
     }
@@ -69,4 +71,13 @@ public class Network {
         timelines_IDs.add(ID);
         return Boolean.TRUE;
     }
+
+    public ArrayList<String> getTitles() {
+        ArrayList<String> titles = new ArrayList<>();
+        for (int ID : airports_IDs) {
+            titles.add(airports.get(ID).getTitle());
+        }
+        return titles;
+    }
+
 }

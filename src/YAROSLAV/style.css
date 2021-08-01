@@ -1,0 +1,20 @@
+#rich-blue {
+    
+    
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 30;
+   
+
+    -fx-transition:0.5s;
+-fx-background-color: 
+#4569d6;
+  ;}
+    
+
+}
+#rich-blue:hover{
+-fx-effect: dropshadow( three-pass-box, black , 10.0, 0.0,0.0,0.0);
+
+}
+
+

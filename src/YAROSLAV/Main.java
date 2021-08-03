@@ -38,6 +38,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,11 +70,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\main1.fxml" ).toURI().toURL()));
         BorderPane root= new BorderPane();
+        root.getChildren().add(content);
 
-
-
-
-        root.setCenter(content);
         group.getChildren().add(root);
         primaryStage.setScene(scene);
         primaryStage.show();

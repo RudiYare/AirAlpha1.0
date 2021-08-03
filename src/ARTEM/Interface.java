@@ -5,6 +5,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Interface {
 
@@ -32,7 +33,7 @@ public class Interface {
                 res.add(new Object[] {(Integer)(s.maxSubstring(text)[0]), text});
             }
         }
-        Collecions.sort()
+        //Collections.sort();
         System.out.println(max_match);
         if (max_match >= 2) {
             for (String text : titles) {

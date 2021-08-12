@@ -68,7 +68,7 @@ public class Main extends Application {
         Group group = new Group();
         Scene scene= new Scene(group,1280, 800);
         primaryStage.setResizable(false);
-        Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\main1.fxml" ).toURI().toURL()));
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\main1.fxml" ).toURI().toURL()));
         BorderPane root= new BorderPane();
         root.getChildren().add(content);
 

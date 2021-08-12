@@ -46,7 +46,7 @@ public class MyController implements Initializable {
         stage = new Stage();
         Group group = new Group();
         Scene scene= new Scene(group,292, 122);
-        Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\pasw.fxml" ).toURI().toURL()));
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\pasw.fxml" ).toURI().toURL()));
         BorderPane root= new BorderPane();
         stage.centerOnScreen();
         root.setCenter(content);
@@ -65,7 +65,7 @@ public class MyController implements Initializable {
             Stage stage1 = new Stage();
             Group group = new Group();
             Scene scene = new Scene(group, 292, 122);
-            Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\error-pasw.fxml").toURI().toURL()));
+            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error-pasw.fxml").toURI().toURL()));
             BorderPane root = new BorderPane();
             stage1.centerOnScreen();
             root.setCenter(content);
@@ -85,7 +85,7 @@ public class MyController implements Initializable {
         Main.stage.close();
         Group group = new Group();
         Scene scene = new Scene(group, 1280, 800);
-        Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\editor.fxml").toURI().toURL()));
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\editor.fxml").toURI().toURL()));
         BorderPane root = new BorderPane();
         stage.centerOnScreen();
         root.setCenter(content);
@@ -98,7 +98,7 @@ public class MyController implements Initializable {
         Stage stage1 = new Stage();
         Group group = new Group();
         Scene scene = new Scene(group, 340, 320);
-        Parent content = FXMLLoader.load((new File("D:\\JAVA PROJECT\\AIR ALPHA 1.0\\src\\YAROSLAV\\add_port.fxml").toURI().toURL()));
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\add_port.fxml").toURI().toURL()));
         BorderPane root = new BorderPane();
         stage1.centerOnScreen();
         root.setCenter(content);

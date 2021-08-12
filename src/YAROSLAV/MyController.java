@@ -418,7 +418,7 @@ public class MyController implements Initializable {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setLocation(0,60);
         FlowPane container = new FlowPane();
-        container.getChildren().add(scrollPane);
+
         stage1.show();
     }
     @Override

@@ -71,7 +71,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="35.0" layoutX="970.0" layoutY="150.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="386.0" prefWidth="296.0" stylesheets="@style.css" text="Удалить&#10;аэропорт" textAlignment="CENTER" textFill="#110000" textOverrun="CLIP">
+            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="35.0" layoutX="970.0" layoutY="150.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="386.0" prefWidth="296.0" stylesheets="@style.css" text="Удалить&#10;аэропорт" textAlignment="CENTER" textFill="#110000" textOverrun="CLIP" onAction="#in_del_port">
                <font>
                   <Font name="Berlin Sans FB Bold" size="36.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="35.0" layoutX="650.0" layoutY="150.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="386.0" prefWidth="296.0" stylesheets="@style.css" text="Удалить&#10;рейс&#10;" textAlignment="CENTER" textFill="#110000" textOverrun="CLIP">
+            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="35.0" layoutX="650.0" layoutY="150.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="386.0" prefWidth="296.0" stylesheets="@style.css" text="Удалить&#10;рейс&#10;" textAlignment="CENTER" textFill="#110000" textOverrun="CLIP" onAction="#in_search_way">
                <font>
                   <Font name="Berlin Sans FB Bold" size="36.0" />
                </font>

@@ -32,8 +32,8 @@ public class AutoComboBox {
             this.comboBox = comboBox;
             sb = new StringBuilder();
             data = comboBox.getItems();
+           this.comboBox.setEditable(true);
 
-            this.comboBox.setEditable(true);
             this.comboBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
                 @Override
@@ -78,6 +78,7 @@ public class AutoComboBox {
                         AutoCompleteComboBoxListener.this.comboBox
                                 .getEditor().getText().toLowerCase())) {
                     list.add(data.get(i));
+
                 }
             }
             String t = comboBox.getEditor().getText();

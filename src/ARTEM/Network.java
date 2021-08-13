@@ -40,18 +40,22 @@ public class Network {
 
         countries.add(actual_country);
 
+        Tree actual_city = new Tree(actual_country, city); boolean isFound = false;
 
 
-        Tree actual_city = new Tree(actual_country, city);
         for (Tree t : actual_country.children) {
             if (t.title.equals(city)) {
                 actual_city = t;
+                isFound = true;
             }
         }
-        actual_country.children.add(actual_city);
+
+        if (!isFound) {
+            actual_country.children.add(actual_city);
+        }
 
         Tree actual_title = new Tree(actual_city, title);
-        boolean isFound = false;
+        isFound = false;
         for (Tree t : actual_city.children) {
             if (t.title.equals(title)) {
                 actual_title = t;

@@ -11,7 +11,6 @@ public class Interface {
 
     private Network net;
 
-
     public Interface() {
         net = new Network();
     }

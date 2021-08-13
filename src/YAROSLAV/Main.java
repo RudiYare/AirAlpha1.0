@@ -1,5 +1,6 @@
 package YAROSLAV;
 
+import ARTEM.Network;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -48,9 +49,9 @@ import java.util.ArrayList;
 public class Main extends Application {
     public static Stage stage;
     public static Stage stage_back;
-
+    public static Network net ;
     public static void main(String[] args)  {
-
+        net = new Network();
         launch(args);
 
 

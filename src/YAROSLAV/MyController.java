@@ -1,23 +1,26 @@
 package YAROSLAV;
-import ARTEM.Network;
-import YAROSLAV.NameTextField;
+import java.time.LocalDate;
+import java.util.Locale;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
-import java.awt.*;
 import java.awt.ScrollPane;
 import java.io.File;
 import java.net.URL;
@@ -26,6 +29,7 @@ import java.util.ResourceBundle;
 public class MyController implements Initializable {
     public static Stage stage;
     public static Stage stage1;
+    public static DatePicker date_in ;public static DatePicker date_out ;
 
     @FXML
     TextField text_password;
@@ -41,6 +45,7 @@ public class MyController implements Initializable {
     ObservableList<String> arr_country =  FXCollections.observableArrayList();
     ObservableList<String> arr_city =  FXCollections.observableArrayList();
     ObservableList<String> arr_port =  FXCollections.observableArrayList();
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -185,7 +190,7 @@ public class MyController implements Initializable {
                 stage2.show();
             }
 
-        Main.net.printCountries();
+
 
     }
     public void in_add_way() throws Exception {
@@ -201,7 +206,8 @@ public class MyController implements Initializable {
         ComboBox <String> cbox_port_in;
 
 
-
+        cbox_city_in = new ComboBox<>();
+        cbox_port_in = new ComboBox<>();//array from Artemius
         Stage stage1 = new Stage();
         Group group = new Group();
         Scene scene = new Scene(group, 834, 613);
@@ -221,22 +227,27 @@ public class MyController implements Initializable {
         cbox_country_in.setLayoutY(102);
         cbox_country_in.setVisibleRowCount(3);
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
+        cbox_country_in.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
+            cbox_city_in.setItems(FXCollections.observableArrayList());
+            cbox_port_in.setItems(FXCollections.observableArrayList());
+        });
 
-        cbox_city_in = new ComboBox<>(); //array from Artemius
+       // cbox_city_in = new ComboBox<>(); //array from Artemius
         cbox_city_in.setLayoutX(352);
         cbox_city_in.setLayoutY(102);
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_in);
         cbox_city_in.setVisibleRowCount(3);
         cbox_city_in.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
 
-
+            cbox_port_in.setItems(FXCollections.observableArrayList());
             if (arr_country.contains(cbox_country_in.getValue())){
                 arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_in.getValue()));
                 cbox_city_in.setItems(arr_city);
+
             }
         });
 
-        cbox_port_in = new ComboBox<>();//array from Artemius
+
         cbox_port_in.setLayoutX(649);
         cbox_port_in.setLayoutY(102);
         cbox_port_in.setVisibleRowCount(3);
@@ -248,47 +259,102 @@ public class MyController implements Initializable {
                 cbox_port_in.setItems(arr_port);
             }
         });
-
+        cbox_port_out = new ComboBox<>();// array from Artemius
+        cbox_city_out = new ComboBox<>(); // array from Artemius
         cbox_country_out = new ComboBox<>(arr_country); //array from Artemius
         cbox_country_out.setLayoutY(186);
         cbox_country_out.setLayoutX(89);
         cbox_country_out.setVisibleRowCount(3);
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_out);
+        cbox_country_out.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
+            cbox_city_out.setItems(FXCollections.observableArrayList());
+            cbox_port_out.setItems(FXCollections.observableArrayList());
+        });
 
 
-        cbox_city_out = new ComboBox<>(); // array from Artemius
         cbox_city_out.setLayoutX(352);
         cbox_city_out.setLayoutY(186);
         cbox_city_out.setVisibleRowCount(3);
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_out);
         cbox_city_out.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
+            cbox_port_out.setItems(FXCollections.observableArrayList());
             if (arr_country.contains(cbox_country_out.getValue())){
                 arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_out.getValue()));
                 cbox_city_out.setItems(arr_city);
             }
         });
 
-        cbox_port_out = new ComboBox<>();// array from Artemius
+
         cbox_port_out.setLayoutY(186);
         cbox_port_out.setLayoutX(649);
+        cbox_port_out.setVisibleRowCount(3);
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_out);
         cbox_port_out.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
             if (arr_city.contains(cbox_city_out.getValue())){
                 arr_port = FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
-                 arr_port.remove(cbox_port_in.getValue());
+                if (cbox_city_in.getValue().equals(cbox_city_out.getValue())&&(cbox_country_in.getValue().equals(cbox_country_out.getValue()))) {
+                    arr_port.remove(cbox_port_in.getValue());
+                }
+                 cbox_port_out.setItems(arr_port);
             }
         });
 
-        DatePicker date_in = new DatePicker();
+        date_in = new DatePicker();
         date_in.setLayoutX(85);
         date_in.setLayoutY(288);
+        date_in.setValue(LocalDate.now());
 
+        date_out = new DatePicker();
+        date_in.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
+            date_out.setValue(null);
+        });
+        final Callback<DatePicker, DateCell> dayCellFactory_in =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
 
-        DatePicker date_out = new DatePicker();
+                                if (item.isBefore(
+                                        LocalDate.now())
+                                ) {
+                                    setDisable(true);
+
+                                }
+                            }
+                        };
+                    }
+                };
+
+date_in.setDayCellFactory(dayCellFactory_in);
+
         date_out.setLayoutX(85);
         date_out.setLayoutY(385);
 
+            final Callback<DatePicker, DateCell> dayCellFactory_out =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (date_in.getValue()!=null) {
+                                        if (item.isBefore(
+                                                date_in.getValue())
+                                        ) {
+                                            setDisable(true);
 
+                                        }
+                                    }
+
+                                }
+                            };
+                        }
+                    };
+            date_out.setDayCellFactory(dayCellFactory_out);
         Spinner<Integer> hours_in = new Spinner<>();
         hours_in.getEditor().setPrefWidth(86);
         hours_in.setLayoutX(388);
@@ -519,6 +585,12 @@ public class MyController implements Initializable {
 
         stage1.show();
     }
+    public void ok_in_add_way() throws Exception {
+
+
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

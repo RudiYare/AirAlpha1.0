@@ -15,7 +15,7 @@ public class PriceTextField extends TextField {
 
             space= false;
         }else
-        if (s.matches(".")&&(space == false)&&(i != 0)){
+        if (s.equals(".")&&(space == false)&&(i != 0)){
             super.replaceText(i,i1,s);
             space = true;
 

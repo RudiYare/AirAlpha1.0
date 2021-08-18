@@ -37,7 +37,7 @@ public class Controller_AddWay implements Initializable {
     ComboBox <String> cbox_port_in;
     ObservableList<String> arr_country =  FXCollections.observableArrayList("Россия","США","Испания");
     public void in_add_way() throws Exception {
-//TODO: Написать ручками все
+
         box_country_in.getItems().setAll("rw","rwr");
         //box_country_in.setItems(arr_country);
         AutoComboBox.AutoCompleteComboBoxListener<String> autobox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<String>(box_country_in);

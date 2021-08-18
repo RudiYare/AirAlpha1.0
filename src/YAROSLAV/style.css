@@ -49,3 +49,9 @@
 -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);
 }
 
+
+#combo{
+
+-fx-cell-size: 35;
+}
+

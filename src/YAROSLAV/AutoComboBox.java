@@ -33,7 +33,7 @@ public class AutoComboBox {
             sb = new StringBuilder();
             data = comboBox.getItems();
            this.comboBox.setEditable(true);
-
+this.comboBox.setVisibleRowCount(3);
             this.comboBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
                 @Override
@@ -50,25 +50,37 @@ public class AutoComboBox {
             if (event.getCode() == KeyCode.UP) {
                 caretPos = -1;
                 moveCaret(comboBox.getEditor().getText().length());
+                this.comboBox.setVisibleRowCount(3);
+                comboBox.setVisibleRowCount(3);
                 return;
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!comboBox.isShowing()) {
                     comboBox.show();
+                    this.comboBox.setVisibleRowCount(3);
+                    comboBox.setVisibleRowCount(3);
                 }
                 caretPos = -1;
                 moveCaret(comboBox.getEditor().getText().length());
+                this.comboBox.setVisibleRowCount(3);
+                comboBox.setVisibleRowCount(3);
                 return;
             } else if (event.getCode() == KeyCode.BACK_SPACE) {
                 moveCaretToPos = true;
                 caretPos = comboBox.getEditor().getCaretPosition();
+                comboBox.setVisibleRowCount(3);
+                this.comboBox.setVisibleRowCount(3);
             } else if (event.getCode() == KeyCode.DELETE) {
                 moveCaretToPos = true;
                 caretPos = comboBox.getEditor().getCaretPosition();
+                comboBox.setVisibleRowCount(3);
+                this.comboBox.setVisibleRowCount(3);
             }
 
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
                     || event.isControlDown() || event.getCode() == KeyCode.HOME
                     || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB) {
+                comboBox.setVisibleRowCount(3);
+                this.comboBox.setVisibleRowCount(3);
                 return;
             }
 
@@ -78,23 +90,32 @@ public class AutoComboBox {
                         AutoCompleteComboBoxListener.this.comboBox
                                 .getEditor().getText().toLowerCase())) {
                     list.add(data.get(i));
-
+                    comboBox.setVisibleRowCount(3);
+                    this.comboBox.setVisibleRowCount(3);
                 }
             }
             String t = comboBox.getEditor().getText();
 
             comboBox.setItems(list);
+            comboBox.setVisibleRowCount(3);
+            this.comboBox.setVisibleRowCount(3);
             comboBox.getEditor().setText(t);
             if (!moveCaretToPos) {
                 caretPos = -1;
+                comboBox.setVisibleRowCount(3);
+                this.comboBox.setVisibleRowCount(3);
             }
             moveCaret(t.length());
             if (!list.isEmpty()) {
                 comboBox.show();
+                comboBox.setVisibleRowCount(3);
+                this.comboBox.setVisibleRowCount(3);
             }
         }
 
         private void moveCaret(int textLength) {
+            comboBox.setVisibleRowCount(3);
+            this.comboBox.setVisibleRowCount(3);
             if (caretPos == -1) {
                 comboBox.getEditor().positionCaret(textLength);
             } else {

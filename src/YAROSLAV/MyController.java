@@ -48,6 +48,9 @@ public class MyController implements Initializable {
     ObservableList<String> arr_port =  FXCollections.observableArrayList();
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public static  ComboBox<String> country_box;
+    public static  ComboBox<String> city_box;
+    public static  ComboBox<String> port_box;
 
     public static long date_1;
     public static long date_2;
@@ -479,7 +482,8 @@ date_in.setDayCellFactory(dayCellFactory_in);
         stage1.show();
     }
     public void in_del_port()throws Exception {
-        Stage stage1 = new Stage();
+        ObservableList<String> arr_country =  FXCollections.observableArrayList(Main.net.getAllCountries());
+         stage1 = new Stage();
         Group group = new Group();
         Scene scene = new Scene(group, 331, 345);
         Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\del_port.fxml").toURI().toURL()));
@@ -491,30 +495,117 @@ date_in.setDayCellFactory(dayCellFactory_in);
         stage1.setResizable(false);
         group.getChildren().add(root);
 
-        ComboBox<String> country = new ComboBox<>(arr_country); // !!!!!!!!!!!!!!!!
-        country.setLayoutX(130);
-        country.setLayoutY(90);
-        country.setVisibleRowCount(3);
-        AutoComboBox.AutoCompleteComboBoxListener<String> auto_country = new AutoComboBox.AutoCompleteComboBoxListener<>(country);
+         country_box = new ComboBox<>(); // !!!!!!!!!!!!!!!!
+        country_box.setLayoutX(130);
+        country_box.setLayoutY(90);
+        country_box.setVisibleRowCount(3);
+        country_box.setItems(arr_country);
+        country_box.setEditable(true);
+        AutoComboBox.AutoCompleteComboBoxListener<String> auto_country = new AutoComboBox.AutoCompleteComboBoxListener<>(country_box);
 
-        ComboBox<String> city = new ComboBox<>(arr_city); // !!!!!!!!!!!!!!!!
-        city.setLayoutX(130);
-        city.setLayoutY(150);
-        city.setVisibleRowCount(3);
-        AutoComboBox.AutoCompleteComboBoxListener<String> auto_city = new AutoComboBox.AutoCompleteComboBoxListener<>(city);
+         city_box = new ComboBox<>(arr_city); // !!!!!!!!!!!!!!!!
+        city_box.setLayoutX(130);
+        city_box.setLayoutY(150);
+        city_box.setVisibleRowCount(3);
 
-        ComboBox<String> port = new ComboBox<>(); // !!!!!!!!!!!!!!!!
-        port.setLayoutX(130);
-        port.setLayoutY(213);
-        port.setVisibleRowCount(3);
-        AutoComboBox.AutoCompleteComboBoxListener<String> auto_port = new AutoComboBox.AutoCompleteComboBoxListener<>(port);
+        city_box.setEditable(true);
 
-        group.getChildren().add(country);
-        group.getChildren().add(city);
-        group.getChildren().add(port);
+
+         port_box = new ComboBox<>(); // !!!!!!!!!!!!!!!!
+        port_box.setLayoutX(130);
+        port_box.setLayoutY(213);
+        port_box.setVisibleRowCount(3);
+        port_box.setEditable(true);
+
+
+        country_box.setOnAction(actionEvent -> {
+            if (arr_country.contains(country_box.getValue())){
+                arr_city = FXCollections.observableArrayList(Main.net.getAllCities(country_box.getValue()));
+                city_box.setItems(arr_city);
+                AutoComboBox.AutoCompleteComboBoxListener<String> auto_city = new AutoComboBox.AutoCompleteComboBoxListener<>(city_box);
+            }else {
+                city_box.setItems(null);
+
+            }
+            country_box.hide();
+            country_box.setVisibleRowCount(3);
+        });
+        city_box.setOnAction(actionEvent -> {
+            if (arr_city.contains(city_box.getValue())){
+                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(country_box.getValue(), city_box.getValue()));
+                port_box.setItems(arr_port);
+                AutoComboBox.AutoCompleteComboBoxListener<String> auto_port = new AutoComboBox.AutoCompleteComboBoxListener<>(port_box);
+            }else{
+                port_box.setItems(null);
+            }
+            city_box.hide();
+            city_box.setVisibleRowCount(3);
+        });
+port_box.setOnAction(actionEvent -> {
+    port_box.hide();
+    port_box.setVisibleRowCount(3);
+});
+        group.getChildren().add(country_box);
+        group.getChildren().add(city_box);
+        group.getChildren().add(port_box);
 
         stage1.setScene(scene);
         stage1.show();
+    }
+    public boolean del_port(){
+        try {
+            if ((country_box.getValue() == null) || (!Main.net.getAllCountries().contains(country_box.getValue()))) {
+                return false;
+            }
+            if ((city_box.getValue() == null) || (!Main.net.getAllCities(country_box.getValue()).contains(city_box.getValue()))) {
+                return false;
+            }
+            if ((port_box.getValue() == null) || (!Main.net.getAllTitles(country_box.getValue(), city_box.getValue()).contains(port_box.getValue()))) {
+                return false;
+            }
+
+        }
+        catch (Exception e){
+            return false;
+        }
+        if (!Main.net.removeAirport(port_box.getValue(),city_box.getValue(),country_box.getValue())){
+            return false;
+        }
+        return true;
+    }
+    public void screen_del_way() throws  Exception{
+        Stage stage2;
+            if (!del_port()){
+             stage2 = new Stage();
+             Group group = new Group();
+                Scene scene = new Scene(group, 292, 122);
+                    Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
+                BorderPane root = new BorderPane();
+                 stage2.centerOnScreen();
+                root.setCenter(content);
+                stage2.initModality(Modality.WINDOW_MODAL);
+                stage2.initOwner(stage1);
+                stage2.setResizable(false);
+                group.getChildren().add(root);
+                stage2.setScene(scene);
+                stage2.show();
+}else{
+                stage2 = new Stage();
+                Group group = new Group();
+                Scene scene = new Scene(group, 310, 122);
+                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\ok.fxml").toURI().toURL()));
+                BorderPane root = new BorderPane();
+                stage2.centerOnScreen();
+                root.setCenter(content);
+                stage2.initModality(Modality.WINDOW_MODAL);
+                stage2.initOwner(stage);
+                stage2.setResizable(false);
+                group.getChildren().add(root);
+                stage2.setScene(scene);
+
+                stage1.close();
+                stage2.show();
+            }
     }
     public void in_search_way() throws Exception {
         ComboBox <String> cbox_country_out;
@@ -740,7 +831,9 @@ date_in.setDayCellFactory(dayCellFactory_in);
         }
         int id_1=Main.net.getIDByParams(cbox_country_in.getValue(),cbox_city_in.getValue(),cbox_port_in.getValue());
         int id_2 = Main.net.getIDByParams(cbox_country_out.getValue(),cbox_city_out.getValue(),cbox_port_out.getValue());
-        Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) );
+        if (!Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) )){
+            return false;
+        }
 
 
                 //TODO: ТУТ ЧЕРЕЗ АЙДИШНИК!!!

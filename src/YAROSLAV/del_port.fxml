@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="331.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="331.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YAROSLAV.MyController">
    <children>
       <ImageView fitHeight="49.0" fitWidth="51.0" layoutX="8.0" layoutY="7.0">
          <image>
@@ -38,7 +38,7 @@
             <Font name="TechnicBold" size="20.0" />
          </font>
       </Text>
-      <Button id="rich-blue" layoutX="120.0" layoutY="270.0" mnemonicParsing="false" stylesheets="@style.css" text="Удалить" textFill="WHITE">
+      <Button id="rich-blue" layoutX="120.0" layoutY="270.0" mnemonicParsing="false" stylesheets="@style.css" text="Удалить" textFill="WHITE" onAction="#screen_del_way">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

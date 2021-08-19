@@ -1,0 +1,8 @@
+.combo-box .list-view .list-cell{
+
+-fx-cell-size: 35;
+
+}
+#d{
+-fx-background-color:blue;
+}

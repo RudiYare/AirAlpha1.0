@@ -9,6 +9,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,7 +23,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.awt.ScrollPane;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -646,9 +646,21 @@ date_in.setDayCellFactory(dayCellFactory_in);
         group.getChildren().add(root);
         stage1.setScene(scene);
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setLocation(0,60);
-        FlowPane container = new FlowPane();
+        javafx.scene.control.ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefWidth(834);
+
+        scrollPane.setPrefHeight(540);
+        scrollPane.setLayoutX(0);
+        scrollPane.setLayoutY(60);
+        scrollPane.fitToWidthProperty();
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        group.getChildren().add(scrollPane);
+
+        scrollPane.setStyle("-fx-background:white;");
+
+
+        stage1.setScene(scene);
 
         stage1.show();
     }
@@ -719,6 +731,10 @@ date_in.setDayCellFactory(dayCellFactory_in);
         if (Double.parseDouble(price.getText()) <= 0){
             return  false;
         }
+        int id_1=Main.net.getIDByParams(cbox_country_in.getValue(),cbox_city_in.getValue(),cbox_port_in.getValue());
+        int id_2 = Main.net.getIDByParams(cbox_country_out.getValue(),cbox_city_out.getValue(),cbox_port_out.getValue());
+        //Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) );
+
 
                 //TODO: ТУТ ЧЕРЕЗ АЙДИШНИК!!!
         return true;

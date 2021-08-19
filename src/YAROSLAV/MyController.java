@@ -690,8 +690,10 @@ date_in.setDayCellFactory(dayCellFactory_in);
     public boolean ok_in_add_way() throws Exception {
         date_1 = 0;
         date_2 = 0;
-        if ((date_in.getValue() == null)||(date_out.getValue() == null)||(min_in == null)||(hours_in == null)||(min_out == null)||(hours_out==null))
-        {return  false;
+        try{
+        if ((date_in.getValue() == null)||(date_out.getValue() == null))
+        {
+            return  false;
 
         }else{
             Timestamp date1 = new Timestamp(date_in.getValue().getYear() - 1900, date_in.getValue().getMonth().getValue() - 1, date_in.getValue().getDayOfMonth(), hours_in.getValue(), min_in.getValue(), 0, 0);
@@ -728,7 +730,7 @@ date_in.setDayCellFactory(dayCellFactory_in);
         if (date_1 >= date_2){
             return  false;
         }
-        try {
+
             if (Double.parseDouble(price.getText()) <= 0) {
                 return false;
             }

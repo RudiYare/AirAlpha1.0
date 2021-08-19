@@ -728,12 +728,17 @@ date_in.setDayCellFactory(dayCellFactory_in);
         if (date_1 >= date_2){
             return  false;
         }
-        if (Double.parseDouble(price.getText()) <= 0){
-            return  false;
+        try {
+            if (Double.parseDouble(price.getText()) <= 0) {
+                return false;
+            }
+        }
+        catch (Exception e){
+            return false;
         }
         int id_1=Main.net.getIDByParams(cbox_country_in.getValue(),cbox_city_in.getValue(),cbox_port_in.getValue());
         int id_2 = Main.net.getIDByParams(cbox_country_out.getValue(),cbox_city_out.getValue(),cbox_port_out.getValue());
-        //Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) );
+        Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) );
 
 
                 //TODO: ТУТ ЧЕРЕЗ АЙДИШНИК!!!

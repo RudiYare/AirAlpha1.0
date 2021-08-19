@@ -1,7 +1,16 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package ARTEM;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 class Tree {
     public ArrayList<Tree> children;
@@ -12,38 +21,38 @@ class Tree {
     public Tree(Tree parent, String title) {
         this.parent = parent;
         this.title = title;
-        this.children = new ArrayList<>();
+        this.children = new ArrayList();
     }
-
 }
 
-public class Network {
 
-    private Set<Tree> countries;
-    private Map<Integer, Tree> airports;
-    private Map<Integer, Timeline> timelines;
+public class Network {
+    private Set<Tree> countries = new HashSet();
+    private Map<Integer, Tree> airports = new HashMap();
+    private Map<Integer, ArrayList<Timeline>> timelines = new HashMap();
+    private Graph g;
 
     public Network() {
-        countries = new HashSet<>();
-        airports = new HashMap<>();
-        timelines = new HashMap<>();
     }
 
     public boolean addNewAirport(String title, String city, String country) {
+        Tree actual_country = new Tree((Tree)null, country);
+        Iterator var5 = this.countries.iterator();
 
-        Tree actual_country = new Tree(null, country);
-        for (Tree t : countries) {
+        while(var5.hasNext()) {
+            Tree t = (Tree)var5.next();
             if (t.title.equals(country)) {
                 actual_country = t;
             }
         }
 
-        countries.add(actual_country);
+        this.countries.add(actual_country);
+        Tree actual_city = new Tree(actual_country, city);
+        boolean isFound = false;
+        Iterator var7 = actual_country.children.iterator();
 
-        Tree actual_city = new Tree(actual_country, city); boolean isFound = false;
-
-
-        for (Tree t : actual_country.children) {
+        while(var7.hasNext()) {
+            Tree t = (Tree)var7.next();
             if (t.title.equals(city)) {
                 actual_city = t;
                 isFound = true;
@@ -56,7 +65,10 @@ public class Network {
 
         Tree actual_title = new Tree(actual_city, title);
         isFound = false;
-        for (Tree t : actual_city.children) {
+        Iterator var13 = actual_city.children.iterator();
+
+        while(var13.hasNext()) {
+            Tree t = (Tree)var13.next();
             if (t.title.equals(title)) {
                 actual_title = t;
                 isFound = true;
@@ -66,113 +78,224 @@ public class Network {
         if (!isFound) {
             int ID;
             do {
-                ID = (int)(Math.random() * 100000000);
-            } while (airports.containsKey(ID));
+                ID = (int)(Math.random() * 1.0E8D);
+            } while(this.airports.containsKey(ID));
+
             actual_title.ID = ID;
-            airports.put(ID, actual_title);
+            this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
         }
 
-        return (!isFound);
-
+        return !isFound;
     }
+
     public ArrayList<String> getAllCountries() {
-        ArrayList<String> titles = new ArrayList<>();
-        for (Tree k : countries) {
+        ArrayList<String> titles = new ArrayList();
+        Iterator var2 = this.countries.iterator();
+
+        while(var2.hasNext()) {
+            Tree k = (Tree)var2.next();
             titles.add(k.title);
         }
+
         return titles;
     }
+
     public ArrayList<String> getAllCities(String country) {
-        ArrayList<String> titles = new ArrayList<>();
-        Tree actual_country = new Tree(null, country); boolean isFound = false;
-        for (Tree k : countries) {
+        ArrayList<String> titles = new ArrayList();
+        Tree actual_country = new Tree((Tree)null, country);
+        boolean isFound = false;
+        Iterator var5 = this.countries.iterator();
+
+        Tree k;
+        while(var5.hasNext()) {
+            k = (Tree)var5.next();
             if (k.title.equals(country)) {
                 actual_country = k;
                 isFound = true;
             }
         }
+
         if (isFound) {
-            for (Tree k : actual_country.children) {
+            var5 = actual_country.children.iterator();
+
+            while(var5.hasNext()) {
+                k = (Tree)var5.next();
                 titles.add(k.title);
             }
         }
+
         return titles;
     }
-    public ArrayList<String> getAllTitles(String country, String city) {
 
-        ArrayList<String> titles = new ArrayList<>();
-        Tree actual_country = new Tree(null, country); boolean isFound = false;
-        for (Tree k : countries) {
+    public ArrayList<String> getAllTitles(String country, String city) {
+        ArrayList<String> titles = new ArrayList();
+        Tree actual_country = new Tree((Tree)null, country);
+        boolean isFound = false;
+        Iterator var6 = this.countries.iterator();
+
+        while(var6.hasNext()) {
+            Tree k = (Tree)var6.next();
             if (k.title.equals(country)) {
                 actual_country = k;
                 isFound = true;
             }
         }
+
         if (isFound) {
             isFound = false;
-            Tree actual_city = new Tree(null, country);
-            for (Tree k : actual_country.children) {
+            Tree actual_city = new Tree((Tree)null, country);
+            Iterator var10 = actual_country.children.iterator();
+
+            Tree k;
+            while(var10.hasNext()) {
+                k = (Tree)var10.next();
                 if (k.title.equals(city)) {
                     actual_city = k;
                     isFound = true;
                 }
             }
+
             if (isFound) {
-                for (Tree k : actual_city.children) {
+                var10 = actual_city.children.iterator();
+
+                while(var10.hasNext()) {
+                    k = (Tree)var10.next();
                     titles.add(k.title);
                 }
             }
         }
 
         return titles;
-
     }
-    public int getIDByParams(String country, String city, String title) {
+
+    public int getIDByParams(String title, String city, String country) {
         int ID = -1;
-        Tree actual_country = new Tree(null, country); boolean isFound = false;
-        for (Tree k : countries) {
-            if (k.title.equals(country)) {
-                actual_country = k;
-                isFound = true;
+        Tree actual_country = null;
+        Iterator var6 = this.countries.iterator();
+
+        Tree actual_title;
+        while(var6.hasNext()) {
+            actual_title = (Tree)var6.next();
+            if (actual_title.title.equals(country)) {
+                actual_country = actual_title;
             }
         }
-        if (isFound) {
-            isFound = false;
-            Tree actual_city = new Tree(null, country);
-            for (Tree k : actual_country.children) {
+
+        if (actual_country != null) {
+            Tree actual_city = null;
+            Iterator var11 = actual_country.children.iterator();
+
+            while(var11.hasNext()) {
+                Tree k = (Tree)var11.next();
                 if (k.title.equals(city)) {
                     actual_city = k;
-                    isFound = true;
                 }
             }
-            if (isFound) {
-                isFound = false;
-                Tree actual_title = new Tree(null, country);
-                for (Tree k : actual_city.children) {
+
+            if (actual_city != null) {
+                actual_title = null;
+                Iterator var12 = actual_city.children.iterator();
+
+                while(var12.hasNext()) {
+                    Tree k = (Tree)var12.next();
                     if (k.title.equals(title)) {
                         actual_title = k;
-                        isFound = true;
                     }
                 }
-                if (isFound) {
+
+                if (actual_title != null) {
                     ID = actual_title.ID;
                 }
             }
         }
+
         return ID;
     }
 
-    public boolean addNewTimeline(int starting_airport, int finishing_airport, int starting_time, int flight_time, int price) {
-        Timeline flight = new Timeline(starting_airport, finishing_airport, starting_time, flight_time, price);
-        if (timelines.containsValue(flight)) {
-            return false;
+    public Tree getElementByParams(String title, String city, String country) {
+        Tree actual_country = null;
+        Iterator var5 = this.countries.iterator();
+
+        Tree actual_title;
+        while(var5.hasNext()) {
+            actual_title = (Tree)var5.next();
+            if (actual_title.title.equals(country)) {
+                actual_country = actual_title;
+            }
+        }
+
+        if (actual_country != null) {
+            Tree actual_city = null;
+            Iterator var10 = actual_country.children.iterator();
+
+            while(var10.hasNext()) {
+                Tree k = (Tree)var10.next();
+                if (k.title.equals(city)) {
+                    actual_city = k;
+                }
+            }
+
+            if (actual_city != null) {
+                actual_title = null;
+                Iterator var11 = actual_city.children.iterator();
+
+                while(var11.hasNext()) {
+                    Tree k = (Tree)var11.next();
+                    if (k.title.equals(title)) {
+                        actual_title = k;
+                    }
+                }
+
+                return actual_title;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean removeAirport(String title, String city, String country) {
+        if (this.getIDByParams(title, city, country) != -1) {
+            Tree current_airport = this.getElementByParams(title, city, country);
+            Tree current_city = current_airport.parent;
+            Tree current_country = current_city.parent;
+            current_city.children.remove(current_airport);
+            if (current_city.children.size() == 0) {
+                current_country.children.remove(current_city);
+                if (current_country.children.size() == 0) {
+                    this.countries.remove(current_country);
+                }
+            }
+
+            return true;
         } else {
-            timelines.put(starting_airport, flight);
+            return false;
+        }
+    }
+
+    public boolean addNewTimeline(int starting_airport, int finishing_airport, int starting_time, int flight_time, double price) {
+        Timeline flight = new Timeline(starting_airport, finishing_airport, starting_time, flight_time, price);
+        if (this.timelines.containsKey(starting_airport)) {
+            if (((ArrayList)this.timelines.get(starting_airport)).contains(flight)) {
+                return false;
+            } else {
+                ((ArrayList)this.timelines.get(starting_airport)).add(flight);
+                return true;
+            }
+        } else {
+            ArrayList<Timeline> actual_timelines = new ArrayList();
+            actual_timelines.add(flight);
+            this.timelines.put(starting_airport, actual_timelines);
             return true;
         }
     }
 
+    public ArrayList<Timeline> getAllTimelinesInAirport(int starting_airport) {
+        return this.timelines.containsKey(starting_airport) ? (ArrayList)this.timelines.get(starting_airport) : new ArrayList();
+    }
 
-
+    public boolean checkIfReachable(int starting_airport, int finishing_airport) {
+        Graph g = new Graph(this.timelines);
+        return g.isReachable(starting_airport, finishing_airport);
+    }
 }

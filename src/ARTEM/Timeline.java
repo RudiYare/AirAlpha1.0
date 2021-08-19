@@ -8,11 +8,11 @@ package ARTEM;
 public class Timeline {
     private int starting_airport;
     private int finishing_airport;
-    private int starting_time;
-    private int flight_time;
+    private long starting_time;
+    private long flight_time;
     private double price;
 
-    public Timeline(int starting_airport, int finishing_airport, int starting_time, int flight_time, double price) {
+    public Timeline(int starting_airport, int finishing_airport, long starting_time, long flight_time, double price) {
         this.starting_airport = starting_airport;
         this.finishing_airport = finishing_airport;
         this.starting_time = starting_time;

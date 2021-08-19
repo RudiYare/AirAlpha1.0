@@ -273,7 +273,7 @@ public class Network {
         }
     }
 
-    public boolean addNewTimeline(int starting_airport, int finishing_airport, int starting_time, int flight_time, double price) {
+    public boolean addNewTimeline(int starting_airport, int finishing_airport, long starting_time, long flight_time, double price) {
         Timeline flight = new Timeline(starting_airport, finishing_airport, starting_time, flight_time, price);
         if (this.timelines.containsKey(starting_airport)) {
             if (((ArrayList)this.timelines.get(starting_airport)).contains(flight)) {

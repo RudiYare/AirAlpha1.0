@@ -66,7 +66,7 @@
                   <Font name="TechnicBold" size="18.0" />
                </font>
             </Text>
-            <Button onAction="#ok_in_add_port" id="rich-blue" alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="107.0" layoutY="270.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="116.0" style=": ;" stylesheets="@style.css" text="Сохранить" textAlignment="CENTER" textFill="WHITE">
+            <Button onAction="#screen_in_add_way" id="rich-blue" alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="107.0" layoutY="270.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="116.0" style=": ;" stylesheets="@style.css" text="Сохранить" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="TechnicBold" size="18.0" />
                </font>

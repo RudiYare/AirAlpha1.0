@@ -690,7 +690,7 @@ date_in.setDayCellFactory(dayCellFactory_in);
     public boolean ok_in_add_way() throws Exception {
         date_1 = 0;
         date_2 = 0;
-        if ((date_in == null)||(date_out == null)||(min_in == null)||(hours_in == null)||(min_out == null)||(hours_out==null))
+        if ((date_in.getValue() == null)||(date_out.getValue() == null)||(min_in == null)||(hours_in == null)||(min_out == null)||(hours_out==null))
         {return  false;
 
         }else{

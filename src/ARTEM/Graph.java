@@ -227,8 +227,8 @@ public class Graph {
         return new RouteInformation(transfers, time, prices, starting_airport, finishing_airport, starting_time);
     }
 
-    public ArrayList<RouteInformation> findSomeWays(int starting_airport, int finishing_airport, long starting_time) {
-        ArrayList<RouteInformation> direct_routes = new ArrayList<>();
+    public Set<RouteInformation> findSomeWays(int starting_airport, int finishing_airport, long starting_time) {
+        Set<RouteInformation> direct_routes = new HashSet<>();
         if (timelines.get(new Pair<>(starting_airport, finishing_airport)) != null) {
             for (Timeline x : timelines.get(new Pair<>(starting_airport, finishing_airport))) {
                 long starts_in = starting_time % SECONDS_IN_WEEK;

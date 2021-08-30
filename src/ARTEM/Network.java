@@ -5,6 +5,9 @@
 
 package ARTEM;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,9 +31,8 @@ class Tree {
 
 public class Network {
     private Set<Tree> countries = new HashSet();
-    private Map<Integer, Tree> airports = new HashMap();
+    private Map<Integer, Tree> airports = new HashMap(); // all children
     private Map<Integer, ArrayList<Timeline>> timelines = new HashMap();
-    private Graph g;
 
     public Network() {
     }
@@ -72,6 +74,45 @@ public class Network {
                 ID = (int)(Math.random() * 1.0E8D);
             } while(this.airports.containsKey(ID));
 
+            actual_title.ID = ID;
+            this.airports.put(ID, actual_title);
+            actual_city.children.add(actual_title);
+        }
+
+        return !isFound;
+    }
+    public boolean addNewAirport(String title, String city, String country, int ID) {
+        Tree actual_country = new Tree((Tree)null, country);
+        for (var t : this.countries) {
+            if (t.title.equals(country)) {
+                actual_country = t;
+            }
+        }
+
+        this.countries.add(actual_country);
+        Tree actual_city = new Tree(actual_country, city);
+        boolean isFound = false;
+        for (var t : actual_country.children) {
+            if (t.title.equals(city)) {
+                actual_city = t;
+                isFound = true;
+            }
+        }
+
+        if (!isFound) {
+            actual_country.children.add(actual_city);
+        }
+
+        Tree actual_title = new Tree(actual_city, title);
+        isFound = false;
+        for (var t : actual_city.children) {
+            if (t.title.equals(title)) {
+                actual_title = t;
+                isFound = true;
+            }
+        }
+
+        if (!isFound) {
             actual_title.ID = ID;
             this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
@@ -257,8 +298,8 @@ public class Network {
             return false;
         }
     }
-    public boolean addNewTimeline(int starting_airport, int finishing_airport, long starting_time, long flight_time, double price, int day_of_week) {
-        Timeline flight = new Timeline(starting_airport, finishing_airport, starting_time, flight_time, price, day_of_week);
+    public boolean addNewTimeline(int starting_airport, int finishing_airport, long starting_time, long flight_time, double price) {
+        Timeline flight = new Timeline(starting_airport, finishing_airport, starting_time, flight_time, price);
         if (this.timelines.containsKey(starting_airport)) {
             if (((ArrayList)this.timelines.get(starting_airport)).contains(flight)) {
                 return false;
@@ -279,16 +320,30 @@ public class Network {
     public ArrayList<ArrayList<String>> search(int starting_airport, int finishing_airport, int starting_time) {
         Graph g = new Graph(this.timelines);
         ArrayList<ArrayList<String>> answer = new ArrayList<>();
+        if (starting_airport == -1 || finishing_airport == -1) return answer;
+        Set<ArrayList<String>> unique_answer = new HashSet<>();
         RouteInformation fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, 0);
         RouteInformation cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, 0);
         RouteInformation optimal = g.findOptimalTimeline(starting_airport, finishing_airport, 0);
-        if (fastest != null) answer.add(fastest.init(this));
-        if (cheapest != null) answer.add(cheapest.init(this));
-        if (optimal != null) answer.add(optimal.init(this));
-        ArrayList<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
-        for (var x : routes) {
-            answer.add(x.init(this));
+        if (fastest == null) {
+            return answer;
         }
+
+        answer.add(fastest.init(this));
+        unique_answer.add(fastest.init(this));
+        answer.add(cheapest.init(this));
+        unique_answer.add(cheapest.init(this));
+        answer.add(optimal.init(this));
+        unique_answer.add(optimal.init(this));
+
+        Set<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
+
+        for (var x : routes) {
+            if (!x.init(this).equals(answer.get(0)) && !x.init(this).equals(answer.get(1)) && !x.init(this).equals(answer.get(2))) {
+                answer.add(x.init(this));
+            }
+        }
+
         return answer;
     }
     public String getAirportInformationAsString(int ID) {
@@ -300,6 +355,94 @@ public class Network {
             return answer;
         }
         return null;
+    }
+    public boolean saveData() throws IOException {
+        ArrayList<ArrayList<String>> airports = new ArrayList<>();
+        Set<Integer> all = new HashSet<>();
+        for (var country : getAllCountries()) {
+            for (var city : getAllCities(country)) {
+                for (var title : getAllTitles(country, city)) {
+                    ArrayList<String> airport_data = new ArrayList<>();
+                    airport_data.add(country);
+                    airport_data.add(city);
+                    airport_data.add(title);
+                    airport_data.add(Integer.toString(getIDByParams(title, city, country)));
+                    airports.add(airport_data);
+                    all.add(getIDByParams(title, city, country));
+                }
+            }
+        }
+        Set<Timeline> timelines = new HashSet<>();
+        for (var x : all) {
+            if (this.timelines.get(x) != null) {
+                for (var timeline : this.timelines.get(x)) {
+                    timelines.add(timeline);
+                }
+            }
+        }
+
+        PrintWriter pw = new PrintWriter(new FileOutputStream(new File("airports.txt")));
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("timelines.txt"))) {
+            oos.writeObject(this.timelines);
+        }
+        catch (Exception ex){
+            return false;
+        }
+
+        pw.println(airports.size());
+        for (var x : airports) {
+            for (var y : x) {
+                pw.println(y);
+            }
+        }
+        pw.close();
+
+
+        return true;
+    }
+    public boolean loadData() throws IOException {
+
+        boolean isCorrectData = true;
+        try (BufferedReader reader = new BufferedReader(new FileReader("airports.txt"))) {
+            String number_of_airports = reader.readLine();
+            if (number_of_airports == null) return false;
+            for (int airport = 0; airport < Integer.parseInt(number_of_airports); airport++) {
+                String country = reader.readLine();
+                String city = reader.readLine();
+                String title = reader.readLine();
+                String ID = reader.readLine();
+                if (ID == null) isCorrectData = false;
+                this.addNewAirport(title, city, country, Integer.parseInt(ID));
+            }
+        } catch (Exception ex) {
+            isCorrectData = false;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("timelines.txt"))) {
+            this.timelines = (Map<Integer, ArrayList<Timeline>>) ois.readObject();
+        }
+        catch (Exception ex){
+            isCorrectData = false;
+        }
+
+        if (isCorrectData) {
+            return true;
+        } else {
+            this.timelines = new HashMap<>();
+            countries = new HashSet();
+            airports = new HashMap();
+            return false;
+        }
+
+    }
+    public void loadRandomData() throws IOException {
+        BufferedReader input = new BufferedReader(new FileReader(new File("dataset")));
+        String line;
+        while ((line = input.readLine()) != null) {
+            String[] airport = line.split(",");
+            boolean k = this.addNewAirport(airport[1], airport[2], airport[3]);
+        }
+        System.out.println(countries.size());
     }
 
 }

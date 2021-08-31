@@ -45,7 +45,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="60.0" layoutX="700.0" layoutY="82.0" mnemonicParsing="false" prefHeight="480.0" prefWidth="404.0" stylesheets="@style.css" text="Поиск" textFill="#110000" onAction="#in_search_way">
+            <Button id="rich-blue" contentDisplay="TOP" graphicTextGap="60.0" layoutX="700.0" layoutY="82.0" mnemonicParsing="false" prefHeight="480.0" prefWidth="404.0" stylesheets="@style.css" text="Поиск" textFill="#110000" onAction="#in_result">
                <graphic>
                   <ImageView fitHeight="263.0" fitWidth="263.0">
                      <image>

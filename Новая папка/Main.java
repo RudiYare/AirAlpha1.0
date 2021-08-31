@@ -52,7 +52,6 @@ public class Main extends Application {
     public static Network net ;
     public static void main(String[] args)  {
         net = new Network();
-
         launch(args);
 
 
@@ -65,24 +64,6 @@ public class Main extends Application {
 
         stage = new Stage();
         stage= primaryStage;
-        try {
-            net.loadData();
-        }
-       catch(Exception e){
-           Stage  stage2 = new Stage();
-           Group group = new Group();
-           Scene scene = new Scene(group, 292, 122);
-           Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
-           BorderPane root = new BorderPane();
-           stage2.centerOnScreen();
-           root.setCenter(content);
-           stage2.initModality(Modality.WINDOW_MODAL);
-           stage2.initOwner(stage);
-           stage2.setResizable(false);
-           group.getChildren().add(root);
-           stage2.setScene(scene);
-           stage2.show();
-        }
         primaryStage.centerOnScreen();
         Group group = new Group();
         Scene scene= new Scene(group,1280, 800);

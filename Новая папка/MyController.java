@@ -587,12 +587,12 @@ port_box.setOnAction(actionEvent -> {
         Group group = new Group();
         Scene scene = new Scene(group, 834, 613);
 
-        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\search_way.fxml").toURI().toURL()));
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\add_way.fxml").toURI().toURL()));
         BorderPane root = new BorderPane();
         stage1.centerOnScreen();
         root.setCenter(content);
         stage1.initModality(Modality.WINDOW_MODAL);
-        stage1.initOwner(Main.stage);
+        stage1.initOwner(stage);
         stage1.setResizable(false);
         group.getChildren().add(root);
 
@@ -738,7 +738,13 @@ port_box.setOnAction(actionEvent -> {
         hours_in.setValueFactory(value_hours_in);
         hours_in.setEditable(true);
 
-
+        hours_out = new Spinner<>();
+        hours_out.getEditor().setPrefWidth(86);
+        hours_out.setLayoutX(388);
+        hours_out.setLayoutY(385);
+        hours_out.setEditable(true);
+        SpinnerValueFactory<Integer> value_hours_out = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+        hours_out.setValueFactory(value_hours_out);
 
         min_in = new Spinner<>();
         min_in.setEditable(true);
@@ -748,7 +754,13 @@ port_box.setOnAction(actionEvent -> {
         min_in.getEditor().setPrefWidth(86);
         min_in.setValueFactory(value_min_in);
 
-
+        min_out = new Spinner<>();
+        min_out.setEditable(true);
+        min_out.setLayoutX(688);
+        min_out.setLayoutY(385);
+        SpinnerValueFactory<Integer> value_min_out= new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        min_out.getEditor().setPrefWidth(86);
+        min_out.setValueFactory(value_min_out);
 
 
         date_in = new DatePicker();
@@ -756,8 +768,10 @@ port_box.setOnAction(actionEvent -> {
         date_in.setLayoutY(288);
         date_in.setValue(LocalDate.now());
 
-
-
+        date_out = new DatePicker();
+        date_in.addEventHandler(MouseEvent.MOUSE_CLICKED, event->{
+            date_out.setValue(null);
+        });
         final Callback<DatePicker, DateCell> dayCellFactory_in =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -780,7 +794,8 @@ port_box.setOnAction(actionEvent -> {
 
         date_in.setDayCellFactory(dayCellFactory_in);
 
-
+        date_out.setLayoutX(85);
+        date_out.setLayoutY(385);
 
         final Callback<DatePicker, DateCell> dayCellFactory_out =
                 new Callback<DatePicker, DateCell>() {
@@ -803,12 +818,12 @@ port_box.setOnAction(actionEvent -> {
                         };
                     }
                 };
-
+        date_out.setDayCellFactory(dayCellFactory_out);
 
 
         price = new PriceTextField();
-        price.setLayoutX(135);
-        price.setLayoutY(363);
+        price.setLayoutX(142);
+        price.setLayoutY(452);
         group.getChildren().add(price);
         group.getChildren().add(cbox_country_in);
         group.getChildren().add(cbox_city_in);
@@ -817,11 +832,11 @@ port_box.setOnAction(actionEvent -> {
         group.getChildren().add(cbox_city_out);
         group.getChildren().add(cbox_port_out);
         group.getChildren().add(date_in);
-
+        group.getChildren().add(date_out);
         group.getChildren().add(hours_in);
-
+        group.getChildren().add(hours_out);
         group.getChildren().add(min_in);
-
+        group.getChildren().add(min_out);
         stage1.setScene(scene);
 
 
@@ -830,8 +845,6 @@ port_box.setOnAction(actionEvent -> {
 
         stage1.show();
     }
-
-
     public void in_del_way() throws Exception {
 
     }
@@ -876,48 +889,48 @@ int day_1= 0, day_2 = 0;
         try{
             switch (day_in.getValue()){
                 case "Понедельник":
-                    day_1 = 0;
-                    break;
-                case "Вторник":
                     day_1 = 1;
                     break;
-                case "Среда":
+                case "Вторник":
                     day_1 = 2;
                     break;
-                case "Четверг":
+                case "Среда":
                     day_1 = 3;
                     break;
+                case "Четверг":
+                    day_1 = 4;
+                    break;
                 case "Пятница" :
-                    day_1= 4;
+                    day_1= 5;
                     break;
                 case "Суббота":
-                    day_1 = 5;
+                    day_1 = 6;
                     break;
                 case "Воскресенье":
-                    day_1 = 6;
+                    day_1 = 7;
                     break;
             }
             switch (day_out.getValue()){
                 case "Понедельник":
-                    day_2 = 0;
-                    break;
-                case "Вторник":
                     day_2 = 1;
                     break;
-                case "Среда":
+                case "Вторник":
                     day_2 = 2;
                     break;
-                case "Четверг":
+                case "Среда":
                     day_2 = 3;
                     break;
+                case "Четверг":
+                    day_2 = 4;
+                    break;
                 case "Пятница" :
-                    day_2= 4;
+                    day_2= 5;
                     break;
                 case "Суббота":
-                    day_2 = 5;
+                    day_2 = 6;
                     break;
                 case "Воскресенье":
-                    day_2 = 6;
+                    day_2 = 7;
                     break;
             }
 System.out.println(day_1);
@@ -925,6 +938,20 @@ System.out.println(day_1);
             return false;
 
         }
+        if (day_1 > day_2){
+            return false;
+        }else
+            if (day_1 == day_2){
+                if (hours_in.getValue() ==hours_out.getValue()){
+                    if (min_in.getValue() >= min_out.getValue()){
+                        return false;
+                    }
+
+                }else
+                    if (hours_in.getValue() >hours_out.getValue()){
+                        return  false;
+                    }
+            }
 
         if ((cbox_country_in == null)){
             return  false;
@@ -949,12 +976,11 @@ System.out.println(day_1);
         if ((cbox_port_out == null)||(!Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue()).contains(cbox_port_out.getValue()))){
             return  false;
         }
-
+        if (date_1 >= date_2){
+            return  false;
+        }
 
             if (Double.parseDouble(price.getText()) <= 0) {
-                return false;
-            }
-            if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))&&(cbox_port_in.getValue().equals(cbox_port_out.getValue()))){
                 return false;
             }
         }
@@ -962,292 +988,147 @@ System.out.println(day_1);
         catch (Exception e){
             return false;
         }
-        long time_1 = 0, time_2 = 0;
-        time_1 = (day_1*60*24+hours_in.getValue()*60+min_in.getValue())*60*1000;
-        time_2 = (day_2*60*24+hours_out.getValue()*60+min_in.getValue())*60*1000;
-
-
         int id_1=Main.net.getIDByParams(cbox_country_in.getValue(),cbox_city_in.getValue(),cbox_port_in.getValue());
         int id_2 = Main.net.getIDByParams(cbox_country_out.getValue(),cbox_city_out.getValue(),cbox_port_out.getValue());
-        if(!Main.net.addNewTimeline(id_1,id_2,time_1,time_2-time_1,Double.parseDouble(price.getText()))){
+        if (!Main.net.addNewTimeline(id_1,id_2,date_1,date_2-date_1, Double.parseDouble(price.getText()) )){
             return false;
         }
 
 
+                //TODO: Переделать функцию!!!
         return true;
     }
-    public void ok_in_search_way(){
+    public void in_result() throws Exception{
+         stage1 = new Stage();
+        Group group = new Group();
+        Scene scene = new Scene(group, 834, 600);
 
-        boolean is_ok = true;
-        try{
-
-            if ((date_in.getValue() == null)){
-                throw new Exception();
-
-            }
-
-            if ((cbox_country_in == null)){
-                throw new Exception();
-            }
-            if (!Main.net.getAllCountries().contains(cbox_country_in.getValue())){
-                throw new Exception();
-            }
-            if ((cbox_city_in==null)||(!Main.net.getAllCities(cbox_country_in.getValue()).contains(cbox_city_in.getValue()))){
-                throw new Exception();
-            }
-            if ((cbox_port_in == null)||(!Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){
-                throw new Exception();
-            }
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\del_way.fxml").toURI().toURL()));
+        BorderPane root = new BorderPane();
+        stage1.centerOnScreen();
+        root.setCenter(content);
+        stage1.initModality(Modality.WINDOW_MODAL);
+        stage1.initOwner(Main.stage);
+        stage1.setResizable(false);
+        group.getChildren().add(root);
+        stage1.setScene(scene);
 
 
-            if ((cbox_country_out == null)||(!Main.net.getAllCountries().contains(cbox_country_out.getValue()))){
-                throw new Exception();
-            }
-            if ((cbox_city_out==null)||(!Main.net.getAllCities(cbox_country_out.getValue()).contains(cbox_city_out.getValue()))){
-                throw new Exception();
-            }
-            if ((cbox_port_out == null)||(!Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue()).contains(cbox_port_out.getValue()))){
-                throw new Exception();
-            }
 
 
-            if (Double.parseDouble(price.getText()) <= 0) {
-                throw new Exception();
-            }
-            if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))&&(cbox_port_in.getValue().equals(cbox_port_out.getValue()))){
-                throw new Exception();
-            }
-            is_ok = true;
+
+
+
+        Text text_optimal=new Text("Самый оптимальный маршрут:\n");
+        text_optimal.setStyle("-fx-font-size:25;" +
+                " ");
+
+text_optimal.setFill(Color.RED);
+text_optimal.setX(100);
+text_optimal.setY(40);
+
+        AnchorPane pane = new AnchorPane();
+        pane.getChildren().add(text_optimal);
+
+
+
+
+            Button but_optimal = new Button();
+            but_optimal.setOnMouseEntered(a ->
+            {
+                but_optimal.setStyle("-fx-border-radius: 10;\n" +
+                        "-fx-background-radius: 10;\n" +
+                        "-fx-background-color: white;\n" +
+                        "-fx-border-color: red;\n" +
+                        "-fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
+            });
+            but_optimal.setOnMouseExited(a -> {
+                but_optimal.setStyle("-fx-border-radius: 10;\n" +
+                        "-fx-background-radius: 10;\n" +
+                        "-fx-background-color: white;\n" +
+                        "-fx-border-color: red;"
+                );
+            });
+
+            but_optimal.setStyle("-fx-border-radius: 10;\n" +
+                    "-fx-background-radius: 10;\n" +
+                    "-fx-background-color: white;\n" +
+                    "-fx-border-color: red;"
+            );
+            //but_optimal.setPrefWidth(590);
+            //but_optimal.setPrefHeight(200);
+            //but_optimal.setLayoutY(75);
+            //but_optimal.setLayoutX(100);
+Info_button button = new Info_button();
+button.set_button_XY(100,75);
+button.set_info_in("Дон");
+button.set_action();
+button.set_style(" -fx-border-color: red;"," -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
+button.set_text();
+pane.getChildren().add(button.get_button());
+text_optimal = new Text("Самый быстрый маршрут:\n");
+        text_optimal.setStyle("-fx-font-size:25;" +
+                " ");
+
+        text_optimal.setX(100);
+        text_optimal.setY(325
+        );
+        text_optimal.setFill(Color.BLUE);
+        pane.getChildren().add(text_optimal);
+        button = new Info_button();
+        button.set_button_XY(100,360);
+        button.set_style(" -fx-border-color: blue;"," -fx-border-color: blue; -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);");
+        button.set_text();
+        pane.getChildren().add(button.get_button());
+        text_optimal = new Text("Самый дешевый маршрут: ");
+        text_optimal.setStyle("-fx-font-size:25;" +
+                " ");
+
+        text_optimal.setX(100);
+        text_optimal.setY(610
+        );
+        text_optimal.setFill(Color.web("#32CD32"));
+        pane.getChildren().add(text_optimal);
+        button = new Info_button();
+        button.set_button_XY(100,645);
+        button.set_style(" -fx-border-color: #32CD32;"," -fx-border-color: #32CD32; -fx-effect: dropshadow( three-pass-box, #00FF00  , 10.0, 0.0,0.0,0.0);");
+        button.set_text();
+        pane.getChildren().add(button.get_button());
+        text_optimal = new Text("Другие: ");
+        text_optimal.setStyle("-fx-font-size:25;" +
+                " ");
+
+        text_optimal.setX(100);
+        text_optimal.setY(895
+        );
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(5));
+        grid.setVgap(10);
+        grid.setLayoutX(100);
+        grid.setLayoutY(930);
+        for (int i = 0; i < 3; i++){
+            button = new Info_button();
+            button.set_style("-fx-border-color: black;","-fx-border-color: black;-fx-effect: dropshadow( three-pass-box, black , 10.0, 0.0,0.0,0.0);");
+            button.set_text();
+            grid.add(button.get_button(),0,i);
+
+
         }
+        pane.getChildren().add(text_optimal);
+        pane.getChildren().add(grid);
+        javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
+        scrollPane.setPrefWidth(834);
+        scrollPane.setStyle("-fx-background:white;");
+        scrollPane.setPrefHeight(540);
+        scrollPane.setLayoutX(0);
+        scrollPane.setLayoutY(60);
+        scrollPane.fitToWidthProperty();
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        catch (Exception e){
-            is_ok = false;
-        }
-        if (is_ok){
-            int id_1 = 0, id_2 = 0;
-            id_1 = Main.net.getIDByParams(cbox_port_in.getValue(),cbox_country_in.getValue(),cbox_country_in.getValue());
-            id_2 = Main.net.getIDByParams(cbox_port_out.getValue(),cbox_country_out.getValue(),cbox_country_out.getValue());
-            Timestamp temp_time = new Timestamp(date_in.getValue().getYear()-1900, date_in.getValue().getMonth().getValue()-1,date_in.getValue().getDayOfMonth(), hours_in.getValue(), min_in.getValue(),0,0);
-            long time = temp_time.getTime();
-            in_result(id_1,id_2,time);
-        }else{
-            try {
-                Stage stage2;
-                stage2 = new Stage();
-                Group group = new Group();
-                Scene scene = new Scene(group, 292, 122);
-                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
-                BorderPane root = new BorderPane();
-                stage2.centerOnScreen();
-                root.setCenter(content);
-                stage2.initModality(Modality.WINDOW_MODAL);
-                stage2.initOwner(stage1);
-                stage2.setResizable(false);
-                group.getChildren().add(root);
-                stage2.setScene(scene);
-                stage2.show();
-            }
-            catch (Exception e){
-
-            }
-        }
+        group.getChildren().add(scrollPane);
+        stage1.show();
     }
-    public void in_result(int id_1,int id_2, long time) {
-        try {
-            ArrayList<ArrayList<String>> info = Main.net.search(id_1,id_2,time);
-            ArrayList<String> temp_info ;
-
-            stage1 = new Stage();
-            Group group = new Group();
-            Scene scene = new Scene(group, 834, 600);
-
-            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\del_way.fxml").toURI().toURL()));
-            BorderPane root = new BorderPane();
-            stage1.centerOnScreen();
-            root.setCenter(content);
-            stage1.initModality(Modality.WINDOW_MODAL);
-            stage1.initOwner(Main.stage);
-            stage1.setResizable(false);
-            group.getChildren().add(root);
-            stage1.setScene(scene);
-            if ((info!=null)&&(info.size()!=0)) {
-
-                Text text_optimal = new Text("Самый оптимальный маршрут:\n");
-                text_optimal.setStyle("-fx-font-size:25;" +
-                        " ");
-
-                text_optimal.setFill(Color.RED);
-                text_optimal.setX(100);
-                text_optimal.setY(40);
-
-                AnchorPane pane = new AnchorPane();
-                pane.getChildren().add(text_optimal);
-
-
-                Info_button button = new Info_button();
-                button.set_button_XY(100, 75);
-                temp_info = new ArrayList();
-                temp_info = info.get(2);
-
-                button.set_info_out(temp_info.get(0));
-                button.set_info_in(temp_info.get(1));
-                button.set_time_fly(temp_info.get(2));
-                button.set_price(temp_info.get(3));
-                button.set_time_in(temp_info.get(4));
-                button.set_time_out(temp_info.get(5));
-                button.set_transfer(temp_info.get(6));
-                button.set_action(temp_info);
-                button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
-                button.set_text();
-                pane.getChildren().add(button.get_button());
-                text_optimal = new Text("Самый быстрый маршрут:\n");
-                text_optimal.setStyle("-fx-font-size:25;" +
-                        " ");
-
-                text_optimal.setX(100);
-                text_optimal.setY(button.get_height());
-
-
-                text_optimal.setFill(Color.BLUE);
-                pane.getChildren().add(text_optimal);
-                button = new Info_button();
-                button.set_button_XY(100, text_optimal.getY() + 25);
-
-                temp_info = new ArrayList();
-                temp_info = info.get(0);
-
-                button.set_info_out(temp_info.get(0));
-                button.set_info_in(temp_info.get(1));
-                button.set_time_fly(temp_info.get(2));
-                button.set_price(temp_info.get(3));
-                button.set_time_in(temp_info.get(4));
-                button.set_time_out(temp_info.get(5));
-                button.set_transfer(temp_info.get(6));
-                button.set_action(temp_info);
-
-                button.set_text();
-
-                button.set_style(" -fx-border-color: blue;", " -fx-border-color: blue; -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);");
-
-                pane.getChildren().add(button.get_button());
-                text_optimal = new Text("Самый дешевый маршрут: ");
-                text_optimal.setStyle("-fx-font-size:25;" +
-                        " ");
-
-                text_optimal.setX(100);
-                text_optimal.setY(button.get_height());
-                text_optimal.setFill(Color.web("#32CD32"));
-                pane.getChildren().add(text_optimal);
-                button = new Info_button();
-                button.set_button_XY(100, text_optimal.getY() + 25);
-                temp_info = new ArrayList();
-
-                temp_info = info.get(1);
-
-                button.set_info_out(temp_info.get(0));
-                button.set_info_in(temp_info.get(1));
-                button.set_time_fly(temp_info.get(2));
-                button.set_price(temp_info.get(3));
-                button.set_time_in(temp_info.get(4));
-                button.set_time_out(temp_info.get(5));
-                button.set_transfer(temp_info.get(6));
-                button.set_action(temp_info);
-
-
-                button.set_text();
-
-                button.set_style(" -fx-border-color: #32CD32;", " -fx-border-color: #32CD32; -fx-effect: dropshadow( three-pass-box, #00FF00  , 10.0, 0.0,0.0,0.0);");
-
-                pane.getChildren().add(button.get_button());
-                if (info.size() > 3) {
-                    text_optimal = new Text("Другие: ");
-                    text_optimal.setStyle("-fx-font-size:25;" +
-                            " ");
-
-                    text_optimal.setX(100);
-                    text_optimal.setY(button.get_height());
-                    GridPane grid = new GridPane();
-                    grid.setPadding(new Insets(5));
-                    grid.setVgap(10);
-                    grid.setLayoutX(100);
-                    grid.setLayoutY(text_optimal.getY() + 25);
-                    for (int i = 0; i < info.size() - 3; i++) {
-                        button = new Info_button();
-                        button.set_style("-fx-border-color: black;", "-fx-border-color: black;-fx-effect: dropshadow( three-pass-box, black , 10.0, 0.0,0.0,0.0);");
-                        temp_info = new ArrayList();
-
-                        temp_info = info.get(i + 3);
-
-                        button.set_info_out(temp_info.get(0));
-                        button.set_info_in(temp_info.get(1));
-                        button.set_time_fly(temp_info.get(2));
-                        button.set_price(temp_info.get(3));
-                        button.set_time_in(temp_info.get(4));
-                        button.set_time_out(temp_info.get(5));
-                        button.set_transfer(temp_info.get(6));
-                        button.set_action(temp_info);
-
-
-                        button.set_text();
-                        grid.add(button.get_button(), 0, i);
-
-
-                    }
-                    pane.getChildren().add(text_optimal);
-                    pane.getChildren().add(grid);
-                    javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
-                    scrollPane.setPrefWidth(834);
-                    scrollPane.setStyle("-fx-background:white;");
-                    scrollPane.setPrefHeight(540);
-                    scrollPane.setLayoutX(0);
-                    scrollPane.setLayoutY(60);
-                    scrollPane.fitToWidthProperty();
-                    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-                    group.getChildren().add(scrollPane);
-                }
-            }else{
-                Text text_optimal = new Text("Авиарейсы отсутствуют.\n");
-                text_optimal.setStyle("-fx-font-size:40;" +
-                        " ");
-
-
-                text_optimal.setX(100);
-                text_optimal.setY(300);
-                group.getChildren().add(text_optimal);
-            }
-            stage1.show();
-        }
-        catch (Exception e){
-System.out.println(e);
-        }
-    }
-    public void save() throws Exception{
-        try {
-            Main.net.saveData();
-        }
-       catch (Exception e){
-           Stage  stage2 = new Stage();
-           Group group = new Group();
-           Scene scene = new Scene(group, 292, 122);
-           Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
-           BorderPane root = new BorderPane();
-           stage2.centerOnScreen();
-           root.setCenter(content);
-           stage2.initModality(Modality.WINDOW_MODAL);
-           stage2.initOwner(stage1);
-           stage2.setResizable(false);
-           group.getChildren().add(root);
-           stage2.setScene(scene);
-           stage2.show();
-       }
-    }
-    public void del_all(){
-        Main.net.removeAllData();
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

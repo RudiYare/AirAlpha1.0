@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="122.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YAROSLAV.MyController">
+   <children>
+      <AnchorPane layoutX="-6.0" layoutY="-12.0" prefHeight="146.0" prefWidth="300.0">
+         <children>
+            <PasswordField fx:id="text_password" layoutX="32.0" layoutY="68.0" prefHeight="25.0" prefWidth="163.0">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></PasswordField>
+            <Button layoutX="214.0" layoutY="67.0" mnemonicParsing="false" onAction="#check_password" style="-fx-background-color: #4569d6; -fx-border-color: black; -fx-background-radius: 6; -fx-border-radius: 6;" text="ОК" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Text layoutX="32.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите пароль:" wrappingWidth="149.0">
+               <font>
+                  <Font name="Bank Gothic Light BT" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

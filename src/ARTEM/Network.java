@@ -320,7 +320,7 @@ public class Network {
     public ArrayList<Timeline> getAllTimelinesInAirport(int starting_airport) {
         return this.timelines.containsKey(starting_airport) ? (ArrayList)this.timelines.get(starting_airport) : new ArrayList();
     }
-    public ArrayList<ArrayList<String>> search(int starting_airport, int finishing_airport, int starting_time) {
+    public ArrayList<ArrayList<String>> search(int starting_airport, int finishing_airport, long starting_time) {
         Graph g = new Graph(this.timelines);
         ArrayList<ArrayList<String>> answer = new ArrayList<>();
         if (starting_airport == -1 || finishing_airport == -1) return answer;

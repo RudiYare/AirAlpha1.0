@@ -1,0 +1,57 @@
+#rich-blue {
+    
+    
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 30;
+   
+
+    -fx-transition:0.5s;
+-fx-background-color: 
+#4569d6;
+  ;}
+    
+
+}
+#rich-blue:hover{
+-fx-effect: dropshadow( three-pass-box, black , 10.0, 0.0,0.0,0.0);
+
+}
+
+#way{
+-fx-border-radius: 10;
+-fx-background-radius: 10;
+
+-fx-background-color: white;
+-fx-border-color: black;}
+
+#way_optimal{
+-fx-border-radius: 10;
+-fx-background-radius: 10;
+-fx-background-color: white;
+-fx-border-color: red;
+-fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);
+
+}
+
+#way_money{
+-fx-border-radius: 10;
+-fx-background-radius: 10;
+-fx-background-color: white;
+-fx-border-color: #32CD32;
+-fx-effect: dropshadow( three-pass-box, #00FF00 , 10.0, 0.0,0.0,0.0);
+}
+
+#way_speed{
+-fx-border-radius: 10;
+-fx-background-radius: 10;
+-fx-background-color: white;
+-fx-border-color: blue;
+-fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);
+}
+
+
+#combo{
+
+-fx-cell-size: 35;
+}
+

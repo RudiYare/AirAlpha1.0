@@ -66,6 +66,7 @@ public class Main extends Application {
         stage = new Stage();
         stage= primaryStage;
         try {
+            net.loadRandomData();
             net.loadData();
         }
        catch(Exception e){

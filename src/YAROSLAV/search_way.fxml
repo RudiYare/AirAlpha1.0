@@ -90,10 +90,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text layoutX="14.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Стоимость:" wrappingWidth="150.0">
-         <font>
-            <Font name="TechnicBold" size="22.0" />
-         </font>
-      </Text>
    </children>
 </Pane>

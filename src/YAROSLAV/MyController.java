@@ -247,9 +247,14 @@ public class MyController implements Initializable {
         cbox_country_in.setLayoutX(89);
         cbox_country_in.setLayoutY(102);
         cbox_country_in.setVisibleRowCount(3);
+        cbox_country_in.setPrefWidth(173);
+cbox_country_in.getStylesheets().add(
+        (new File("src/YAROSLAV/size.css").toURI().toString()) );
+
 cbox_country_in.setEditable(true);
 
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
+
        // cbox_city_in = new ComboBox<>(); //array from Artemius
         cbox_city_in.setLayoutX(352);
         cbox_city_in.setLayoutY(102);
@@ -261,9 +266,13 @@ cbox_country_in.setEditable(true);
         cbox_port_in.setVisibleRowCount(3);
         cbox_port_in.setEditable(true);
         cbox_port_in.setPrefWidth(173);
-
+        cbox_port_in.setPrefWidth(173);
+        cbox_port_in.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_city_in.getEditor().setPrefColumnCount(3);
-
+        cbox_city_in.setPrefWidth(173);
+        cbox_city_in.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_country_in.setOnAction(actionEvent -> {
             if (arr_country.contains(cbox_country_in.getValue())){
                 arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_in.getValue()));
@@ -313,12 +322,17 @@ cbox_country_in.setEditable(true);
         cbox_country_out.setVisibleRowCount(3);
         cbox_country_out.setPrefWidth(173);
         cbox_country_out.setEditable(true);
+        cbox_country_out.setPrefWidth(173);
+        cbox_country_out.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_city_out.setLayoutX(352);
         cbox_city_out.setLayoutY(186);
         cbox_city_out.setVisibleRowCount(3);
         cbox_city_out.setPrefWidth(173);
         cbox_city_out.setEditable(true);
-
+        cbox_city_out.setPrefWidth(173);
+        cbox_city_out.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_country_out.setOnAction(actionEvent -> {
             if (arr_country.contains(cbox_country_out.getValue())){
                 arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_out.getValue()));
@@ -354,6 +368,9 @@ cbox_country_in.setEditable(true);
             }
 
             cbox_port_out.setVisibleRowCount(3);
+            cbox_port_out.setPrefWidth(173);
+            cbox_port_out.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
             cbox_city_out.hide();
             cbox_city_out.setVisibleRowCount(3);
 
@@ -470,13 +487,19 @@ cbox_port_out.setOnAction(actionEvent -> {
         country_box.setVisibleRowCount(3);
         country_box.setItems(arr_country);
         country_box.setEditable(true);
+        country_box.setVisibleRowCount(3);
+        country_box.setPrefWidth(173);
+        country_box.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_country = new AutoComboBox.AutoCompleteComboBoxListener<>(country_box);
 
          city_box = new ComboBox<>(arr_city); // !!!!!!!!!!!!!!!!
         city_box.setLayoutX(130);
         city_box.setLayoutY(150);
         city_box.setVisibleRowCount(3);
-
+        city_box.setPrefWidth(173);
+        city_box.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         city_box.setEditable(true);
 
 
@@ -485,7 +508,9 @@ cbox_port_out.setOnAction(actionEvent -> {
         port_box.setLayoutY(213);
         port_box.setVisibleRowCount(3);
         port_box.setEditable(true);
-
+        port_box.setPrefWidth(173);
+        port_box.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
 
         country_box.setOnAction(actionEvent -> {
             if (arr_country.contains(country_box.getValue())){
@@ -602,20 +627,28 @@ port_box.setOnAction(actionEvent -> {
         cbox_country_in.setLayoutY(102);
         cbox_country_in.setVisibleRowCount(3);
         cbox_country_in.setEditable(true);
-
+        cbox_country_in.setPrefWidth(173);
+        cbox_country_in.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
         // cbox_city_in = new ComboBox<>(); //array from Artemius
         cbox_city_in.setLayoutX(352);
         cbox_city_in.setLayoutY(102);
         cbox_city_in.setVisibleRowCount(3);
+
         cbox_city_in.setEditable(true);
         cbox_city_in.setPrefWidth(173);
+        cbox_city_in.setPrefWidth(173);
+        cbox_city_in.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_port_in.setLayoutX(649);
         cbox_port_in.setLayoutY(102);
         cbox_port_in.setVisibleRowCount(3);
         cbox_port_in.setEditable(true);
         cbox_port_in.setPrefWidth(173);
-
+        cbox_port_in.setPrefWidth(173);
+        cbox_port_in.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_city_in.getEditor().setPrefColumnCount(3);
 
         cbox_country_in.setOnAction(actionEvent -> {
@@ -663,6 +696,9 @@ port_box.setOnAction(actionEvent -> {
         cbox_country_out = new ComboBox<>(arr_country); //array from Artemius
         cbox_country_out.setLayoutY(186);
         cbox_country_out.setLayoutX(89);
+        cbox_country_out.setPrefWidth(173);
+        cbox_country_out.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_country_out.setVisibleRowCount(3);
         cbox_country_out.setVisibleRowCount(3);
         cbox_country_out.setPrefWidth(173);
@@ -672,7 +708,9 @@ port_box.setOnAction(actionEvent -> {
         cbox_city_out.setVisibleRowCount(3);
         cbox_city_out.setPrefWidth(173);
         cbox_city_out.setEditable(true);
-
+        cbox_city_out.setPrefWidth(173);
+        cbox_city_out.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_country_out.setOnAction(actionEvent -> {
             if (arr_country.contains(cbox_country_out.getValue())){
                 arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_out.getValue()));
@@ -717,6 +755,9 @@ port_box.setOnAction(actionEvent -> {
 
         cbox_port_out.setLayoutY(186);
         cbox_port_out.setLayoutX(649);
+        cbox_port_out.setPrefWidth(173);
+        cbox_port_out.getStylesheets().add(
+                (new File("src/YAROSLAV/size.css").toURI().toString()) );
         cbox_port_out.setVisibleRowCount(3);
 
 
@@ -806,10 +847,8 @@ port_box.setOnAction(actionEvent -> {
 
 
 
-        price = new PriceTextField();
-        price.setLayoutX(135);
-        price.setLayoutY(363);
-        group.getChildren().add(price);
+
+
         group.getChildren().add(cbox_country_in);
         group.getChildren().add(cbox_city_in);
         group.getChildren().add(cbox_port_in);
@@ -1011,9 +1050,6 @@ System.out.println(day_1);
             }
 
 
-            if (Double.parseDouble(price.getText()) <= 0) {
-                throw new Exception();
-            }
             if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))&&(cbox_port_in.getValue().equals(cbox_port_out.getValue()))){
                 throw new Exception();
             }

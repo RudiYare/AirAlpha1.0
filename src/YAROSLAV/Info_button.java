@@ -80,7 +80,7 @@ return  y;
         return button;
     }
     public void set_action(ArrayList<String> info) {
-        if (info.size() > 7) {
+        if (info.size() > 12) {
             button.setOnAction(actionEvent -> {
 
                 try {

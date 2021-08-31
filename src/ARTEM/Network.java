@@ -30,11 +30,14 @@ class Tree {
 
 
 public class Network {
-    private Set<Tree> countries = new HashSet();
-    private Map<Integer, Tree> airports = new HashMap(); // all children
-    private Map<Integer, ArrayList<Timeline>> timelines = new HashMap();
+    private Set<Tree> countries;
+    private Map<Integer, Tree> airports;
+    private Map<Integer, ArrayList<Timeline>> timelines;
 
     public Network() {
+        countries = new HashSet();
+        airports = new HashMap();
+        timelines = new HashMap();
     }
 
     public boolean addNewAirport(String title, String city, String country) {
@@ -465,6 +468,11 @@ public class Network {
                 }
             }
         }
+    }
+    public void removeAllData() {
+        countries = new HashSet();
+        airports = new HashMap();
+        timelines = new HashMap();
     }
 
 }

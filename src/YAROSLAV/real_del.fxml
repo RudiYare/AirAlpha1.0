@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="401.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="31.0" layoutY="24.0">
+         <image>
+            <Image url="@../../КАРТИНОЧКИ/warning.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="145.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вы действительно хотите удалить этот авиарейс?" textAlignment="CENTER" wrappingWidth="231.32421875">
+         <font>
+            <Font name="TechnicBold" size="24.0" />
+         </font>
+      </Text>
+      <Button id="rich-blue" alignment="CENTER" layoutX="96.0" layoutY="148.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-radius: 18;" stylesheets="@style.css" text="Да" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="rich-blue" alignment="CENTER" layoutX="261.0" layoutY="148.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-radius: 18; -fx-background-color: #a6a6a6;" stylesheets="@style.css" text="Нет" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

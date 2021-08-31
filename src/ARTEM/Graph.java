@@ -39,7 +39,6 @@ public class Graph {
             }
         }
     }
-
     public RouteInformation findOptimalTimeTimeline(int starting_airport, int finishing_airport, long starting_time) {
         starting_time = starting_time % SECONDS_IN_WEEK;
         Set<Integer> a = new HashSet<>();
@@ -98,7 +97,6 @@ public class Graph {
         Collections.reverse(transfers);
         return new RouteInformation(transfers, time, prices, starting_airport, finishing_airport, starting_time);
     }
-
     public RouteInformation findOptimalPriceTimeline(int starting_airport, int finishing_airport, long starting_time) {
         starting_time = starting_time % SECONDS_IN_WEEK;
         Set<Integer> a = new HashSet<>();
@@ -160,7 +158,6 @@ public class Graph {
         Collections.reverse(transfers);
         return new RouteInformation(transfers, time, prices, starting_airport, finishing_airport, starting_time);
     }
-
     public RouteInformation findOptimalTimeline(int starting_airport, int finishing_airport, long starting_time) {
         starting_time = starting_time % SECONDS_IN_WEEK;
         for (var x : time.entrySet()) {
@@ -226,7 +223,6 @@ public class Graph {
         Collections.reverse(transfers);
         return new RouteInformation(transfers, time, prices, starting_airport, finishing_airport, starting_time);
     }
-
     public Set<RouteInformation> findSomeWays(int starting_airport, int finishing_airport, long starting_time) {
         Set<RouteInformation> direct_routes = new HashSet<>();
         if (timelines.get(new Pair<>(starting_airport, finishing_airport)) != null) {
@@ -249,6 +245,7 @@ public class Graph {
                 if (timelines.get(new Pair<>(starting_airport, v)) != null && timelines.get(new Pair<>(v, finishing_airport)) != null) {
                     for (Timeline x : timelines.get(new Pair<>(starting_airport, v))) {
                         for (Timeline y : timelines.get(new Pair<>(v, finishing_airport))) {
+                            if (direct_routes.size() > 50) return direct_routes;
                             long starts_in = starting_time % SECONDS_IN_WEEK;
                             long starts_time = x.getStartingTime();
                             if (starts_time - starts_in < 0) {
@@ -278,7 +275,4 @@ public class Graph {
         }
         return direct_routes;
     }
-
-
-
 }

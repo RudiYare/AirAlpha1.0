@@ -442,7 +442,29 @@ public class Network {
             String[] airport = line.split(",");
             boolean k = this.addNewAirport(airport[1], airport[2], airport[3]);
         }
-        System.out.println(countries.size());
+        ArrayList<Integer> airport_IDs = new ArrayList<>();
+        for (var airport : airports.entrySet()) {
+            int ID = airport.getKey();
+            airport_IDs.add(ID);
+        }
+        for (int starting_airport = 0; starting_airport < airport_IDs.size(); starting_airport++) {
+            for (int finishing_airport = 0; finishing_airport < airport_IDs.size(); finishing_airport++) {
+                if (starting_airport != finishing_airport) {
+                    final long MV = 1000000007;
+                    final long SECONDS_IN_WEEK = 604800000;
+                    long rand1 = (int)Math.round(Math.random() * MV);
+                    long rand2 = (int)Math.round(Math.random() * MV);
+                    long rand3 = (int)Math.round(Math.random() * MV);
+                    if (rand3 > MV / 2) {
+                        this.addNewTimeline(airport_IDs.get(starting_airport),
+                                airport_IDs.get(finishing_airport),
+                                            (rand1 * rand2) % SECONDS_IN_WEEK,
+                                            (rand2 * rand3) % (SECONDS_IN_WEEK / 14),
+                                            Math.round(rand2 / 50000.0 * 100.0) / 100.0);
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -1232,23 +1232,24 @@ System.out.println(day_1);
 
                         button.set_text();
                         grid.add(button.get_button(), 0, i);
-
+                        pane.getChildren().add(text_optimal);
+                        pane.getChildren().add(grid);
 
                     }
-                    pane.getChildren().add(text_optimal);
-                    pane.getChildren().add(grid);
-                    javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
-                    scrollPane.setPrefWidth(834);
-                    scrollPane.setStyle("-fx-background:white;");
-                    scrollPane.setPrefHeight(540);
-                    scrollPane.setLayoutX(0);
-                    scrollPane.setLayoutY(60);
-                    scrollPane.fitToWidthProperty();
-                    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-                    group.getChildren().add(scrollPane);
+
                 }
+                javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
+                scrollPane.setPrefWidth(834);
+                scrollPane.setStyle("-fx-background:white;");
+                scrollPane.setPrefHeight(540);
+                scrollPane.setLayoutX(0);
+                scrollPane.setLayoutY(60);
+                scrollPane.fitToWidthProperty();
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+                group.getChildren().add(scrollPane);
             }else{
                 Text text_optimal = new Text("Авиарейсы отсутствуют.\n");
                 text_optimal.setStyle("-fx-font-size:40;" +
@@ -1259,6 +1260,7 @@ System.out.println(day_1);
                 text_optimal.setY(300);
                 group.getChildren().add(text_optimal);
             }
+
             stage1.show();
         }
         catch (Exception e){

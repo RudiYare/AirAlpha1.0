@@ -82,7 +82,7 @@
             <Font name="TechnicBold" size="18.0" />
          </font>
       </Text>
-      <Button id="rich-blue" layoutX="359.0" layoutY="537.0" mnemonicParsing="false" onAction="#ok_in_search_way" stylesheets="@style.css" text="Добавить" textFill="WHITE">
+      <Button id="rich-blue" layoutX="381.0" layoutY="537.0" mnemonicParsing="false" onAction="#ok_in_search_way" stylesheets="@style.css" text="Найти" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

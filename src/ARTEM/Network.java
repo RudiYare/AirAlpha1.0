@@ -240,7 +240,6 @@ public class Network {
                 }
             }
         }
-
         return ID;
     }
     public Tree getElementByParams(String title, String city, String country) {
@@ -324,20 +323,15 @@ public class Network {
         Graph g = new Graph(this.timelines);
         ArrayList<ArrayList<String>> answer = new ArrayList<>();
         if (starting_airport == -1 || finishing_airport == -1) return answer;
-        Set<ArrayList<String>> unique_answer = new HashSet<>();
-        RouteInformation fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, 0);
-        RouteInformation cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, 0);
-        RouteInformation optimal = g.findOptimalTimeline(starting_airport, finishing_airport, 0);
+        RouteInformation fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, starting_time);
+        RouteInformation cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, starting_time);
+        RouteInformation optimal = g.findOptimalTimeline(starting_airport, finishing_airport, starting_time);
         if (fastest == null) {
             return answer;
         }
-
         answer.add(fastest.init(this));
-        unique_answer.add(fastest.init(this));
         answer.add(cheapest.init(this));
-        unique_answer.add(cheapest.init(this));
         answer.add(optimal.init(this));
-        unique_answer.add(optimal.init(this));
 
         Set<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
 
@@ -346,7 +340,6 @@ public class Network {
                 answer.add(x.init(this));
             }
         }
-
         return answer;
     }
     public String getAirportInformationAsString(int ID) {
@@ -443,7 +436,7 @@ public class Network {
         String line;
         while ((line = input.readLine()) != null) {
             String[] airport = line.split(",");
-            boolean k = this.addNewAirport(airport[1], airport[2], airport[3]);
+            boolean k = this.addNewAirport(airport[1].replaceAll("\"", ""), airport[2].replaceAll("\"", ""), airport[3].replaceAll("\"", ""));
         }
         ArrayList<Integer> airport_IDs = new ArrayList<>();
         for (var airport : airports.entrySet()) {
@@ -455,15 +448,15 @@ public class Network {
                 if (starting_airport != finishing_airport) {
                     final long MV = 1000000007;
                     final long SECONDS_IN_WEEK = 604800000;
-                    long rand1 = (int)Math.round(Math.random() * MV);
-                    long rand2 = (int)Math.round(Math.random() * MV);
                     long rand3 = (int)Math.round(Math.random() * MV);
-                    if (rand3 > MV / 2) {
-                        this.addNewTimeline(airport_IDs.get(starting_airport),
-                                airport_IDs.get(finishing_airport),
-                                            (rand1 * rand2) % SECONDS_IN_WEEK,
-                                            (rand2 * rand3) % (SECONDS_IN_WEEK / 14),
-                                            Math.round(rand2 / 50000.0 * 100.0) / 100.0);
+                    for (int i = 0; i < (int)Math.round(Math.random() * 9); i++) {
+                        if (rand3 > MV / 1.5) {
+                            this.addNewTimeline(airport_IDs.get(starting_airport),
+                                    airport_IDs.get(finishing_airport),
+                                    (Math.round(Math.random() * MV) * Math.round(Math.random() * MV)) % SECONDS_IN_WEEK,
+                                    (Math.round(Math.random() * MV) * Math.round(Math.random() * MV)) % (SECONDS_IN_WEEK / 14),
+                                    Math.round(((3000 * (Math.random() + .5)) + Math.round(Math.random() * MV) / 70000.0) * 100.0) / 100.0);
+                        }
                     }
                 }
             }

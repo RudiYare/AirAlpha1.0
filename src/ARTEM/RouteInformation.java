@@ -9,16 +9,13 @@ public class RouteInformation {
     public int starting_airport;
     public int finishing_airport;
     public long starting_time;
+    private final long SECONDS_IN_WEEK = 604800000;
     public ArrayList<Timeline> transfers;
-    public Map<Integer, Long> time;
-    public Map<Integer, Long> prices;
     private ArrayList<String> result;
-    public RouteInformation(ArrayList<Timeline> transfers, Map<Integer, Long> time,
-                            Map<Integer, Long> prices, int starting_airport,
+    public RouteInformation(ArrayList<Timeline> transfers,
+                            int starting_airport,
                             int finishing_airport, long starting_time) {
         this.transfers = transfers;
-        this.time = time;
-        this.prices = prices;
         this.starting_airport = starting_airport;
         this.finishing_airport = finishing_airport;
         this.starting_time = starting_time;
@@ -52,15 +49,28 @@ public class RouteInformation {
 
     public ArrayList<String> init(Network net) {
         result = new ArrayList<>();
+        System.out.println("");
         result.add(net.getAirportInformationAsString(starting_airport));
         result.add(net.getAirportInformationAsString(finishing_airport));
-        long flight_time = time.get(finishing_airport);
+        long flight_time = 0;
+        long current_time = starting_time;
+        for (var i = 0; i < transfers.size(); i++) {
+            //transfers.get(i).print();
+            long starts_in = current_time % SECONDS_IN_WEEK;
+            long flight_start = transfers.get(i).getStartingTime();
+            System.out.print(starts_in); System.out.print(" "); System.out.println(flight_start);
+            if (flight_start < starts_in) {
+                flight_start += SECONDS_IN_WEEK;
+            }
+            flight_time += flight_start - starts_in + transfers.get(i).getFlightTime();
+            current_time += flight_start - starts_in + transfers.get(i).getFlightTime();
+        }
         result.add(Long.toString(flight_time / 1000 / 3600) + " ч. " + Long.toString((flight_time / 60000) % 60) + " мин.");
         double flight_price = 0;
         for (int transfer = 0; transfer < transfers.size(); transfer++) {
             flight_price += transfers.get(transfer).getPrice();
         }
-        result.add(Double.toString(flight_price));
+        result.add(Double.toString(Math.round(flight_price * 100) / 100.0));
         Timestamp date;
         date = new Timestamp(starting_time);
         addNewDateToRoute(date);
@@ -70,11 +80,11 @@ public class RouteInformation {
         for (int transfer = 0; transfer < transfers.size(); transfer++) {
             result.add(net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport()));
             result.add(net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport()));
-            date = new Timestamp(time.get(transfers.get(transfer).getFinishingAirport()) - transfers.get(transfer).getFlightTime());
+            date = new Timestamp(10000);
             addNewDateToRoute(date);
-            date = new Timestamp(time.get(transfers.get(transfer).getFinishingAirport()));
+            date = new Timestamp(10000000);
             addNewDateToRoute(date);
-            result.add(Double.toString(transfers.get(transfer).getPrice()));
+            result.add(Double.toString(Math.round((transfers.get(transfer).getPrice() * 100) / 100.0)));
         }
         return result;
     }

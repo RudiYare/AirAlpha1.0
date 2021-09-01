@@ -243,7 +243,7 @@ public class MyController implements Initializable {
         group.getChildren().add(root);
 
         cbox_country_in = new ComboBox<String>();//array from Artemius
-        cbox_country_in.setItems(arr_country);
+
         cbox_country_in.setLayoutX(89);
         cbox_country_in.setLayoutY(102);
         cbox_country_in.setVisibleRowCount(3);
@@ -252,6 +252,8 @@ cbox_country_in.getStylesheets().add(
         (new File("src/YAROSLAV/size.css").toURI().toString()) );
 
 cbox_country_in.setEditable(true);
+        cbox_country_in.setItems(arr_country);
+        cbox_country_in.setPrefWidth(173);
 
         AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
 
@@ -1061,8 +1063,8 @@ System.out.println(day_1);
         }
         if (is_ok){
             int id_1 = 0, id_2 = 0;
-            id_1 = Main.net.getIDByParams(cbox_port_in.getValue(),cbox_country_in.getValue(),cbox_country_in.getValue());
-            id_2 = Main.net.getIDByParams(cbox_port_out.getValue(),cbox_country_out.getValue(),cbox_country_out.getValue());
+            id_1 = Main.net.getIDByParams(cbox_port_in.getValue(),cbox_city_in.getValue(),cbox_country_in.getValue());
+            id_2 = Main.net.getIDByParams(cbox_port_out.getValue(),cbox_city_out.getValue(),cbox_country_out.getValue());
             Timestamp temp_time = new Timestamp(date_in.getValue().getYear()-1900, date_in.getValue().getMonth().getValue()-1,date_in.getValue().getDayOfMonth(), hours_in.getValue(), min_in.getValue(),0,0);
             long time = temp_time.getTime();
             in_result(id_1,id_2,time);
@@ -1091,6 +1093,10 @@ System.out.println(day_1);
     public void in_result(int id_1,int id_2, long time) {
         try {
             ArrayList<ArrayList<String>> info = Main.net.search(id_1,id_2,time);
+            System.out.println(info);
+            System.out.println(id_1);
+            System.out.println(id_2);
+            System.out.println(time);
             ArrayList<String> temp_info ;
 
             stage1 = new Stage();

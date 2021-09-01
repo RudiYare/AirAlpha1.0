@@ -76,7 +76,7 @@ public class RouteInformation {
         addNewDateToRoute(date);
         date = new Timestamp(starting_time + flight_time);
         addNewDateToRoute(date);
-        result.add(Integer.toString(transfers.size()));
+        result.add(Integer.toString(transfers.size() - 1));
         for (int transfer = 0; transfer < transfers.size(); transfer++) {
             result.add(net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport()));
             result.add(net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport()));

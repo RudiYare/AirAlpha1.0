@@ -1008,8 +1008,8 @@ System.out.println(day_1);
         time_2 = (day_2*60*24+hours_out.getValue()*60+min_in.getValue())*60*1000;
 
 
-        int id_1=Main.net.getIDByParams(cbox_country_in.getValue(),cbox_city_in.getValue(),cbox_port_in.getValue());
-        int id_2 = Main.net.getIDByParams(cbox_country_out.getValue(),cbox_city_out.getValue(),cbox_port_out.getValue());
+        int id_1=Main.net.getIDByParams(cbox_port_in.getValue(),cbox_city_in.getValue(),cbox_country_in.getValue());
+        int id_2 = Main.net.getIDByParams(cbox_port_out.getValue(),cbox_city_out.getValue(),cbox_country_out.getValue());
         if(!Main.net.addNewTimeline(id_1,id_2,time_1,time_2-time_1,Double.parseDouble(price.getText()))){
             return false;
         }

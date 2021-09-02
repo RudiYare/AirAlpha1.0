@@ -293,7 +293,7 @@ cbox_country_in.setEditable(true);
         cbox_city_in.setOnAction(actionEvent -> {
             if(arr_city.contains(cbox_city_in.getValue())){
                 arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
-                arr_port.remove(cbox_port_out.getValue());
+                //arr_port.remove(cbox_port_out.getValue());
                 cbox_port_in.setItems(arr_port);
                 AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_in);
             }else{
@@ -359,7 +359,7 @@ cbox_country_in.setEditable(true);
             if(arr_city.contains(cbox_city_out.getValue())){
                 arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
                 if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))){
-                    arr_port.remove(cbox_port_in.getValue());
+                    //arr_port.remove(cbox_port_in.getValue());
                 }
 
                 cbox_port_out.setItems(arr_port);
@@ -671,7 +671,7 @@ port_box.setOnAction(actionEvent -> {
         cbox_city_in.setOnAction(actionEvent -> {
             if(arr_city.contains(cbox_city_in.getValue())){
                 arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
-                arr_port.remove(cbox_port_out.getValue());
+                //arr_port.remove(cbox_port_out.getValue());
                 cbox_port_in.setItems(arr_port);
                 AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_in);
             }else{
@@ -737,7 +737,7 @@ port_box.setOnAction(actionEvent -> {
             if(arr_city.contains(cbox_city_out.getValue())){
                 arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
                 if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))){
-                    arr_port.remove(cbox_port_in.getValue());
+                    //arr_port.remove(cbox_port_in.getValue());
                 }
 
                 cbox_port_out.setItems(arr_port);
@@ -1208,6 +1208,7 @@ System.out.println(day_1);
 
                     text_optimal.setX(100);
                     text_optimal.setY(button.get_height());
+                    pane.getChildren().add(text_optimal);
                     GridPane grid = new GridPane();
                     grid.setPadding(new Insets(5));
                     grid.setVgap(10);
@@ -1232,11 +1233,11 @@ System.out.println(day_1);
 
                         button.set_text();
                         grid.add(button.get_button(), 0, i);
-                        pane.getChildren().add(text_optimal);
-                        pane.getChildren().add(grid);
+
+
 
                     }
-
+                    pane.getChildren().add(grid);
 
                 }
                 javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
@@ -1265,6 +1266,7 @@ System.out.println(day_1);
         }
         catch (Exception e){
 System.out.println(e);
+System.out.println(e.getLocalizedMessage());
         }
     }
     public void save() throws Exception{
@@ -1290,7 +1292,15 @@ System.out.println(e);
     public void del_all(){
         Main.net.removeAllData();
     }
+    public void random(){
+try {
+    Main.net.removeAllData();
+    Main.net.loadRandomData();
+}
+catch (Exception e){
 
+}
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

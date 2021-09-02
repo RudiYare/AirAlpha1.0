@@ -66,9 +66,8 @@ public class Main extends Application {
         stage = new Stage();
         stage= primaryStage;
         try {
-            net.removeAllData();
-            net.loadRandomData();
-            //net.loadData();
+
+            net.loadData();
         }
         catch(Exception e){
             Stage  stage2 = new Stage();

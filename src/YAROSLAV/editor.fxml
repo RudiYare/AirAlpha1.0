@@ -50,6 +50,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button id="rich-blue" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="537.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#random" prefHeight="48.0" prefWidth="176.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 2;" stylesheets="@style.css" text="Рандом">
+               <font>
+                  <Font name="TechnicBold" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="103.0" prefHeight="700.0" prefWidth="1280.0">

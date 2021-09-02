@@ -333,13 +333,13 @@ public class Network {
         answer.add(cheapest.init(this));
         answer.add(optimal.init(this));
 
-        //Set<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
+        Set<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
 
-        //for (var x : routes) {
-        //    if (!x.init(this).equals(answer.get(0)) && !x.init(this).equals(answer.get(1)) && !x.init(this).equals(answer.get(2))) {
-         //       answer.add(x.init(this));
-         //   }
-       // }
+        for (var x : routes) {
+            if (!x.init(this).equals(answer.get(0)) && !x.init(this).equals(answer.get(1)) && !x.init(this).equals(answer.get(2))) {
+                answer.add(x.init(this));
+           }
+        }
         return answer;
     }
     public String getAirportInformationAsString(int ID) {

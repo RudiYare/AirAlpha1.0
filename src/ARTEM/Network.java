@@ -469,20 +469,21 @@ public class Network {
     }
     public ArrayList<ArrayList<Double>> tempPoints() {
         ArrayList<ArrayList<Double>> res = new ArrayList<>();
-        double k = 641.0 / 360.0;
+        double k = 641.0 / 190.0;
         double x, ans; ArrayList<Double> r;
                 x = 49;
-        ans = ((x - 15) * k) + 641;
+        ans = ((x - 8) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
         x = 142.5;
-        ans = ((x - 15) * k) + 641;
+        ans = ((x - 8) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
+        System.out.println(k + " " + ans);
         return res;
     }
 

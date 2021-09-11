@@ -469,7 +469,7 @@ public class Network {
     }
     public ArrayList<ArrayList<Double>> tempPoints() {
         ArrayList<ArrayList<Double>> res = new ArrayList<>();
-        double k = 641.0 / 180.0; int l = 3;
+        double k = 641.0 / 173.0; int l = 3;
         double x, ans; ArrayList<Double> r;
                 x = 49;
         ans = ((x + l) * k) + 600;

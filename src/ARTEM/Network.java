@@ -471,24 +471,18 @@ public class Network {
         ArrayList<ArrayList<Double>> res = new ArrayList<>();
         double k = 641.0 / 190.0;
         double x, ans; ArrayList<Double> r;
-                x = 51;
-        ans = ((x - 10) * k) + 641;
+                x = 49;
+        ans = ((x - 7) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
-        x = 80;
-        ans = ((x - 10) * k) + 641;
+        x = 142.5;
+        ans = ((x - 7) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
-        x = -30;
-        ans = ((x - 10) * k) + 641;
-        r = new ArrayList<>();
-        r.add(ans); r.add(0.0);
-        res.add(r);
-        System.out.println(res);
         return res;
     }
 

@@ -472,19 +472,19 @@ public class Network {
         double k = 641.0 / 190.0;
         double x, ans; ArrayList<Double> r;
                 x = 51;
-        ans = ((x - 20) * k) + 641;
+        ans = ((x - 10) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
         x = 80;
-        ans = ((x - 20) * k) + 641;
+        ans = ((x - 10) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);
 
         x = -30;
-        ans = ((x - 20) * k) + 641;
+        ans = ((x - 10) * k) + 641;
         r = new ArrayList<>();
         r.add(ans); r.add(0.0);
         res.add(r);

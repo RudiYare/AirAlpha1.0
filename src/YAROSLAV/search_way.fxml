@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -89,6 +90,25 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </Button>
+      <Button id="rich-blue" alignment="CENTER" contentDisplay="TOP" graphicTextGap="1.0" layoutX="650.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#map_search" prefHeight="49.0" prefWidth="176.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" stylesheets="@style.css" textAlignment="CENTER">
+         <font>
+            <Font name="TechnicBold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="8.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Карта" textAlignment="CENTER" wrappingWidth="123.75">
+                     <font>
+                        <Font name="TechnicBold" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </graphic>
       </Button>
    </children>
 </Pane>

@@ -25,6 +25,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -95,6 +97,14 @@ public class Main extends Application {
         group.getChildren().add(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+
+
+
+
+
+
     }
 
 }

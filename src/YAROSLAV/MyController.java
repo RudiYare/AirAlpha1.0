@@ -75,6 +75,8 @@ public class MyController implements Initializable {
     public static PriceTextField price ;
     public static Spinner <Integer> min_in;
     public static Spinner <Integer> min_out;
+    public static TextField text_in;
+    public static TextField text_out;
     public void screen(String str){
         System.out.println(str);
     }
@@ -1293,6 +1295,7 @@ System.out.println(e.getLocalizedMessage());
         Main.net.removeAllData();
     }
     public void random(){
+
 try {
     Main.net.removeAllData();
     Main.net.loadRandomData();
@@ -1301,7 +1304,159 @@ catch (Exception e){
 
 }
     }
+public void map_search(){
+    stage = new Stage();
 
+    stage.centerOnScreen();
+    Group group = new Group();
+    Scene scene= new Scene(group,1280, 800);
+    stage.setResizable(false);
+    try{
+    Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\map_search.fxml" ).toURI().toURL()));
+    BorderPane root= new BorderPane();
+    root.getChildren().add(content);
+
+    AnchorPane pane = new AnchorPane();
+    AnchorPane pane_up = new AnchorPane();
+    pane_up.setPrefHeight(87);
+    pane_up.setLayoutY(0);
+    pane_up.setLayoutX(0);
+    pane_up.setPrefWidth(873);
+
+    pane.setPrefWidth(1280);
+    pane.setLayoutX(0);
+    pane.setLayoutY(92);
+    pane.setPrefHeight(710);
+   text_in = new TextField("");
+    text_in.setPrefWidth(335);
+    text_in.setPrefHeight(25);
+    text_in.setLayoutY(14);
+
+    text_in.setLayoutX(104);
+    text_in.setEditable(false);
+
+
+     text_out = new TextField("");
+    text_out .setPrefWidth(335);
+    text_out .setPrefHeight(25);
+    text_out .setLayoutY(52);
+
+    text_out .setLayoutX(104);
+    text_out .setEditable(false);
+
+
+    pane_up.getChildren().add(text_in);
+    pane_up.getChildren().add(text_out);
+
+date_in = new DatePicker();
+
+
+        date_in.setLayoutX(685);
+        date_in.setLayoutY(14);
+        date_in.setValue(LocalDate.now());
+
+
+
+        final Callback<DatePicker, DateCell> dayCellFactory_in =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.now())
+                                ) {
+                                    setDisable(true);
+
+                                }
+                            }
+                        };
+                    }
+                };
+
+        date_in.setDayCellFactory(dayCellFactory_in);
+
+pane_up.getChildren().add(date_in);
+
+        hours_in = new Spinner<>();
+        hours_in.getEditor().setPrefWidth(86);
+        hours_in.setLayoutX(512);
+        hours_in.setLayoutY(50);
+        SpinnerValueFactory<Integer> value_hours_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+        hours_in.setValueFactory(value_hours_in);
+        hours_in.setEditable(true);
+
+
+
+        min_in = new Spinner<>();
+        min_in.setEditable(true);
+        min_in.setLayoutX(730);
+        min_in.setLayoutY(50);
+        SpinnerValueFactory<Integer> value_min_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        min_in.getEditor().setPrefWidth(86);
+        min_in.setValueFactory(value_min_in);
+
+pane_up.getChildren().add(hours_in);
+pane_up.getChildren().add(min_in);
+ArrayList<ArrayList<Double>> list = Main.net.tempPoints();
+for (var el : list ){
+    Map_but_in but = new Map_but_in(text_in,text_out);
+    but.set_XY(el.get(0),el.get(1)+400);
+    but.set_button_info("ERerewr");
+    pane.getChildren().add(but.get_button());
+
+
+}
+        Map_but_in but = new Map_but_in(text_in,text_out);
+        but.set_button_info("ДНР");
+        but.set_XY(600,200);
+        pane.getChildren().add(but.get_button());
+    group.getChildren().add(root);
+
+
+    group.getChildren().add(pane_up);
+    group.getChildren().add(pane);
+    stage.setScene(scene);
+    stage.show();
+    }
+    catch (Exception e){
+
+    }
+}
+public void map_result() {
+    stage = new Stage();
+
+    stage.centerOnScreen();
+    Group group = new Group();
+    Scene scene = new Scene(group, 1280, 800);
+    stage.setResizable(false);
+    try {
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\map_search.fxml").toURI().toURL()));
+        BorderPane root= new BorderPane();
+        root.getChildren().add(content);
+
+        AnchorPane pane = new AnchorPane();
+
+
+
+        pane.setPrefWidth(1280);
+        pane.setLayoutX(0);
+        pane.setLayoutY(92);
+        pane.setPrefHeight(710);
+        group.getChildren().add(root);
+
+
+
+        group.getChildren().add(pane);
+        stage.setScene(scene);
+        stage.show();
+    }    catch (Exception e){
+
+    }
+}
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

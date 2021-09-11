@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane id="back" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YAROSLAV.MyController">
+   <children>
+      <AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="99.0" prefWidth="1280.0" stylesheets="@style.css">
+         <children>
+            <Text layoutX="-5.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Откуда:" textAlignment="CENTER" wrappingWidth="111.75">
+               <font>
+                  <Font name="TechnicBold" size="25.0" />
+               </font>
+            </Text>
+            <Line endX="1165.0" endY="1.0" layoutX="115.0" layoutY="90.0" startX="-115.0" startY="0.5" strokeWidth="3.0" />
+            <Text layoutX="448.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата отправления:&#10;" textAlignment="CENTER" wrappingWidth="235.75">
+               <font>
+                  <Font name="TechnicBold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="424.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Час:" textAlignment="CENTER" wrappingWidth="111.75">
+               <font>
+                  <Font name="TechnicBold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="617.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Минута:" textAlignment="CENTER" wrappingWidth="111.75">
+               <font>
+                  <Font name="TechnicBold" size="25.0" />
+               </font>
+            </Text>
+            <Button id="rich-blue" alignment="CENTER" contentDisplay="TOP" graphicTextGap="1.0" layoutX="879.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#random" prefHeight="79.0" prefWidth="177.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" stylesheets="@style.css" textAlignment="CENTER">
+               <font>
+                  <Font name="TechnicBold" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="8.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Текстовыйрежим" textAlignment="CENTER" wrappingWidth="123.75">
+                           <font>
+                              <Font name="TechnicBold" size="25.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </Button>
+            <Button id="rich-blue" alignment="CENTER" contentDisplay="BOTTOM" layoutX="1070.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#random" prefHeight="79.0" prefWidth="177.0" style="-fx-background-color: #4569d6; -fx-border-color: #4569d6; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" stylesheets="@style.css" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="TechnicBold" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <graphic>
+                  <Text fill="WHITE" layoutX="8.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ОК" textAlignment="CENTER" wrappingWidth="123.75">
+                     <font>
+                        <Font name="TechnicBold" size="25.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-9.0" layoutY="92.0" prefHeight="717.0" prefWidth="1280.0">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <ImageView fitHeight="710.0" fitWidth="1282.0" layoutX="9.0" layoutY="1.0">
+               <image>
+                  <Image url="@../../карта.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text layoutX="-13.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Куда:" textAlignment="CENTER" wrappingWidth="111.75">
+         <font>
+            <Font name="TechnicBold" size="25.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

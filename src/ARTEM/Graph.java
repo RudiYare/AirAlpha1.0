@@ -17,6 +17,7 @@ public class Graph {
     private Map<Integer, Long> time;
     private Map<Integer, Long> prices;
     private final long SECONDS_IN_WEEK = 604800000;
+    private final long time_error = SECONDS_IN_WEEK * 3 / 7 + SECONDS_IN_WEEK / 56;
     private Map<Integer, Boolean> used = new HashMap();
 
     public Graph(Map<Integer, ArrayList<Timeline>> timelines) {
@@ -39,9 +40,41 @@ public class Graph {
             }
         }
     }
-    public RouteInformation findOptimalTimeTimeline(int starting_airport, int finishing_airport, long starting_time) {
-        long starts = starting_time;
-        starting_time = starting_time % SECONDS_IN_WEEK;
+
+    Set<RouteInformation> optimal_routes = new HashSet<>();
+    Set<RouteInformation> fastest_routes = new HashSet<>();
+    Set<RouteInformation> cheapest_routes = new HashSet<>();
+
+    private void getWayBack(ArrayList<Timeline> prev, ArrayList<Pair<Long, Long>> prev_times, int u, int starting_airport, int finishing_airport, long starting_time, int type) {
+        System.out.println("p " + u + " " + starting_airport);
+        ArrayList<Timeline> current = new ArrayList<>(prev);
+        ArrayList<Pair<Long, Long>> curr_times = new ArrayList<>(prev_times);
+        if (prev.size() > 0 && prev.get(prev.size() - 1).getStartingAirport() == starting_airport) {
+            Collections.reverse(current);
+            if (type == 1) {
+                optimal_routes.add(new RouteInformation(current, starting_airport, finishing_airport, curr_times, starting_time - time_error));
+            } else if (type == 2) {
+                fastest_routes.add(new RouteInformation(current, starting_airport, finishing_airport, curr_times, starting_time - time_error));
+            } else if (type == 3) {
+                cheapest_routes.add(new RouteInformation(current, starting_airport, finishing_airport, curr_times, starting_time - time_error));
+            }
+            return;
+        }
+        for (Integer v : connected_reversed.get(u)) {
+            for (Timeline x : timelines.get(new Pair<>(v, u))) {
+                if ((time.get(u) - x.getFlightTime() - x.getStartingTime()) % SECONDS_IN_WEEK == 0) {
+                    current.add(x);
+                    curr_times.add(new Pair<>((time.get(u) - x.getFlightTime() - time_error), (time.get(u) - time_error)));
+                    getWayBack(current, curr_times, v, starting_airport, finishing_airport, starting_time, type);
+                    current.remove(current.size() - 1);
+                    curr_times.remove(curr_times.size() - 1);
+                }
+            }
+        }
+    }
+
+    public ArrayList<RouteInformation> findOptimalTimeTimeline(int starting_airport, int finishing_airport, long starting_time) {
+        starting_time = (starting_time + time_error);
         Set<Integer> a = new HashSet<>();
 
         for (var x : time.entrySet()) {
@@ -60,7 +93,6 @@ public class Graph {
             if (connected.get(u) == null) continue;
             for (Integer v : connected.get(u)) {
                 if (!a.contains(v)) {
-                    Timeline optimal;
                     long flight_time = SECONDS_IN_WEEK * 2;
                     for (Timeline x : timelines.get(new Pair<>(u, v))) {
                         long starts_in = time.get(u) % SECONDS_IN_WEEK;
@@ -68,12 +100,11 @@ public class Graph {
                         if (starts_time - starts_in < 0) {
                             starts_time += SECONDS_IN_WEEK;
                         }
-                        if (flight_time > starts_time - starts_in) {
-                            optimal = x;
-                            flight_time = starts_time - starts_in + x.getFlightTime();
+                        if (flight_time > starts_time - starts_in + (x.getFlightTime() + SECONDS_IN_WEEK) % SECONDS_IN_WEEK) {
+                            flight_time = starts_time - starts_in + (x.getFlightTime() + SECONDS_IN_WEEK) % SECONDS_IN_WEEK;
                         }
                     }
-                    available.add(new Pair<>(flight_time, v));
+                    available.add(new Pair<>(time.get(u) + flight_time, v));
                     time.put(v, Math.min(time.get(v), time.get(u) + flight_time));
                 }
             }
@@ -81,28 +112,15 @@ public class Graph {
         if (time.get(finishing_airport) == null || time.get(finishing_airport) >= 1000000007L * 1000000007L) {
             return null;
         }
-        ArrayList<Timeline> transfers = new ArrayList<>();
-        int current_airport = finishing_airport;
-        while (current_airport != starting_airport) {
-            Timeline optimal; boolean isFound = false;
-            for (Integer v : connected_reversed.get(current_airport)) {
-                for (Timeline x : timelines.get(new Pair<>(v, current_airport))) {
-                    if ((time.get(current_airport) - x.getFlightTime() - x.getStartingTime()) % SECONDS_IN_WEEK == 0) {
-                        transfers.add(x);
-                        isFound = true;
-                        current_airport = v;
-                        break;
-                    }
-                }
-                if (isFound) break;
-            }
-        }
-        Collections.reverse(transfers);
-        return new RouteInformation(transfers, starting_airport, finishing_airport, starts);
+
+        getWayBack(new ArrayList<>(), new ArrayList<>(), finishing_airport, starting_airport, finishing_airport, starting_time, 2);
+        System.out.println(fastest_routes.size());
+        ArrayList<RouteInformation> routes = new ArrayList<>();
+        routes.addAll(fastest_routes);
+        return routes;
     }
-    public RouteInformation findOptimalPriceTimeline(int starting_airport, int finishing_airport, long starting_time) {
-        long starts = starting_time;
-        starting_time = starting_time % SECONDS_IN_WEEK;
+    public ArrayList<RouteInformation> findOptimalPriceTimeline(int starting_airport, int finishing_airport, long starting_time) {
+        starting_time = (starting_time + time_error);
         Set<Integer> a = new HashSet<>();
         for (var x : time.entrySet()) {
             x.setValue(1000000007L * 1000000007L);
@@ -144,28 +162,14 @@ public class Graph {
         if (time.get(finishing_airport) == null || time.get(finishing_airport) >= 1000000007L * 1000000007L) {
             return null;
         }
-        ArrayList<Timeline> transfers = new ArrayList<>();
-        int current_airport = finishing_airport;
-        while (current_airport != starting_airport) {
-            Timeline optimal; boolean isFound = false;
-            for (Integer v : connected_reversed.get(current_airport)) {
-                for (Timeline x : timelines.get(new Pair<>(v, current_airport))) {
-                    if ((time.get(current_airport) - x.getFlightTime() - x.getStartingTime()) % SECONDS_IN_WEEK == 0) {
-                        transfers.add(x);
-                        isFound = true;
-                        current_airport = v;
-                        break;
-                    }
-                }
-                if (isFound) break;
-            }
-        }
-        Collections.reverse(transfers);
-        return new RouteInformation(transfers, starting_airport, finishing_airport, starts);
+        getWayBack(new ArrayList<>(), new ArrayList<>(), finishing_airport, starting_airport, finishing_airport, starting_time, 3);
+        System.out.println(cheapest_routes.size());
+        ArrayList<RouteInformation> routes = new ArrayList<>();
+        routes.addAll(cheapest_routes);
+        return routes;
     }
-    public RouteInformation findOptimalTimeline(int starting_airport, int finishing_airport, long starting_time) {
-        long starts = starting_time;
-        starting_time = starting_time % SECONDS_IN_WEEK;
+    public ArrayList<RouteInformation> findOptimalTimeline(int starting_airport, int finishing_airport, long starting_time) {
+        starting_time = (starting_time + time_error);
         for (var x : time.entrySet()) {
             x.setValue(1000000007L * 1000000007L);
         }
@@ -201,84 +205,19 @@ public class Graph {
                     if (prices.get(v) >= prices.get(u) + min_flight_price + flight_time / 50) {
                         time.put(v, time.get(u) + flight_time);
                         prices.put(v, prices.get(u) + min_flight_price + flight_time / 50);
-
                     }
-
                 }
             }
         }
         if (time.get(finishing_airport) == null || time.get(finishing_airport) >= 1000000007L * 1000000007L) {
             return null;
         }
-        ArrayList<Timeline> transfers = new ArrayList<>();
-        int current_airport = finishing_airport;
 
-        while (current_airport != starting_airport) {
-            Timeline optimal; boolean isFound = false;
-            for (Integer v : connected_reversed.get(current_airport)) {
-                for (Timeline x : timelines.get(new Pair<>(v, current_airport))) {
-                    if ((time.get(current_airport) - x.getFlightTime() - x.getStartingTime()) % SECONDS_IN_WEEK == 0) {
-                        transfers.add(x);
-                        isFound = true;
-                        current_airport = v;
-                        break;
-                    }
-                }
-                if (isFound) break;
-            }
-        }
-        Collections.reverse(transfers);
-        return new RouteInformation(transfers, starting_airport, finishing_airport, starts);
+        getWayBack(new ArrayList<>(), new ArrayList<>(), finishing_airport, starting_airport, finishing_airport, starting_time, 1);
+        System.out.println(optimal_routes.size());
+        ArrayList<RouteInformation> routes = new ArrayList<>();
+        routes.addAll(optimal_routes);
+        return routes;
     }
-    public Set<RouteInformation> findSomeWays(int starting_airport, int finishing_airport, long starting_time) {
-        Set<RouteInformation> direct_routes = new HashSet<>();
-        if (timelines.get(new Pair<>(starting_airport, finishing_airport)) != null) {
-            for (Timeline x : timelines.get(new Pair<>(starting_airport, finishing_airport))) {
-                long starts_in = starting_time % SECONDS_IN_WEEK;
-                long starts_time = x.getStartingTime();
-                if (starts_time - starts_in < 0) {
-                    starts_time += SECONDS_IN_WEEK;
-                }
-                long flight_time = starts_time - starts_in + x.getFlightTime();
-                time.put(finishing_airport, starting_time + flight_time);
-                prices.put(finishing_airport, (long)(x.getPrice() * 100));
-                ArrayList<Timeline> transfers = new ArrayList<>();
-                transfers.add(x);
-                direct_routes.add(new RouteInformation(transfers, starting_airport, finishing_airport, starting_time));
-            }
-        }
-        if (connected.get(starting_airport) != null) {
-            for (Integer v : connected.get(starting_airport)) {
-                if (timelines.get(new Pair<>(starting_airport, v)) != null && timelines.get(new Pair<>(v, finishing_airport)) != null) {
-                    for (Timeline x : timelines.get(new Pair<>(starting_airport, v))) {
-                        for (Timeline y : timelines.get(new Pair<>(v, finishing_airport))) {
-                            if (direct_routes.size() > 50) return direct_routes;
-                            long starts_in = starting_time % SECONDS_IN_WEEK;
-                            long starts_time = x.getStartingTime() % SECONDS_IN_WEEK;
-                            if (starts_time - starts_in < 0) {
-                                starts_time += SECONDS_IN_WEEK;
-                            }
-                            long flight_time = starts_time - starts_in + x.getFlightTime();
-                            time.put(v, flight_time);
-                            prices.put(v, (long) (x.getPrice() * 100));
 
-                            starts_in = time.get(v) % SECONDS_IN_WEEK;
-                            starts_time = y.getStartingTime() % SECONDS_IN_WEEK;
-                            if (starts_time - starts_in < 0) {
-                                starts_time += SECONDS_IN_WEEK;
-                            }
-                            flight_time = starts_time - starts_in + y.getFlightTime();
-                            time.put(finishing_airport, time.get(v) + flight_time);
-                            prices.put(finishing_airport, (long) (x.getPrice() * 100));
-                            ArrayList<Timeline> transfers = new ArrayList<>();
-                            transfers.add(x);
-                            transfers.add(y);
-                            direct_routes.add(new RouteInformation(transfers, starting_airport, finishing_airport, starting_time));
-                        }
-                    }
-                }
-            }
-        }
-        return direct_routes;
-    }
 }

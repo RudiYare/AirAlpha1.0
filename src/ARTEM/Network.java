@@ -5,6 +5,8 @@
 
 package ARTEM;
 
+import javafx.util.Pair;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,12 +21,24 @@ class Tree {
     public ArrayList<Tree> children;
     public Tree parent;
     public String title;
+    public Integer x;
+    public Integer y;
     public int ID;
 
     public Tree(Tree parent, String title) {
         this.parent = parent;
         this.title = title;
         this.children = new ArrayList();
+        this.x = null;
+        this.y = null;
+    }
+
+    public Tree(Tree parent, String title, int x, int y) {
+        this.parent = parent;
+        this.title = title;
+        this.children = new ArrayList();
+        this.x = x;
+        this.y = y;
     }
 }
 
@@ -40,8 +54,8 @@ public class Network {
         timelines = new HashMap();
     }
 
-    public boolean addNewAirport(String title, String city, String country) {
-        Tree actual_country = new Tree((Tree)null, country);
+    public boolean addNewAirport(String title, String city, String country, int x, int y) {
+        Tree actual_country = new Tree((Tree)null, country, x, y);
         for (var t : this.countries) {
             if (t.title.equals(country)) {
                 actual_country = t;
@@ -62,7 +76,7 @@ public class Network {
             actual_country.children.add(actual_city);
         }
 
-        Tree actual_title = new Tree(actual_city, title);
+        Tree actual_title = new Tree(actual_city, title, x, y);
         isFound = false;
         for (var t : actual_city.children) {
             if (t.title.equals(title)) {
@@ -81,10 +95,10 @@ public class Network {
             this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
         }
-
+        System.out.println(title + " " + actual_title.ID);
         return !isFound;
     }
-    public boolean addNewAirport(String title, String city, String country, int ID) {
+    public boolean addNewAirport(String title, String city, String country, int ID, int x, int y) {
         Tree actual_country = new Tree((Tree)null, country);
         for (var t : this.countries) {
             if (t.title.equals(country)) {
@@ -106,7 +120,7 @@ public class Network {
             actual_country.children.add(actual_city);
         }
 
-        Tree actual_title = new Tree(actual_city, title);
+        Tree actual_title = new Tree(actual_city, title, x, y);
         isFound = false;
         for (var t : actual_city.children) {
             if (t.title.equals(title)) {
@@ -120,7 +134,7 @@ public class Network {
             this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
         }
-
+        System.out.println(title + " " + actual_title.ID);
         return !isFound;
     }
     public ArrayList<String> getAllCountries() {
@@ -160,8 +174,8 @@ public class Network {
 
         return titles;
     }
-    public ArrayList<String> getAllTitles(String country, String city) {
-        ArrayList<String> titles = new ArrayList();
+    public ArrayList<Tree> getAllTitles(String country, String city) {
+        ArrayList<Tree> titles = new ArrayList();
         Tree actual_country = new Tree((Tree)null, country);
         boolean isFound = false;
         Iterator var6 = this.countries.iterator();
@@ -193,7 +207,7 @@ public class Network {
 
                 while(var10.hasNext()) {
                     k = (Tree)var10.next();
-                    titles.add(k.title);
+                    titles.add(k);
                 }
             }
         }
@@ -319,27 +333,29 @@ public class Network {
     public ArrayList<Timeline> getAllTimelinesInAirport(int starting_airport) {
         return this.timelines.containsKey(starting_airport) ? (ArrayList)this.timelines.get(starting_airport) : new ArrayList();
     }
-    public ArrayList<ArrayList<String>> search(int starting_airport, int finishing_airport, long starting_time) {
+    public ArrayList<String> search(int starting_airport, int finishing_airport, long starting_time) {
         Graph g = new Graph(this.timelines);
-        ArrayList<ArrayList<String>> answer = new ArrayList<>();
+        ArrayList<String> answer = new ArrayList<>();
         if (starting_airport == -1 || finishing_airport == -1) return answer;
-        RouteInformation fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, starting_time);
-        RouteInformation cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, starting_time);
-        RouteInformation optimal = g.findOptimalTimeline(starting_airport, finishing_airport, starting_time);
+        ArrayList<RouteInformation> fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, starting_time);
+        ArrayList<RouteInformation> cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, starting_time);
+        ArrayList<RouteInformation> optimal = g.findOptimalTimeline(starting_airport, finishing_airport, starting_time);
         if (fastest == null) {
             return answer;
         }
-        answer.add(fastest.init(this));
-        answer.add(cheapest.init(this));
-        answer.add(optimal.init(this));
-
-        Set<RouteInformation> routes = g.findSomeWays(starting_airport, finishing_airport, starting_time);
-
-        for (var x : routes) {
-            if (!x.init(this).equals(answer.get(0)) && !x.init(this).equals(answer.get(1)) && !x.init(this).equals(answer.get(2))) {
-                answer.add(x.init(this));
-           }
+        answer.add("" + optimal.size());
+        answer.add("" + fastest.size());
+        answer.add("" + cheapest.size());
+        for (var x : optimal) {
+            answer.addAll(x.init(this));
         }
+        for (var x : fastest) {
+            answer.addAll(x.init(this));
+        }
+        for (var x : cheapest) {
+            answer.addAll(x.init(this));
+        }
+
         return answer;
     }
     public String getAirportInformationAsString(int ID) {
@@ -361,10 +377,12 @@ public class Network {
                     ArrayList<String> airport_data = new ArrayList<>();
                     airport_data.add(country);
                     airport_data.add(city);
-                    airport_data.add(title);
-                    airport_data.add(Integer.toString(getIDByParams(title, city, country)));
+                    airport_data.add(title.title);
+                    airport_data.add(Integer.toString(getIDByParams(title.title, city, country)));
+                    airport_data.add(Integer.toString(title.x));
+                    airport_data.add(Integer.toString(title.y));
                     airports.add(airport_data);
-                    all.add(getIDByParams(title, city, country));
+                    all.add(getIDByParams(title.title, city, country));
                 }
             }
         }
@@ -407,8 +425,10 @@ public class Network {
                 String city = reader.readLine();
                 String title = reader.readLine();
                 String ID = reader.readLine();
+                String x = reader.readLine();
+                String y = reader.readLine();
                 if (ID == null) isCorrectData = false;
-                this.addNewAirport(title, city, country, Integer.parseInt(ID));
+                this.addNewAirport(title, city, country, Integer.parseInt(ID), Integer.parseInt(x), Integer.parseInt(y));
             }
         } catch (Exception ex) {
             isCorrectData = false;
@@ -436,7 +456,7 @@ public class Network {
         String line;
         while ((line = input.readLine()) != null) {
             String[] airport = line.split(",");
-            boolean k = this.addNewAirport(airport[1].replaceAll("\"", ""), airport[2].replaceAll("\"", ""), airport[3].replaceAll("\"", ""));
+            boolean k = this.addNewAirport(airport[1].replaceAll("\"", ""), airport[2].replaceAll("\"", ""), airport[3].replaceAll("\"", ""), (int)(Math.random() * 360), (int)(Math.random() * 180));
         }
         ArrayList<Integer> airport_IDs = new ArrayList<>();
         for (var airport : airports.entrySet()) {

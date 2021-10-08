@@ -23,6 +23,14 @@ public class Timeline implements Serializable {
         this.price = price;
     }
 
+    public Timeline(Timeline a) {
+        this.starting_airport = a.getStartingAirport();
+        this.finishing_airport = a.getFinishingAirport();
+        this.starting_time = a.getStartingTime();
+        this.flight_time = a.getFlightTime();
+        this.price = a.getPrice();
+    }
+
     public long getStartingTime() { return this.starting_time; }
     public long getFinishingTime() { return this.starting_time + this.flight_time; }
     public int getFinishingAirport() { return this.finishing_airport; }

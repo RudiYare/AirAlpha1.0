@@ -3,7 +3,10 @@ import java.awt.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import ARTEM.Tree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,14 +46,7 @@ public class MyController implements Initializable {
     public static Stage stage1;
     public static DatePicker date_in ;public static DatePicker date_out ;
 
-    @FXML
-    TextField text_password;
-    @FXML
-    NameTextField name ;
-    @FXML
-    NameTextField city;
-    @FXML
-    NameTextField country;
+
 
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -80,6 +76,11 @@ public class MyController implements Initializable {
     public static PriceTextField price ;
     public static Spinner <Integer> min_in;
     public static Spinner <Integer> min_out;
+    public static NameTextField name;
+    public static NameTextField city;
+    public static NameTextField country;
+    public static XY_TextField x;
+    public static XY_TextField y;
     public static TextField text_in;
     public static TextField text_out;
     public void screen(String str){
@@ -89,25 +90,7 @@ public class MyController implements Initializable {
 in_editor();
     }
 
-    public void check_password() throws Exception {
-        if (text_password.getText().equals("")) {
-            in_editor();
-        } else {
-            Stage stage1 = new Stage();
-            Group group = new Group();
-            Scene scene = new Scene(group, 292, 122);
-            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error-pasw.fxml").toURI().toURL()));
-            BorderPane root = new BorderPane();
-            stage1.centerOnScreen();
-            root.setCenter(content);
-            stage1.initModality(Modality.WINDOW_MODAL);
-            stage1.initOwner(stage);
-            stage1.setResizable(false);
-            group.getChildren().add(root);
-            stage1.setScene(scene);
-            stage1.show();
-        }
-    }
+
     public void back_from_editor_to_main() {
             stage.close();
 adminMenu();
@@ -128,7 +111,7 @@ adminMenu();
     public void in_add_port() throws Exception{
         stage1 = new Stage();
         Group group = new Group();
-        Scene scene = new Scene(group, 340, 320);
+        Scene scene = new Scene(group, 331, 476);
         Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\add_port.fxml").toURI().toURL()));
         BorderPane root = new BorderPane();
         stage1.centerOnScreen();
@@ -137,37 +120,63 @@ adminMenu();
         stage1.initOwner(stage);
         stage1.setResizable(false);
         group.getChildren().add(root);
+        //////////////////////////
+   name = new NameTextField();
+   name.setLayoutX(125);
+   name.setLayoutY(87);
+   name.setPrefWidth(195);
+   city = new NameTextField();
+        city.setLayoutX(125);
+        city.setLayoutY(150);
+        city.setPrefWidth(195);
+        country = new NameTextField();
+        country.setLayoutX(125);
+        country.setLayoutY(213);
+        country.setPrefWidth(195);
+        x = new XY_TextField();
+        x.setLayoutX(125);
+       x.setLayoutY(280);
+       x.setPrefWidth(195);
+        y = new XY_TextField();
+        y.setLayoutX(125);
+        y.setLayoutY(350);
+        y.setPrefWidth(195);
+        group.getChildren().add(name);
+        group.getChildren().addAll(city,country,x,y);
+        ///////////////////
         stage1.setScene(scene);
 
 
         stage1.show();
     }
-    public void ok_in_add_port() throws Exception {
+public void ok_add_port() throws Exception{
         Stage stage2;
-        String  name_port ;
-        String city_port ;
-        String country_port ;
 
-        if ((name.getText().length()!=0)&&(name.getText().charAt(name.getText().length()-1) == ' ')){
-            name_port = name.getText().substring(0,name.getText().length()-1 );
-        }else{
-            name_port = name.getText();
-        }
-        if ((city.getText().length()!=0)&&(city.getText().charAt(city.getText().length()-1)==' ' )){
-            city_port = city.getText().substring(0,city.getText().length()-1);
-        }else{
-            city_port = city.getText();
-        }
-        if ((country.getText().length()!=0)&&(country.getText().charAt(country.getText().length()-1)==' ' )){
-            country_port = country.getText().substring(0,country.getText().length()-1);
-        }else{
-            country_port = country.getText();
-        }
-        if (name_port.equals("") || (city_port.equals("")) || (country_port.equals(""))){
+try {  double iX = Double.parseDouble(x.getText()), iY = Double.parseDouble(y.getText());
+    if ((name.getText().length()!=0)&&(city.getText().length()!=0)&&(country.getText().length()!=0)&&(iY<=90)&&(iX<=180)&&(iX>=-90)&&(iY>=-180)&&(y.getText().length()!=0)){
+        boolean isOk = Main.net.addNewAirport(name.getText(),city.getText(),country.getText(),Double.parseDouble(x.getText()),Double.parseDouble(y.getText()));
+
+        if(isOk){
+            stage2 = new Stage();
+            Group group = new Group();
+            Scene scene = new Scene(group, 310, 122);
+            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\ok.fxml").toURI().toURL()));
+            BorderPane root = new BorderPane();
+            stage2.centerOnScreen();
+            root.setCenter(content);
+            stage2.initModality(Modality.WINDOW_MODAL);
+            stage2.initOwner(stage);
+            stage2.setResizable(false);
+            group.getChildren().add(root);
+            stage2.setScene(scene);
+
+            stage1.close();
+            stage2.show();
+        }else {
             stage2 = new Stage();
             Group group = new Group();
             Scene scene = new Scene(group, 292, 122);
-            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
+            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_port1.fxml").toURI().toURL()));
             BorderPane root = new BorderPane();
             stage2.centerOnScreen();
             root.setCenter(content);
@@ -177,45 +186,42 @@ adminMenu();
             group.getChildren().add(root);
             stage2.setScene(scene);
             stage2.show();
-        } else
-            if (!Main.net.addNewAirport(name_port,city_port,country_port.toString())){
-                System.out.println("5");
-                stage2 = new Stage();
-                Group group = new Group();
-                Scene scene = new Scene(group, 292, 122);
-                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_port1.fxml").toURI().toURL()));
-                BorderPane root = new BorderPane();
-                stage2.centerOnScreen();
-                root.setCenter(content);
-                stage2.initModality(Modality.WINDOW_MODAL);
-                stage2.initOwner(stage1);
-                stage2.setResizable(false);
-                group.getChildren().add(root);
-                stage2.setScene(scene);
-
-
-                stage2.show();
-            }else {
-                stage2 = new Stage();
-                Group group = new Group();
-                Scene scene = new Scene(group, 310, 122);
-                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\ok.fxml").toURI().toURL()));
-                BorderPane root = new BorderPane();
-                stage2.centerOnScreen();
-                root.setCenter(content);
-                stage2.initModality(Modality.WINDOW_MODAL);
-                stage2.initOwner(stage);
-                stage2.setResizable(false);
-                group.getChildren().add(root);
-                stage2.setScene(scene);
-
-                stage1.close();
-                stage2.show();
-            }
-
-
-
+        }
+    }else {
+        stage2 = new Stage();
+        Group group = new Group();
+        Scene scene = new Scene(group, 292, 122);
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
+        BorderPane root = new BorderPane();
+        stage2.centerOnScreen();
+        root.setCenter(content);
+        stage2.initModality(Modality.WINDOW_MODAL);
+        stage2.initOwner(stage1);
+        stage2.setResizable(false);
+        group.getChildren().add(root);
+        stage2.setScene(scene);
+        stage2.show();
     }
+}
+catch (Exception e){
+    stage2 = new Stage();
+    Group group = new Group();
+    Scene scene = new Scene(group, 292, 122);
+    Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
+    BorderPane root = new BorderPane();
+    stage2.centerOnScreen();
+    root.setCenter(content);
+    stage2.initModality(Modality.WINDOW_MODAL);
+    stage2.initOwner(stage1);
+    stage2.setResizable(false);
+    group.getChildren().add(root);
+    stage2.setScene(scene);
+    stage2.show();
+}
+
+
+
+}
     public void in_add_way() throws Exception {
 
         ObservableList<String> arr_country =  FXCollections.observableArrayList(Main.net.getAllCountries());
@@ -287,7 +293,13 @@ cbox_country_in.setEditable(true);
         });
         cbox_city_in.setOnAction(actionEvent -> {
             if(arr_city.contains(cbox_city_in.getValue())){
-                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
+                ArrayList<Tree>arr_port1 = (Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
+                ArrayList<String> arr = new ArrayList<>();
+                for (ARTEM.Tree t: arr_port1){
+                    arr.add(t.title);
+                }
+
+                arr_port=FXCollections.observableArrayList(arr);
                 //arr_port.remove(cbox_port_out.getValue());
                 cbox_port_in.setItems(arr_port);
                 AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_in);
@@ -352,7 +364,13 @@ cbox_country_in.setEditable(true);
 
         cbox_city_out.setOnAction(actionEvent -> {
             if(arr_city.contains(cbox_city_out.getValue())){
-                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
+                ArrayList<Tree>arr_port1 = (Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
+                ArrayList<String> arr = new ArrayList<>();
+                for (ARTEM.Tree t: arr_port1){
+                    arr.add(t.title);
+                }
+
+                arr_port=FXCollections.observableArrayList(arr);
                 if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))){
                     //arr_port.remove(cbox_port_in.getValue());
                 }
@@ -523,7 +541,13 @@ cbox_port_out.setOnAction(actionEvent -> {
         });
         city_box.setOnAction(actionEvent -> {
             if (arr_city.contains(city_box.getValue())){
-                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(country_box.getValue(), city_box.getValue()));
+                arr_port=FXCollections.observableArrayList();
+                ObservableList<ARTEM.Tree> arr_port1 = FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
+
+                for (Tree t: arr_port1){
+                    arr_port.add(t.title);
+                }
+
                 port_box.setItems(arr_port);
                 AutoComboBox.AutoCompleteComboBoxListener<String> auto_port = new AutoComboBox.AutoCompleteComboBoxListener<>(port_box);
             }else{
@@ -598,273 +622,291 @@ port_box.setOnAction(actionEvent -> {
                 stage2.show();
             }
     }
-    public void in_search_way() throws Exception {
-        ObservableList<String> arr_country =  FXCollections.observableArrayList(Main.net.getAllCountries());
+    public void in_search_way()  {
+        try {
+            ObservableList<String> arr_country =  FXCollections.observableArrayList(Main.net.getAllCountries());
 
 
 
-        cbox_city_in = new ComboBox<>();
-        cbox_port_in = new ComboBox<>();//array from Artemius
-        stage1 = new Stage();
-        Group group = new Group();
-        Scene scene = new Scene(group, 834, 613);
+            cbox_city_in = new ComboBox<>();
+            cbox_port_in = new ComboBox<>();//array from Artemius
+            stage1 = new Stage();
+            Group group = new Group();
+            Scene scene = new Scene(group, 834, 613);
 
-        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\search_way.fxml").toURI().toURL()));
-        BorderPane root = new BorderPane();
-        stage1.centerOnScreen();
-        root.setCenter(content);
-        stage1.initModality(Modality.WINDOW_MODAL);
-        stage1.initOwner(Main.stage);
-        stage1.setResizable(false);
-        group.getChildren().add(root);
+            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\search_way.fxml").toURI().toURL()));
+            BorderPane root = new BorderPane();
+            stage1.centerOnScreen();
+            root.setCenter(content);
+            stage1.initModality(Modality.WINDOW_MODAL);
+            stage1.initOwner(Main.stage);
+            stage1.setResizable(false);
+            group.getChildren().add(root);
 
-        cbox_country_in = new ComboBox<String>();//array from Artemius
-        cbox_country_in.setItems(arr_country);
-        cbox_country_in.setLayoutX(89);
-        cbox_country_in.setLayoutY(102);
-        cbox_country_in.setVisibleRowCount(3);
-        cbox_country_in.setEditable(true);
-        cbox_country_in.setPrefWidth(173);
-        cbox_country_in.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
-        // cbox_city_in = new ComboBox<>(); //array from Artemius
-        cbox_city_in.setLayoutX(352);
-        cbox_city_in.setLayoutY(102);
-        cbox_city_in.setVisibleRowCount(3);
-
-        cbox_city_in.setEditable(true);
-        cbox_city_in.setPrefWidth(173);
-        cbox_city_in.setPrefWidth(173);
-        cbox_city_in.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        cbox_port_in.setLayoutX(649);
-        cbox_port_in.setLayoutY(102);
-        cbox_port_in.setVisibleRowCount(3);
-        cbox_port_in.setEditable(true);
-        cbox_port_in.setPrefWidth(173);
-        cbox_port_in.setPrefWidth(173);
-        cbox_port_in.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        cbox_city_in.getEditor().setPrefColumnCount(3);
-
-        cbox_country_in.setOnAction(actionEvent -> {
-            if (arr_country.contains(cbox_country_in.getValue())){
-                arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_in.getValue()));
-                cbox_city_in.setItems(arr_city);
-                AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_in);
-
-            }else {
-                cbox_city_in.setItems(null);
-
-            }
-            cbox_country_in.hide();
+            cbox_country_in = new ComboBox<String>();//array from Artemius
+            cbox_country_in.setItems(arr_country);
+            cbox_country_in.setLayoutX(89);
+            cbox_country_in.setLayoutY(102);
             cbox_country_in.setVisibleRowCount(3);
-
-
-        });
-        cbox_city_in.setOnAction(actionEvent -> {
-            if(arr_city.contains(cbox_city_in.getValue())){
-                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
-                //arr_port.remove(cbox_port_out.getValue());
-                cbox_port_in.setItems(arr_port);
-                AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_in);
-            }else{
-                cbox_port_in.setItems(null);
-            }
-            //cbox_port_in.setValue("");
-            cbox_city_in.hide();
+            cbox_country_in.setEditable(true);
+            cbox_country_in.setPrefWidth(173);
+            cbox_country_in.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
+            AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_in);
+            // cbox_city_in = new ComboBox<>(); //array from Artemius
+            cbox_city_in.setLayoutX(352);
+            cbox_city_in.setLayoutY(102);
             cbox_city_in.setVisibleRowCount(3);
 
-
-        });
-
-
-        cbox_port_in.setOnAction(actionEvent -> {
-            cbox_port_in.hide();
+            cbox_city_in.setEditable(true);
+            cbox_city_in.setPrefWidth(173);
+            cbox_city_in.setPrefWidth(173);
+            cbox_city_in.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
+            cbox_port_in.setLayoutX(649);
+            cbox_port_in.setLayoutY(102);
             cbox_port_in.setVisibleRowCount(3);
+            cbox_port_in.setEditable(true);
+            cbox_port_in.setPrefWidth(173);
+            cbox_port_in.setPrefWidth(173);
+            cbox_port_in.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
+            cbox_city_in.getEditor().setPrefColumnCount(3);
+
+            cbox_country_in.setOnAction(actionEvent -> {
+                if (arr_country.contains(cbox_country_in.getValue())){
+                    arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_in.getValue()));
+                    cbox_city_in.setItems(arr_city);
+                    AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_in);
+
+                }else {
+                    cbox_city_in.setItems(null);
+
+                }
+                cbox_country_in.hide();
+                cbox_country_in.setVisibleRowCount(3);
 
 
-        });
+            });
+            cbox_city_in.setOnAction(actionEvent -> {
+                if(arr_city.contains(cbox_city_in.getValue())){
+                    ArrayList<Tree>arr_port1 = (Main.net.getAllTitles(cbox_country_in.getValue(), cbox_city_in.getValue()));
+                    ArrayList<String> arr = new ArrayList<>();
+                    for (ARTEM.Tree t: arr_port1){
+                        arr.add(t.title);
+                    }
+
+                    arr_port=FXCollections.observableArrayList(arr);
 
 
-        cbox_port_out = new ComboBox<>();// array from Artemius
-        cbox_city_out = new ComboBox<>(); // array from Artemius
-        cbox_country_out = new ComboBox<>(arr_country); //array from Artemius
-        cbox_country_out.setLayoutY(186);
-        cbox_country_out.setLayoutX(89);
-        cbox_country_out.setPrefWidth(173);
-        cbox_country_out.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        cbox_country_out.setVisibleRowCount(3);
-        cbox_country_out.setVisibleRowCount(3);
-        cbox_country_out.setPrefWidth(173);
-        cbox_country_out.setEditable(true);
-        cbox_city_out.setLayoutX(352);
-        cbox_city_out.setLayoutY(186);
-        cbox_city_out.setVisibleRowCount(3);
-        cbox_city_out.setPrefWidth(173);
-        cbox_city_out.setEditable(true);
-        cbox_city_out.setPrefWidth(173);
-        cbox_city_out.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        cbox_country_out.setOnAction(actionEvent -> {
-            if (arr_country.contains(cbox_country_out.getValue())){
-                arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_out.getValue()));
-                cbox_city_out.setItems(arr_city);
-                AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_out);
+                    //arr_port.remove(cbox_port_out.getValue());
+                    cbox_port_in.setItems(arr_port);
+                    AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_in = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_in);
+                }else{
+                    cbox_port_in.setItems(null);
+                }
+                //cbox_port_in.setValue("");
+                cbox_city_in.hide();
+                cbox_city_in.setVisibleRowCount(3);
 
-            }else {
-                cbox_city_out.setItems(null);
-            }
-            cbox_country_out.hide();
+
+            });
+
+            System.out.println("RESTETEEWGG    "+arr_port.toString());
+            cbox_port_in.setOnAction(actionEvent -> {
+                cbox_port_in.hide();
+                cbox_port_in.setVisibleRowCount(3);
+
+
+            });
+
+
+            cbox_port_out = new ComboBox<>();// array from Artemius
+            cbox_city_out = new ComboBox<>(); // array from Artemius
+            cbox_country_out = new ComboBox<>(arr_country); //array from Artemius
+            cbox_country_out.setLayoutY(186);
+            cbox_country_out.setLayoutX(89);
+            cbox_country_out.setPrefWidth(173);
+            cbox_country_out.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
             cbox_country_out.setVisibleRowCount(3);
+            cbox_country_out.setVisibleRowCount(3);
+            cbox_country_out.setPrefWidth(173);
+            cbox_country_out.setEditable(true);
+            cbox_city_out.setLayoutX(352);
+            cbox_city_out.setLayoutY(186);
+            cbox_city_out.setVisibleRowCount(3);
+            cbox_city_out.setPrefWidth(173);
+            cbox_city_out.setEditable(true);
+            cbox_city_out.setPrefWidth(173);
+            cbox_city_out.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
+            cbox_country_out.setOnAction(actionEvent -> {
+                if (arr_country.contains(cbox_country_out.getValue())){
+                    arr_city = FXCollections.observableArrayList(Main.net.getAllCities(cbox_country_out.getValue()));
+                    cbox_city_out.setItems(arr_city);
+                    AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_city_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_city_out);
 
-            cbox_port_out.setItems(null);
-        });
-        AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_out);
+                }else {
+                    cbox_city_out.setItems(null);
+                }
+                cbox_country_out.hide();
+                cbox_country_out.setVisibleRowCount(3);
+
+                cbox_port_out.setItems(null);
+            });
+            AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_country_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_country_out);
 
 
 
 
 
-        cbox_city_out.setOnAction(actionEvent -> {
-            if(arr_city.contains(cbox_city_out.getValue())){
-                arr_port=FXCollections.observableArrayList(Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
-                if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))){
-                    //arr_port.remove(cbox_port_in.getValue());
+            cbox_city_out.setOnAction(actionEvent -> {
+                if(arr_city.contains(cbox_city_out.getValue())){
+                    ArrayList<Tree>arr_port1 = (Main.net.getAllTitles(cbox_country_out.getValue(), cbox_city_out.getValue()));
+                    ArrayList<String> arr = new ArrayList<>();
+                    for (ARTEM.Tree t: arr_port1){
+                        arr.add(t.title);
+                    }
+                    arr_port=FXCollections.observableArrayList(arr);
+                    if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))){
+                        //arr_port.remove(cbox_port_in.getValue());
+                    }
+
+                    cbox_port_out.setItems(arr_port);
+                    AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_out);
+
+                }else{
+                    cbox_port_out.setItems(null);
                 }
 
-                cbox_port_out.setItems(arr_port);
-                AutoComboBox.AutoCompleteComboBoxListener<String> auto_cbox_port_out = new AutoComboBox.AutoCompleteComboBoxListener<>(cbox_port_out);
+                cbox_port_out.setVisibleRowCount(3);
+                cbox_city_out.hide();
+                cbox_city_out.setVisibleRowCount(3);
 
-            }else{
-                cbox_port_out.setItems(null);
-            }
-
-            cbox_port_out.setVisibleRowCount(3);
-            cbox_city_out.hide();
-            cbox_city_out.setVisibleRowCount(3);
-
-        });
+            });
 
 
 
-        cbox_port_out.setLayoutY(186);
-        cbox_port_out.setLayoutX(649);
-        cbox_port_out.setPrefWidth(173);
-        cbox_port_out.getStylesheets().add(
-                (new File("src/YAROSLAV/size.css").toURI().toString()) );
-        cbox_port_out.setVisibleRowCount(3);
-
-
-        cbox_port_out.setPrefWidth(173);
-        cbox_port_out.setEditable(true);
-        cbox_port_out.setOnAction(actionEvent -> {
-
-
-
-            cbox_port_out.hide();
+            cbox_port_out.setLayoutY(186);
+            cbox_port_out.setLayoutX(649);
+            cbox_port_out.setPrefWidth(173);
+            cbox_port_out.getStylesheets().add(
+                    (new File("src/YAROSLAV/size.css").toURI().toString()) );
             cbox_port_out.setVisibleRowCount(3);
 
-        });
-        hours_in = new Spinner<>();
-        hours_in.getEditor().setPrefWidth(86);
-        hours_in.setLayoutX(388);
-        hours_in.setLayoutY(288);
-        SpinnerValueFactory<Integer> value_hours_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
-        hours_in.setValueFactory(value_hours_in);
-        hours_in.setEditable(true);
+
+            cbox_port_out.setPrefWidth(173);
+            cbox_port_out.setEditable(true);
+            cbox_port_out.setOnAction(actionEvent -> {
 
 
 
-        min_in = new Spinner<>();
-        min_in.setEditable(true);
-        min_in.setLayoutX(688);
-        min_in.setLayoutY(288);
-        SpinnerValueFactory<Integer> value_min_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-        min_in.getEditor().setPrefWidth(86);
-        min_in.setValueFactory(value_min_in);
+                cbox_port_out.hide();
+                cbox_port_out.setVisibleRowCount(3);
+
+            });
+            hours_in = new Spinner<>();
+            hours_in.getEditor().setPrefWidth(86);
+            hours_in.setLayoutX(388);
+            hours_in.setLayoutY(288);
+            SpinnerValueFactory<Integer> value_hours_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+            hours_in.setValueFactory(value_hours_in);
+            hours_in.setEditable(true);
+
+
+
+            min_in = new Spinner<>();
+            min_in.setEditable(true);
+            min_in.setLayoutX(688);
+            min_in.setLayoutY(288);
+            SpinnerValueFactory<Integer> value_min_in = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+            min_in.getEditor().setPrefWidth(86);
+            min_in.setValueFactory(value_min_in);
 
 
 
 
-        date_in = new DatePicker();
-        date_in.setLayoutX(85);
-        date_in.setLayoutY(288);
-        date_in.setValue(LocalDate.now());
+            date_in = new DatePicker();
+            date_in.setLayoutX(85);
+            date_in.setLayoutY(288);
+            date_in.setValue(LocalDate.now());
 
 
 
-        final Callback<DatePicker, DateCell> dayCellFactory_in =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
+            final Callback<DatePicker, DateCell> dayCellFactory_in =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
 
-                                if (item.isBefore(
-                                        LocalDate.now())
-                                ) {
-                                    setDisable(true);
-
-                                }
-                            }
-                        };
-                    }
-                };
-
-        date_in.setDayCellFactory(dayCellFactory_in);
-
-
-
-        final Callback<DatePicker, DateCell> dayCellFactory_out =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (date_in.getValue()!=null) {
                                     if (item.isBefore(
-                                            date_in.getValue())
+                                            LocalDate.now())
                                     ) {
                                         setDisable(true);
 
                                     }
                                 }
+                            };
+                        }
+                    };
 
-                            }
-                        };
-                    }
-                };
-
-
+            date_in.setDayCellFactory(dayCellFactory_in);
 
 
 
-        group.getChildren().add(cbox_country_in);
-        group.getChildren().add(cbox_city_in);
-        group.getChildren().add(cbox_port_in);
-        group.getChildren().add(cbox_country_out);
-        group.getChildren().add(cbox_city_out);
-        group.getChildren().add(cbox_port_out);
-        group.getChildren().add(date_in);
+            final Callback<DatePicker, DateCell> dayCellFactory_out =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (date_in.getValue()!=null) {
+                                        if (item.isBefore(
+                                                date_in.getValue())
+                                        ) {
+                                            setDisable(true);
 
-        group.getChildren().add(hours_in);
+                                        }
+                                    }
 
-        group.getChildren().add(min_in);
-
-        stage1.setScene(scene);
-
-
-
+                                }
+                            };
+                        }
+                    };
 
 
-        stage1.show();
+
+
+
+            group.getChildren().add(cbox_country_in);
+            group.getChildren().add(cbox_city_in);
+            group.getChildren().add(cbox_port_in);
+            group.getChildren().add(cbox_country_out);
+            group.getChildren().add(cbox_city_out);
+            group.getChildren().add(cbox_port_out);
+            group.getChildren().add(date_in);
+
+            group.getChildren().add(hours_in);
+
+            group.getChildren().add(min_in);
+
+            stage1.setScene(scene);
+
+
+
+
+
+            stage1.show();
+        }
+      catch (Exception e){
+            System.out.println(e);
+      }
     }
 
 
@@ -1031,7 +1073,13 @@ System.out.println(day_1);
             if ((cbox_city_in==null)||(!Main.net.getAllCities(cbox_country_in.getValue()).contains(cbox_city_in.getValue()))){
                 throw new Exception();
             }
-            if ((cbox_port_in == null)||(!Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){
+            ArrayList<Tree> arr1 = Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue());
+            ArrayList<String> arr2 = new ArrayList<>();
+            for (Tree t:arr1){
+                arr2.add(t.title);
+
+            }
+            if ((cbox_port_in == null)||(!arr2.contains(cbox_port_in.getValue()))){
                 throw new Exception();
             }
 
@@ -1042,7 +1090,13 @@ System.out.println(day_1);
             if ((cbox_city_out==null)||(!Main.net.getAllCities(cbox_country_out.getValue()).contains(cbox_city_out.getValue()))){
                 throw new Exception();
             }
-            if ((cbox_port_out == null)||(!Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue()).contains(cbox_port_out.getValue()))){
+             arr1 = Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue());
+             arr2 = new ArrayList<>();
+            for (Tree t:arr1){
+                arr2.add(t.title);
+
+            }
+            if ((cbox_port_out == null)||(!arr2.contains(cbox_port_out.getValue()))){
                 throw new Exception();
             }
 
@@ -1087,7 +1141,7 @@ System.out.println(day_1);
     }
     public void in_result(int id_1,int id_2, long time) {
         try {
-            ArrayList<ArrayList<String>> info = Main.net.search(id_1,id_2,time);
+            ArrayList<String> info =Main.net.search(id_1,id_2,time);
             System.out.println(info);
             System.out.println(id_1);
             System.out.println(id_2);
@@ -1107,7 +1161,10 @@ System.out.println(day_1);
             stage1.setResizable(false);
             group.getChildren().add(root);
             stage1.setScene(scene);
+            int iPlus = 0;
+            //TODO: По айПласу размещать клолонки
             if ((info!=null)&&(info.size()!=0)) {
+                int sizeOpt = Integer.parseInt(info.get(0)), sizeSpeed = Integer.parseInt(info.get(1)), sizePrice = Integer.parseInt(info.get(2));
 
                 Text text_optimal = new Text("Самый оптимальный маршрут:\n");
                 text_optimal.setStyle("-fx-font-size:25;" +

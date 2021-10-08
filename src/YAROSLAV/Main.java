@@ -52,6 +52,7 @@ public class Main extends Application {
     public static Stage stage;
     public static Stage stage_back;
     public static Network net ;
+
     public static void main(String[] args)  {
         net = new Network();
 
@@ -63,13 +64,43 @@ public class Main extends Application {
 
 
 
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage s) throws Exception {
 
-        stage = new Stage();
-        stage= primaryStage;
         try {
+         MyController.stage = new Stage();
+            Main.net.loadData();
+            MyController.stage.centerOnScreen();
+            Group group = new Group();
+            Scene scene = new Scene(group, 330, 289);
+            MyController.stage.setResizable(false);
 
-            net.loadData();
+                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\login.fxml").toURI().toURL()));
+                BorderPane root = new BorderPane();
+                root.getChildren().add(content);
+
+            AnchorPane pane = new AnchorPane();
+            pane.setPrefWidth(330);
+            pane.setPrefHeight(170);
+            pane.setLayoutX(0);
+            pane.setLayoutY(0);
+
+            MyController.login = new TextField();
+            MyController.login.setLayoutX(110);
+            MyController.login.setLayoutY(90);
+            MyController.login.setPrefWidth(206);
+            MyController.login.setPrefHeight(27);
+            pane.getChildren().add(MyController.login);
+            MyController.password = new PasswordField();
+            MyController.password.setLayoutX(110);
+            MyController.password.setLayoutY(160);
+            MyController.password.setPrefWidth(206);
+            MyController.password.setPrefHeight(27);
+            pane.getChildren().add(MyController.password);
+            group.getChildren().add(root);
+            group.getChildren().add(pane);
+            MyController.stage.setScene(scene);
+            MyController.stage.show();
+
         }
         catch(Exception e){
             Stage  stage2 = new Stage();
@@ -86,24 +117,6 @@ public class Main extends Application {
             stage2.setScene(scene);
             stage2.show();
         }
-        primaryStage.centerOnScreen();
-        Group group = new Group();
-        Scene scene= new Scene(group,1280, 800);
-        primaryStage.setResizable(false);
-        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\main1.fxml" ).toURI().toURL()));
-        BorderPane root= new BorderPane();
-        root.getChildren().add(content);
-
-        group.getChildren().add(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-
-
-
-
-
-
 
     }
 

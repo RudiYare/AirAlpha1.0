@@ -26,6 +26,9 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,12 +59,14 @@ public class MyController implements Initializable {
     ObservableList<String> arr_port =  FXCollections.observableArrayList();
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public static  PasswordField password;
     public static  ComboBox<String> country_box;
     public static  ComboBox<String> city_box;
     public static  ComboBox<String> port_box;
-
+    public static TextField login;
     public static long date_1;
     public static long date_2;
+    public static boolean admin;
     public static ComboBox <String> cbox_country_out;
     public static ComboBox <String> cbox_country_in;
     public static ComboBox <String> cbox_city_out;
@@ -80,20 +85,8 @@ public class MyController implements Initializable {
     public void screen(String str){
         System.out.println(str);
     }
-    public void in_password() throws Exception{
-        stage = new Stage();
-        Group group = new Group();
-        Scene scene= new Scene(group,292, 122);
-        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\pasw.fxml" ).toURI().toURL()));
-        BorderPane root= new BorderPane();
-        stage.centerOnScreen();
-        root.setCenter(content);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(Main.stage);
-        stage.setResizable(false);
-        group.getChildren().add(root);
-        stage.setScene(scene);
-        stage.show();
+    public void in_password() throws Exception{stage.close();
+in_editor();
     }
 
     public void check_password() throws Exception {
@@ -117,10 +110,10 @@ public class MyController implements Initializable {
     }
     public void back_from_editor_to_main() {
             stage.close();
-            Main.stage.show();
+adminMenu();
         }
     public void in_editor () throws Exception{
-        Main.stage.close();
+        //Main.stage.close();
         Group group = new Group();
         Scene scene = new Scene(group, 1280, 800);
         Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\editor.fxml").toURI().toURL()));
@@ -1446,6 +1439,17 @@ public void map_result() {
         pane.setLayoutX(0);
         pane.setLayoutY(92);
         pane.setPrefHeight(710);
+        Button_Map_Result one = new Button_Map_Result(1);
+        one.set_XY(100,100);
+        Button_Map_Result two = new Button_Map_Result(2);
+        two.set_XY(500,300);
+        Line line = new Line();
+        Path path = new Path();
+
+     one.set_line(pane,two.get_x(),two.get_y());
+pane.getChildren().add(one.get_button());
+pane.getChildren().add(two.get_button());
+pane.getChildren().add(line);
         group.getChildren().add(root);
 
 
@@ -1457,7 +1461,51 @@ public void map_result() {
 
     }
 }
-    @Override
+public void inLogIn(){
+
+    if((password.getText().equals("admin"))&&(login.getText().equals("admin"))){
+stage.close(); admin = true;
+        adminMenu();
+    }else{
+        try {
+            stage.close();
+            admin = false;
+            in_search_way();
+
+        }catch (Exception e){
+
+        }
+    }
+}
+public void adminMenu(){
+    stage = new Stage();
+    Stage primaryStage = stage;
+
+
+    primaryStage.centerOnScreen();
+    Group group = new Group();
+    Scene scene= new Scene(group,1280, 800);
+    primaryStage.setResizable(false);
+    try {
+        Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\main1.fxml").toURI().toURL()));
+        BorderPane root = new BorderPane();
+        root.getChildren().add(content);
+
+        group.getChildren().add(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    catch (Exception e){
+
+    }
+
+
+
+
+
+
+}
+@Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 

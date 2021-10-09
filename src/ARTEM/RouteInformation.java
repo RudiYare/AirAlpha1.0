@@ -64,6 +64,7 @@ public class RouteInformation {
             flight_price += timeline.getPrice();
         }
 
+
         flight.from = net.getAirportInformationAsString(starting_airport);
         flight.where = net.getAirportInformationAsString(finishing_airport);
         flight.flight_time = Long.toString(flight_time / 1000 / 3600) + " ч. " + Long.toString((flight_time / 60000) % 60) + " мин.";

@@ -433,7 +433,7 @@ public class Network {
         String line;
         while ((line = input.readLine()) != null) {
             String[] airport = line.split(",");
-            boolean k = this.addNewAirport(airport[1].replaceAll("\"", ""), airport[2].replaceAll("\"", ""), airport[3].replaceAll("\"", ""), (int)(Math.random() * 360), (int)(Math.random() * 180));
+            boolean k = this.addNewAirport(airport[1].replaceAll("\"", ""), airport[2].replaceAll("\"", ""), airport[3].replaceAll("\"", ""), (int)(Math.random() * 1200), (int)(Math.random() * 700));
         }
         ArrayList<Integer> airport_IDs = new ArrayList<>();
         for (var airport : airports.entrySet()) {

@@ -1,5 +1,6 @@
 package YAROSLAV;
 
+import ARTEM.Flight;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -79,8 +80,8 @@ return  y;
     public Button get_button() {
         return button;
     }
-    public void set_action(ArrayList<String> info) {
-        if (info.size() > 12) {
+    public void set_action(ArrayList<Flight> flights) {
+
             button.setOnAction(actionEvent -> {
 
                 try {
@@ -111,21 +112,19 @@ return  y;
                     text.setFont(Font.font(15));
                     String t = "";
                     int j = 7;
-                    for (int i = 0; i < Integer.parseInt(info.get(6))+1; i++) {
-                        t += String.valueOf(i + 1) + ") ";
-                        t += "Откуда: " + info.get(j) + "\n";
-                        j++;
-                        t += "Куда: " + info.get(j) + "\n";
-                        j++;
-                        t += "Дата отправления: " + info.get(j) + "\n";
-                        j++;
-                        t += "Дата прибытия: " + info.get(j) + "\n";
-                        j++;
-                        t += "Стоимость: " + info.get(j) + "\n";
-                        j++;
-                        t += "\n";
+                    int i = 1;
+
+                    for (Flight flight : flights){
+                        t += String.valueOf(i ) + ") ";
+                        t += "Откуда: " + flight.from + "\n";
+                        t += "Куда: " + flight.where + "\n";
+                        t += "Дата отправления: " + flight.time_from+ "\n";
+                        t += "Дата прибытия: " + flight.time_where + "\n";
+                        t += "Стоимость: " + flight.price + "\n";  t += "\n";
+                        i++;
                     }
-text.setText(t);
+
+                    text.setText(t);
                     text.setLayoutY(25);
                     text.setLayoutX(10);
                     text.setFont(Font.font(20));
@@ -140,7 +139,7 @@ text.setText(t);
                 }
             });
         }
-    }
+
     public void set_text() {
         AnchorPane pane = new AnchorPane();
         pane.setMaxWidth(550);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import ARTEM.Flight;
 import ARTEM.Tree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -1141,7 +1142,8 @@ System.out.println(day_1);
     }
     public void in_result(int id_1,int id_2, long time) {
         try {
-            ArrayList<String> info =Main.net.search(id_1,id_2,time);
+
+            ArrayList<ArrayList<Flight>> info =Main.net.search(id_1,id_2,time);
             System.out.println(info);
             System.out.println(id_1);
             System.out.println(id_2);
@@ -1161,10 +1163,10 @@ System.out.println(day_1);
             stage1.setResizable(false);
             group.getChildren().add(root);
             stage1.setScene(scene);
-            int iPlus = 0;
+            int iPlus = 75;
             //TODO: По айПласу размещать клолонки
             if ((info!=null)&&(info.size()!=0)) {
-                int sizeOpt = Integer.parseInt(info.get(0)), sizeSpeed = Integer.parseInt(info.get(1)), sizePrice = Integer.parseInt(info.get(2));
+                ArrayList<Flight> arrOpt = info.get(0), arrSpeed = info.get(1), arrMoney= info.get(2);
 
                 Text text_optimal = new Text("Самый оптимальный маршрут:\n");
                 text_optimal.setStyle("-fx-font-size:25;" +
@@ -1173,33 +1175,44 @@ System.out.println(day_1);
                 text_optimal.setFill(Color.RED);
                 text_optimal.setX(100);
                 text_optimal.setY(40);
-
+                Info_button button;
                 AnchorPane pane = new AnchorPane();
                 pane.getChildren().add(text_optimal);
 
+                for ( Flight flight : arrOpt){
+                    button = new Info_button();
+                    button.set_button_XY(100, iPlus);
+                    button.set_info_out(flight.from);
 
-                Info_button button = new Info_button();
-                button.set_button_XY(100, 75);
-                temp_info = new ArrayList();
-                temp_info = info.get(2);
+                    button.set_info_in(flight.where);
+                    button.set_time_fly(flight.flight_time);
+                    button.set_price(flight.price);
+                    button.set_time_in(flight.time_from);
+                    button.set_time_out(flight.time_where);
+                    button.set_transfer(Integer.toString(flight.transfers.size()));
+                    if (flight.transfers.size()!=1){
+                        button.set_action(flight.transfers);
+                    }
 
-                button.set_info_out(temp_info.get(0));
-                button.set_info_in(temp_info.get(1));
-                button.set_time_fly(temp_info.get(2));
-                button.set_price(temp_info.get(3));
-                button.set_time_in(temp_info.get(4));
-                button.set_time_out(temp_info.get(5));
-                button.set_transfer(temp_info.get(6));
-                button.set_action(temp_info);
-                button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
-                button.set_text();
-                pane.getChildren().add(button.get_button());
+                    button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
+                    button.set_text();
+                    iPlus += button.get_height();
+                    pane.getChildren().add(button.get_button());
+                }
+
+
+
+
+
+
+
+
                 text_optimal = new Text("Самый быстрый маршрут:\n");
                 text_optimal.setStyle("-fx-font-size:25;" +
                         " ");
 
                 text_optimal.setX(100);
-                text_optimal.setY(button.get_height());
+           /*     text_optimal.setY(button.get_height());
 
 
                 text_optimal.setFill(Color.BLUE);
@@ -1291,7 +1304,7 @@ System.out.println(day_1);
                     }
                     pane.getChildren().add(grid);
 
-                }
+                } */
                 javafx.scene.control.ScrollPane scrollPane = new ScrollPane(pane);
                 scrollPane.setPrefWidth(834);
                 scrollPane.setStyle("-fx-background:white;");
@@ -1312,6 +1325,7 @@ System.out.println(day_1);
                 text_optimal.setX(100);
                 text_optimal.setY(300);
                 group.getChildren().add(text_optimal);
+
             }
 
             stage1.show();
@@ -1451,7 +1465,7 @@ pane_up.getChildren().add(date_in);
 
 pane_up.getChildren().add(hours_in);
 pane_up.getChildren().add(min_in);
-ArrayList<ArrayList<Double>> list = Main.net.tempPoints();
+ArrayList<ArrayList<Double>> list = null;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 for (var el : list ){
     Map_but_in but = new Map_but_in(text_in,text_out);
     but.set_XY(el.get(0),el.get(1)+400);

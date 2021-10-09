@@ -27,7 +27,9 @@ public class RouteInformation {
         this.starting_time = starting_time;
     }
 
-    private void addNewDateToRoute(Timestamp date) {
+    Flight flight;
+
+    private String addNewDateToRoute(Timestamp date) {
         String year; String month; String day; String hours; String minute;
         year = Integer.toString(date.toLocalDateTime().getYear());
         if (date.toLocalDateTime().getMonth().getValue() < 10) {
@@ -50,34 +52,32 @@ public class RouteInformation {
         } else {
             minute = Integer.toString(date.toLocalDateTime().getMinute());
         }
-        result.add(day + "." + month + "." + year + " " + hours + ":" + minute);
+        return (year + " " + month + " " + day + " " + hours + ":" + minute);
     }
-    public ArrayList<String> init(Network net) {
-        result = new ArrayList<>();
-        result.add(net.getAirportInformationAsString(starting_airport));
-        result.add(net.getAirportInformationAsString(finishing_airport));
+    public Flight init(Network net) {
+        flight = new Flight();
+
         long flight_time = transfer_time.get(0).getValue() - starting_time;
-        result.add(Long.toString(flight_time / 1000 / 3600) + " ч. " + Long.toString((flight_time / 60000) % 60) + " мин.");
+
         double flight_price = 0;
         for (Timeline timeline : transfers) {
             flight_price += timeline.getPrice();
         }
-        result.add(Double.toString(Math.round(flight_price * 100) / 100.0));
-        Timestamp date;
 
-        date = new Timestamp(transfer_time.get(transfer_time.size() - 1).getKey());
-        addNewDateToRoute(date);
-        date = new Timestamp(transfer_time.get(0).getValue());
-        addNewDateToRoute(date);
-        result.add(Integer.toString(transfers.size() - 1));
+        flight.from = net.getAirportInformationAsString(starting_airport);
+        flight.where = net.getAirportInformationAsString(finishing_airport);
+        flight.flight_time = Long.toString(flight_time / 1000 / 3600) + " ч. " + Long.toString((flight_time / 60000) % 60) + " мин.";
+        flight.price = Double.toString(Math.round(flight_price * 100) / 100.0);
+        flight.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - 1).getKey()));
+        flight.time_where = addNewDateToRoute(new Timestamp(transfer_time.get(0).getValue()));
+        flight.transfers = new ArrayList<>();
 
         for (int transfer = 0; transfer < transfers.size(); transfer++) {
-            result.add(net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport()));
-            result.add(net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport()));
-            date = new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getKey());
-            addNewDateToRoute(date);
-            date = new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue());
-            addNewDateToRoute(date);
+            Flight t = new Flight();
+            t.from = net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport());
+            t.where = net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport());
+            t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getKey()));
+            t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue()));
             result.add(Double.toString(Math.round((transfers.get(transfer).getPrice() * 100) / 100.0)));
         }
         return result;

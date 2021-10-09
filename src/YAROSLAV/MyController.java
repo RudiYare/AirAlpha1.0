@@ -1518,19 +1518,14 @@ pane_up.getChildren().add(date_in);
 
 pane_up.getChildren().add(hours_in);
 pane_up.getChildren().add(min_in);
-ArrayList<ArrayList<Double>> list = null;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-for (var el : list ){
-    Map_but_in but = new Map_but_in(text_in,text_out);
-    but.set_XY(el.get(0),el.get(1)+400);
-    but.set_button_info("ERerewr");
-    pane.getChildren().add(but.get_button());
-
-
+ArrayList<Tree> listTree = Main.net.getAllAirports();Map_but_in but;
+for (Tree tree : listTree){
+    but = new Map_but_in(text_in,text_out);
+    but.set_XY(tree.x,tree.y);
+    but.set_button_info(tree.title);   pane.getChildren().add(but.get_button());
 }
-        Map_but_in but = new Map_but_in(text_in,text_out);
-        but.set_button_info("ДНР");
-        but.set_XY(600,200);
-        pane.getChildren().add(but.get_button());
+
+
     group.getChildren().add(root);
 
 

@@ -26,8 +26,8 @@ public class Map_but_in {
         button.setMaxHeight(8);
         button.setMinWidth(8);
         style = "-fx-background-radius:20; " +
-                "-fx-border-radius:20;" +
-                "-fx-background-color: blue;"+"-fx-cursor:hand;";
+                "-fx-border-radius:20;" +"-fx-border-color: black;"+"-fx-border-width:1;"+
+                "-fx-background-color: white;"+"-fx-cursor:hand;";
    button.setStyle(style);
 
 

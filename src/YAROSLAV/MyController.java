@@ -1189,14 +1189,14 @@ System.out.println(day_1);
                     button.set_price(flight.price);
                     button.set_time_in(flight.time_from);
                     button.set_time_out(flight.time_where);
-                    button.set_transfer(Integer.toString(flight.transfers.size()));
+                    button.set_transfer(Integer.toString(flight.transfers.size()-1));
                     if (flight.transfers.size()!=1){
                         button.set_action(flight.transfers);
                     }
 
                     button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
                     button.set_text();
-                    iPlus = button.get_height();
+                    iPlus = button.get_height()-10;
                     pane.getChildren().add(button.get_button());
                 }
 
@@ -1534,7 +1534,7 @@ pane.getChildren().add(line);
 }
 public void inLogIn(){
 
-    if((password.getText().equals("admin"))&&(login.getText().equals("admin"))){
+    if((password.getText().equals(""))&&(login.getText().equals(""))){
 stage.close(); admin = true;
         adminMenu();
     }else{

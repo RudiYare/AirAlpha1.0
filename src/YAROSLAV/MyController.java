@@ -1163,7 +1163,7 @@ System.out.println(day_1);
             stage1.setResizable(false);
             group.getChildren().add(root);
             stage1.setScene(scene);
-            int iPlus = 75;
+     double iPlus = 75;
             //TODO: По айПласу размещать клолонки
             if ((info!=null)&&(info.size()!=0)) {
                 ArrayList<Flight> arrOpt = info.get(0), arrSpeed = info.get(1), arrMoney= info.get(2);
@@ -1196,7 +1196,7 @@ System.out.println(day_1);
 
                     button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
                     button.set_text();
-                    iPlus += button.get_height();
+                    iPlus = button.get_height();
                     pane.getChildren().add(button.get_button());
                 }
 

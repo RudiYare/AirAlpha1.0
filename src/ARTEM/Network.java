@@ -310,27 +310,27 @@ public class Network {
     public ArrayList<Timeline> getAllTimelinesInAirport(int starting_airport) {
         return this.timelines.containsKey(starting_airport) ? (ArrayList)this.timelines.get(starting_airport) : new ArrayList();
     }
-    public ArrayList<String> search(int starting_airport, int finishing_airport, long starting_time) {
+    public ArrayList<ArrayList<Flight>> search(int starting_airport, int finishing_airport, long starting_time) {
         Graph g = new Graph(this.timelines);
-        ArrayList<String> answer = new ArrayList<>();
-        if (starting_airport == -1 || finishing_airport == -1) return answer;
+        ArrayList<ArrayList<Flight>> answer = new ArrayList<>();
+        answer.add(new ArrayList<>());
+        answer.add(new ArrayList<>());
+        answer.add(new ArrayList<>());
+        if (starting_airport == -1 || finishing_airport == -1) return null;
         ArrayList<RouteInformation> fastest = g.findOptimalTimeTimeline(starting_airport, finishing_airport, starting_time);
         ArrayList<RouteInformation> cheapest = g.findOptimalPriceTimeline(starting_airport, finishing_airport, starting_time);
         ArrayList<RouteInformation> optimal = g.findOptimalTimeline(starting_airport, finishing_airport, starting_time);
         if (fastest == null) {
-            return answer;
+            return null;
         }
-        answer.add("" + optimal.size());
-        answer.add("" + fastest.size());
-        answer.add("" + cheapest.size());
         for (var x : optimal) {
-            answer.addAll(x.init(this));
+            answer.get(0).add(x.init(this));
         }
         for (var x : fastest) {
-            answer.addAll(x.init(this));
+            answer.get(1).add(x.init(this));
         }
         for (var x : cheapest) {
-            answer.addAll(x.init(this));
+            answer.get(2).add(x.init(this));
         }
 
         return answer;

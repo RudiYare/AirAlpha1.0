@@ -1212,11 +1212,64 @@ System.out.println(day_1);
                         " ");
 
                 text_optimal.setX(100);
-           /*     text_optimal.setY(button.get_height());
+                iPlus+=20;
+          text_optimal.setY(iPlus);
 
-
+                iPlus+=20;
                 text_optimal.setFill(Color.BLUE);
                 pane.getChildren().add(text_optimal);
+                for ( Flight flight : arrSpeed){
+                    button = new Info_button();
+                    button.set_button_XY(100, iPlus);
+                    button.set_info_out(flight.from);
+
+                    button.set_info_in(flight.where);
+                    button.set_time_fly(flight.flight_time);
+                    button.set_price(flight.price);
+                    button.set_time_in(flight.time_from);
+                    button.set_time_out(flight.time_where);
+                    button.set_transfer(Integer.toString(flight.transfers.size()-1));
+                    if (flight.transfers.size()!=1){
+                        button.set_action(flight.transfers);
+                    }
+
+                    button.set_style(" -fx-border-color: blue;", " -fx-border-color: blue; -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);");
+                    button.set_text();
+                    iPlus = button.get_height()-10;
+                    pane.getChildren().add(button.get_button());
+                }
+                text_optimal = new Text("Самый дешевый маршрут: ");
+                text_optimal.setStyle("-fx-font-size:25;" +
+                        " ");
+                iPlus+=20;
+                text_optimal.setX(100);
+                text_optimal.setY(iPlus);  iPlus+=20;
+                text_optimal.setFill(Color.web("#32CD32"));
+                pane.getChildren().add(text_optimal);
+                for ( Flight flight : arrMoney){
+                    button = new Info_button();
+                    button.set_button_XY(100, iPlus);
+                    button.set_info_out(flight.from);
+
+                    button.set_info_in(flight.where);
+                    button.set_time_fly(flight.flight_time);
+                    button.set_price(flight.price);
+                    button.set_time_in(flight.time_from);
+                    button.set_time_out(flight.time_where);
+                    button.set_transfer(Integer.toString(flight.transfers.size()-1));
+                    if (flight.transfers.size()!=1){
+                        button.set_action(flight.transfers);
+                    }
+
+
+                    button.set_style(" -fx-border-color: #32CD32;", " -fx-border-color: #32CD32; -fx-effect: dropshadow( three-pass-box, #00FF00  , 10.0, 0.0,0.0,0.0);");
+
+                    button.set_text();
+                    iPlus = button.get_height()-10;
+                    pane.getChildren().add(button.get_button());
+                }
+
+                 /*
                 button = new Info_button();
                 button.set_button_XY(100, text_optimal.getY() + 25);
 
@@ -1234,7 +1287,7 @@ System.out.println(day_1);
 
                 button.set_text();
 
-                button.set_style(" -fx-border-color: blue;", " -fx-border-color: blue; -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);");
+               button.set_style(" -fx-border-color: #32CD32;", " -fx-border-color: #32CD32; -fx-effect: dropshadow( three-pass-box, #00FF00  , 10.0, 0.0,0.0,0.0);");
 
                 pane.getChildren().add(button.get_button());
                 text_optimal = new Text("Самый дешевый маршрут: ");

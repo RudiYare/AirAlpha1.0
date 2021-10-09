@@ -26,6 +26,37 @@ public class RouteInformation {
         this.transfer_time = transfer_time;
         this.starting_time = starting_time;
     }
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        int MOD = (int)(1e9 + 7);
+        hash += (starting_airport) % MOD; hash %= MOD;
+        hash += (finishing_airport) % MOD; hash %= MOD;
+        hash += (starting_time) % MOD; hash %= MOD;
+        hash += (transfers.size()) % MOD; hash %= MOD;
+        for (Timeline x : transfers) {
+            hash += (x.getStartingAirport()) % MOD; hash %= MOD;
+            hash += (x.getFinishingAirport()) % MOD; hash %= MOD;
+            hash += (x.getStartingTime()) % MOD; hash %= MOD;
+            hash += (x.getFlightTime()) % MOD; hash %= MOD;
+        }
+        System.out.println(hash);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        RouteInformation other = (RouteInformation) obj;
+        if (starting_airport != other.starting_airport)
+            return false;
+        if (finishing_airport != other.finishing_airport)
+            return false;
+        if (starting_time != other.starting_time)
+            return false;
+        if (transfers.size() != other.transfers.size())
+            return false;
+        return true;
+    }
 
     Flight flight;
 

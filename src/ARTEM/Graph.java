@@ -46,7 +46,6 @@ public class Graph {
     Set<RouteInformation> cheapest_routes = new HashSet<>();
 
     private void getWayBack(ArrayList<Timeline> prev, ArrayList<Pair<Long, Long>> prev_times, int u, int starting_airport, int finishing_airport, long starting_time, int type) {
-        System.out.println("p " + u + " " + starting_airport);
         ArrayList<Timeline> current = new ArrayList<>(prev);
         ArrayList<Pair<Long, Long>> curr_times = new ArrayList<>(prev_times);
         if (prev.size() > 0 && prev.get(prev.size() - 1).getStartingAirport() == starting_airport) {
@@ -215,6 +214,7 @@ public class Graph {
 
         getWayBack(new ArrayList<>(), new ArrayList<>(), finishing_airport, starting_airport, finishing_airport, starting_time, 1);
         System.out.println(optimal_routes.size());
+
         ArrayList<RouteInformation> routes = new ArrayList<>();
         routes.addAll(optimal_routes);
         return routes;

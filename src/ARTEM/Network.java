@@ -71,7 +71,6 @@ public class Network {
             this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
         }
-        System.out.println(title + " " + actual_title.ID);
         return !isFound;
     }
     public boolean addNewAirport(String title, String city, String country, int ID, double x, double y) {
@@ -110,8 +109,10 @@ public class Network {
             this.airports.put(ID, actual_title);
             actual_city.children.add(actual_title);
         }
-        System.out.println(title + " " + actual_title.ID);
         return !isFound;
+    }
+    private void transformAirportPointData(Tree airport) {
+
     }
     public ArrayList<String> getAllCountries() {
         ArrayList<String> titles = new ArrayList();
@@ -463,35 +464,15 @@ public class Network {
         airports = new HashMap();
         timelines = new HashMap();
     }
-    public ArrayList<ArrayList<Double>> tempPoints() {
-        ArrayList<ArrayList<Double>> res = new ArrayList<>();
-        double k = 641.0 / 173.0; int l = 3;
-        double x, ans; ArrayList<Double> r;
-                x = 49;
-        ans = ((x + l) * k) + 600;
-        r = new ArrayList<>();
-        r.add(ans); r.add(0.0);
-        res.add(r);
-
-        x = 142.5;
-        ans = ((x + l) * k) + 600;
-        r = new ArrayList<>();
-        r.add(ans); r.add(0.0);
-        res.add(r);
-
-        x = -81.5;
-        ans = ((x + l) * k) + 600;
-        r = new ArrayList<>();
-        r.add(ans); r.add(0.0);
-        res.add(r);
-
-        x = 0;
-        ans = ((x + l) * k) + 600;
-        r = new ArrayList<>();
-        r.add(ans); r.add(0.0);
-        res.add(r);
-
-        System.out.println(k + " " + ans);
+    public ArrayList<Tree> getAllAirports() {
+        ArrayList<Tree> res = new ArrayList<>();
+        for (var country : getAllCountries()) {
+            for (var city : getAllCities(country)) {
+                for (var airport : getAllTitles(country, city)) {
+                    res.add(airport);
+                }
+            }
+        }
         return res;
     }
 

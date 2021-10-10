@@ -26,7 +26,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
@@ -1528,7 +1527,10 @@ scrollPane.setPrefHeight(710);
 
 scrollPane.setLayoutX(0);
 scrollPane.setLayoutY(92);
-paneMap.getChildren().add(new ImageView("src/YAROSLAV/map.jpg"));
+        ImageView imageMap = new ImageView(new File("src/YAROSLAV/map1.jpg").toURI().toURL().toString());
+        imageMap.setFitWidth(2560);
+imageMap.setFitHeight(1440);
+paneMap.getChildren().add(imageMap);
         ArrayList<Tree> listTree = Main.net.getAllAirports();Map_but_in but;
         for (Tree tree : listTree){
             but = new Map_but_in(text_in,text_out);

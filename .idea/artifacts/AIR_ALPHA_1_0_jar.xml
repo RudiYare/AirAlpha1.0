@@ -1,0 +1,41 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AIR ALPHA 1.0:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AIR_ALPHA_1_0_jar</output-path>
+    <root id="archive" name="AIR ALPHA 1.0.jar">
+      <element id="module-output" name="AIR ALPHA 1.0" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/16/javafx-fxml-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/16/javafx-fxml-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16/javafx-controls-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/16/javafx-controls-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16/javafx-graphics-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/16/javafx-graphics-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16/javafx-base-16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/16/javafx-base-16-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/javafx-sdk-16/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/src.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Новая папка/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FIX$/lib/javafx.media.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

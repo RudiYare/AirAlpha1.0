@@ -26,6 +26,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -1518,24 +1520,32 @@ pane_up.getChildren().add(date_in);
 
 pane_up.getChildren().add(hours_in);
 pane_up.getChildren().add(min_in);
-ArrayList<Tree> listTree = Main.net.getAllAirports();Map_but_in but;
-for (Tree tree : listTree){
-    but = new Map_but_in(text_in,text_out);
-    but.set_XY(tree.x,tree.y);
-    but.set_button_info(tree.title);   pane.getChildren().add(but.get_button());
-}
 
+AnchorPane paneMap = new AnchorPane();
+     ScrollPane scrollPane = new ScrollPane(paneMap);
+scrollPane.setPrefWidth(1280);
+scrollPane.setPrefHeight(710);
+
+scrollPane.setLayoutX(0);
+scrollPane.setLayoutY(92);
+paneMap.getChildren().add(new ImageView("src/YAROSLAV/map.jpg"));
+        ArrayList<Tree> listTree = Main.net.getAllAirports();Map_but_in but;
+        for (Tree tree : listTree){
+            but = new Map_but_in(text_in,text_out);
+            but.set_XY(tree.x,tree.y);
+            but.set_button_info(tree.title);   paneMap.getChildren().add(but.get_button());
+        }
 
     group.getChildren().add(root);
 
 
     group.getChildren().add(pane_up);
-    group.getChildren().add(pane);
+    group.getChildren().add(scrollPane);
     stage.setScene(scene);
     stage.show();
     }
     catch (Exception e){
-
+        System.out.println(e);
     }
 }
 public void map_result() {

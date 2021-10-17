@@ -53,6 +53,7 @@ public class Network {
         }
 
         Tree actual_title = new Tree(actual_city, title, x, y);
+        actual_title.info = country + ", " + city + ", " + title;
         isFound = false;
         for (var t : actual_city.children) {
             if (t.title.equals(title)) {
@@ -96,6 +97,7 @@ public class Network {
         }
 
         Tree actual_title = new Tree(actual_city, title, x, y);
+        actual_title.info = country + ", " + city + ", " + title;
         isFound = false;
         for (var t : actual_city.children) {
             if (t.title.equals(title)) {

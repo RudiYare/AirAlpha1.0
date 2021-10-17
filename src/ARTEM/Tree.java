@@ -6,6 +6,7 @@ public class Tree {
     public ArrayList<Tree> children;
     public Tree parent;
     public String title;
+    public String info;
     public Double x;
     public Double y;
     public int ID;

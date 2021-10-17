@@ -19,6 +19,16 @@ public class Tree {
         this.y = null;
     }
 
+    public Tree(Tree tree) {
+        this.parent = tree.parent;
+        this.title = tree.title;
+        this.info = tree.info;
+        this.x = tree.x;
+        this.y = tree.y;
+        this.ID = tree.ID;
+        this.children = tree.children;
+    }
+
     public Tree(Tree parent, String title, double x, double y) {
         this.parent = parent;
         this.title = title;

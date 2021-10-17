@@ -29,7 +29,6 @@ public class Network {
         airports = new HashMap();
         timelines = new HashMap();
     }
-
     public boolean addNewAirport(String title, String city, String country, double x, double y) {
         Tree actual_country = new Tree((Tree)null, country, x, y);
         for (var t : this.countries) {
@@ -52,6 +51,8 @@ public class Network {
             actual_country.children.add(actual_city);
         }
 
+        var point = transformAirportPointData(x, y);
+        x = point.getKey(); y = point.getValue();
         Tree actual_title = new Tree(actual_city, title, x, y);
         actual_title.info = country + ", " + city + ", " + title;
         isFound = false;
@@ -113,8 +114,10 @@ public class Network {
         }
         return !isFound;
     }
-    private void transformAirportPointData(Tree airport) {
-
+    private Pair<Double, Double> transformAirportPointData(double x, double y) {
+        x = 1270 + Math.pow(x, 0.996) * 7.2;
+        y = 1000 - Math.pow(y, 1.26) * 2.7;
+        return new Pair<>(x, y);
     }
     public ArrayList<String> getAllCountries() {
         ArrayList<String> titles = new ArrayList();
@@ -471,7 +474,15 @@ public class Network {
         for (var country : getAllCountries()) {
             for (var city : getAllCities(country)) {
                 for (var airport : getAllTitles(country, city)) {
-                    res.add(airport);
+                    /*for (int i = 0; i < 100; i++) {
+                        Tree n = new Tree(airport);
+                        n.x = 1000.0;
+                        n.y = 15.0 * i;
+                        n.info = Integer.toString(15 * i);
+                        res.add(n);
+                    }*/
+                    Tree n = new Tree(airport);;
+                    res.add(n);
                 }
             }
         }

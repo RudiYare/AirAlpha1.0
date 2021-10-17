@@ -125,7 +125,7 @@ adminMenu();
         //////////////////////////
    name = new NameTextField();
    name.setLayoutX(125);
-   name.setLayoutY(87);
+   name.setLayoutY(213);
    name.setPrefWidth(195);
    city = new NameTextField();
         city.setLayoutX(125);
@@ -133,7 +133,7 @@ adminMenu();
         city.setPrefWidth(195);
         country = new NameTextField();
         country.setLayoutX(125);
-        country.setLayoutY(213);
+        country.setLayoutY(87);
         country.setPrefWidth(195);
         x = new XY_TextField();
         x.setLayoutX(125);

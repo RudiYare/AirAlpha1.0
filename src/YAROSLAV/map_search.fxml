@@ -56,7 +56,7 @@
                   </AnchorPane>
                </graphic>
             </Button>
-            <Button id="rich-blue" alignment="CENTER" contentDisplay="BOTTOM" layoutX="1070.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#map_result" prefHeight="79.0" prefWidth="177.0" style="-fx-background-color: #4569d6; -fx-border-color: #4569d6; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" stylesheets="@style.css" textAlignment="CENTER" wrapText="true">
+            <Button id="rich-blue" alignment="CENTER" contentDisplay="BOTTOM" layoutX="1070.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#runMapCheck" prefHeight="79.0" prefWidth="177.0" style="-fx-background-color: #4569d6; -fx-border-color: #4569d6; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" stylesheets="@style.css" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="TechnicBold" size="24.0" />
                </font>

@@ -12,7 +12,7 @@ public class Button_Map_Result {
     Button_Map_Result(int i){
         button = new Button();
 
-        //button.setText(Integer.toString(i));
+        button.setText(Integer.toString(i));
         button.setPrefWidth(15);
         button.setPrefHeight(15);
         button.setMinHeight(15);
@@ -21,7 +21,7 @@ public class Button_Map_Result {
         button.setMinWidth(15);
         style = "-fx-background-radius:20; " +
                 "-fx-border-radius:20;" +
-                "-fx-background-color: blue;"+"-fx-cursor:hand;";
+                "-fx-background-color: white;"+"-fx-cursor:hand;-fx-border-width:2; -fx-border-color:white";
         button.setStyle(style);
     }
     public void set_XY(double x, double y){

@@ -1067,12 +1067,16 @@ System.out.println(day_1);
             }
 
             if ((cbox_country_in == null)){
+
                 throw new Exception();
             }
             if (!Main.net.getAllCountries().contains(cbox_country_in.getValue())){
+
                 throw new Exception();
             }
+
             if ((cbox_city_in==null)||(!Main.net.getAllCities(cbox_country_in.getValue()).contains(cbox_city_in.getValue()))){
+
                 throw new Exception();
             }
             ArrayList<Tree> arr1 = Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue());
@@ -1082,14 +1086,17 @@ System.out.println(day_1);
 
             }
             if ((cbox_port_in == null)||(!arr2.contains(cbox_port_in.getValue()))){
+
                 throw new Exception();
             }
 
 
             if ((cbox_country_out == null)||(!Main.net.getAllCountries().contains(cbox_country_out.getValue()))){
+
                 throw new Exception();
             }
             if ((cbox_city_out==null)||(!Main.net.getAllCities(cbox_country_out.getValue()).contains(cbox_city_out.getValue()))){
+
                 throw new Exception();
             }
              arr1 = Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue());
@@ -1099,11 +1106,13 @@ System.out.println(day_1);
 
             }
             if ((cbox_port_out == null)||(!arr2.contains(cbox_port_out.getValue()))){
+
                 throw new Exception();
             }
 
 
             if ((cbox_country_in.getValue().equals(cbox_country_out.getValue()))&&(cbox_city_in.getValue().equals(cbox_city_out.getValue()))&&(cbox_port_in.getValue().equals(cbox_port_out.getValue()))){
+
                 throw new Exception();
             }
             is_ok = true;
@@ -1137,7 +1146,7 @@ System.out.println(day_1);
                 stage2.show();
             }
             catch (Exception e){
-
+                System.out.println(e);
             }
         }
     }
@@ -1527,7 +1536,7 @@ scrollPane.setPrefHeight(710);
 
 scrollPane.setLayoutX(0);
 scrollPane.setLayoutY(92);
-        ImageView imageMap = new ImageView(new File("src/YAROSLAV/map1.jpg").toURI().toURL().toString());
+        ImageView imageMap = new ImageView(new File("src/YAROSLAV/map.jpg").toURI().toURL().toString());
         imageMap.setFitWidth(2560);
 imageMap.setFitHeight(1440);
 paneMap.getChildren().add(imageMap);
@@ -1535,7 +1544,7 @@ paneMap.getChildren().add(imageMap);
         for (Tree tree : listTree){
             but = new Map_but_in(text_in,text_out);
             but.set_XY(tree.x,tree.y);
-            but.set_button_info(tree.title);   paneMap.getChildren().add(but.get_button());
+            but.set_button_info(tree.info);   paneMap.getChildren().add(but.get_button());
         }
 
     group.getChildren().add(root);
@@ -1549,6 +1558,53 @@ paneMap.getChildren().add(imageMap);
     catch (Exception e){
         System.out.println(e);
     }
+}
+public void runMapCheck(){
+        try {
+            if ((date_in.getValue() == null)){
+                throw new Exception();
+
+            }
+            if (text_in.getText().equals("")||text_out.getText().equals("")){
+                throw new Exception();
+            }
+
+            String in = text_in.getText().trim();
+            String out = text_out.getText().trim();
+            String[] allIn =in.split(", ");
+
+            String[] allOut= out.split(", ");
+            int id_1 = 0, id_2 = 0;
+            id_1 = Main.net.getIDByParams(allIn[2],allIn[1],allIn[0]);
+            id_2 = Main.net.getIDByParams(allOut[2],allOut[1],allOut[0]);
+            Timestamp temp_time = new Timestamp(date_in.getValue().getYear()-1900, date_in.getValue().getMonth().getValue()-1,date_in.getValue().getDayOfMonth(), hours_in.getValue(), min_in.getValue(),0,0);
+            long time = temp_time.getTime();
+            in_result(id_1,id_2,time);
+
+        }catch (Exception e){
+            try {
+                System.out.println(e);
+                Stage stage2;
+                stage2 = new Stage();
+                Group group = new Group();
+                Scene scene = new Scene(group, 292, 122);
+                Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\error_data.fxml").toURI().toURL()));
+                BorderPane root = new BorderPane();
+                stage2.centerOnScreen();
+                root.setCenter(content);
+                stage2.initModality(Modality.WINDOW_MODAL);
+                stage2.initOwner(stage1);
+                stage2.setResizable(false);
+                group.getChildren().add(root);
+                stage2.setScene(scene);
+                stage2.show();
+            }catch (Exception ewew){
+
+            }
+
+        }
+
+
 }
 public void map_result() {
     stage = new Stage();

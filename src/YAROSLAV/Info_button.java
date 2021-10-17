@@ -27,6 +27,7 @@ public class Info_button {
     private String time_in;
     private String time_out;
     private String time_fly;
+    private static Stage stage2;
     private double  y;
     public Info_button()  {
         button = new Button();
@@ -80,6 +81,38 @@ return  y;
     public Button get_button() {
         return button;
     }
+    public void setMap(boolean info){
+        try {
+            Stage stage3 = new Stage();
+            Group group = new Group();
+            Scene scene = new Scene(group, 500, 274);
+            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\map_search.fxml").toURI().toURL()));
+            AnchorPane pane = new AnchorPane();
+
+
+
+            pane.setPrefWidth(1280);
+            pane.setLayoutX(0);
+            pane.setLayoutY(92);
+            pane.setPrefHeight(710);
+
+            BorderPane root = new BorderPane();
+            stage3.centerOnScreen();
+            root.setCenter(content);
+            stage3.initModality(Modality.WINDOW_MODAL);
+            if (info){
+                stage3.initOwner(stage2);
+            }else{
+                stage3.initOwner(MyController.stage1);
+            }
+            group.getChildren().add(root);
+            stage3.setResizable(false);
+        }
+       catch (Exception e){
+            System.out.println(e);
+       }
+
+    }
     public void set_action(ArrayList<Flight> flights) {
 
             button.setOnAction(actionEvent -> {
@@ -87,7 +120,7 @@ return  y;
                 try {
 
 
-                    Stage stage2 = new Stage();
+                    stage2 = new Stage();
                     Group group = new Group();
                     Scene scene = new Scene(group, 500, 274);
                     Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\info.fxml").toURI().toURL()));
@@ -135,7 +168,7 @@ return  y;
                     stage2.setScene(scene);
                     stage2.show();
                 } catch (Exception e) {
-
+                    System.out.println(e);
                 }
             });
         }

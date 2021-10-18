@@ -118,6 +118,7 @@ public class Network {
         x = 1270 + Math.pow(x, 0.996) * 7.2;
         y = 1000 - Math.pow(y, 1.26) * 2.7;
         return new Pair<>(x, y);
+
     }
     public ArrayList<String> getAllCountries() {
         ArrayList<String> titles = new ArrayList();

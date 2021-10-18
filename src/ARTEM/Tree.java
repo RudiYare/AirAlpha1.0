@@ -35,6 +35,7 @@ public class Tree {
         this.children = new ArrayList();
         this.x = x;
         this.y = y;
+
     }
 }
 

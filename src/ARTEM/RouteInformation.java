@@ -104,7 +104,7 @@ public class RouteInformation {
             t.from = net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport());
             t.where = net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport());
             t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getKey()));
-            t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue()));
+            t.time_where = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue()));
             t.price = Double.toString(Math.round((transfers.get(transfer).getPrice() * 100) / 100.0));
             flight.transfers.add(t);
         }

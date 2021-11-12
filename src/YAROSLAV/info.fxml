@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YAROSLAV.MyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="YAROSLAV.Info_button">
    <children>
       <ImageView fitHeight="49.0" fitWidth="51.0" layoutX="5.0" layoutY="7.0">
          <image>
@@ -22,7 +22,7 @@
             <Font name="TechnicBold" size="22.0" />
          </font>
       </Text>
-      <Button id="rich-blue" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="353.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#random" prefHeight="48.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 2;" stylesheets="@style.css" text="Карта">
+      <Button   id="rich-blue" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="353.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="48.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 2;" stylesheets="@style.css" text="Карта">
          <font>
             <Font name="TechnicBold" size="24.0" />
          </font>

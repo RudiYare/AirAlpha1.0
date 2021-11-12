@@ -155,7 +155,7 @@ public void ok_add_port() throws Exception{
         Stage stage2;
 
 try {  double iX = Double.parseDouble(x.getText()), iY = Double.parseDouble(y.getText());
-    if ((name.getText().length()!=0)&&(city.getText().length()!=0)&&(country.getText().length()!=0)&&(iY<=90)&&(iX<=180)&&(iX>=-90)&&(iY>=-180)&&(y.getText().length()!=0)){
+    if ((name.getText().length()!=0)&&(city.getText().length()!=0)&&(country.getText().length()!=0)&&(iY<=90)&&(iX<=180)&&(iX>=-180)&&(iY>=-90)&&(y.getText().length()!=0)){
         boolean isOk = Main.net.addNewAirport(name.getText(),city.getText(),country.getText(),Double.parseDouble(x.getText()),Double.parseDouble(y.getText()));
 
         if(isOk){
@@ -1015,7 +1015,7 @@ System.out.println(day_1);
         if ((cbox_city_in==null)||(!Main.net.getAllCities(cbox_country_in.getValue()).contains(cbox_city_in.getValue()))){
             return  false;
         }
-        if ((cbox_port_in == null)||(!Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){ //TODO:ERROR ARTEMIUS BALBES
+        if ((cbox_port_in == null)||(!Main.net.getAllTitlesString(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){ //TODO:ERROR ARTEMIUS BALBES
             return  false;
         }
 
@@ -1026,7 +1026,7 @@ System.out.println(day_1);
         if ((cbox_city_out==null)||(!Main.net.getAllCities(cbox_country_out.getValue()).contains(cbox_city_out.getValue()))){
             return  false;
         }
-        if ((cbox_port_out == null)||(!Main.net.getAllTitles(cbox_country_out.getValue(),cbox_city_out.getValue()).contains(cbox_port_out.getValue()))){
+        if ((cbox_port_out == null)||(!Main.net.getAllTitlesString(cbox_country_out.getValue(),cbox_city_out.getValue()).contains(cbox_port_out.getValue()))){
             return  false;
         }
 
@@ -1200,8 +1200,10 @@ System.out.println(day_1);
                     button.set_time_in(flight.time_from);
                     button.set_time_out(flight.time_where);
                     button.set_transfer(Integer.toString(flight.transfers.size()-1));
-                    if (flight.transfers.size()!=0){
+                    if (flight.transfers.size()>1){
                         button.set_action(flight.transfers);
+                    }else {
+                        button.setMapAction(flight.transfers);
                     }
 
                     button.set_style(" -fx-border-color: red;", " -fx-border-color: red; -fx-effect: dropshadow( three-pass-box, red , 10.0, 0.0,0.0,0.0);");
@@ -1239,8 +1241,10 @@ System.out.println(day_1);
                     button.set_time_in(flight.time_from);
                     button.set_time_out(flight.time_where);
                     button.set_transfer(Integer.toString(flight.transfers.size()-1));
-                    if (flight.transfers.size()!=1){
+                    if (flight.transfers.size()>1){
                         button.set_action(flight.transfers);
+                    }else {
+                        button.setMapAction(flight.transfers);
                     }
 
                     button.set_style(" -fx-border-color: blue;", " -fx-border-color: blue; -fx-effect: dropshadow( three-pass-box, blue , 10.0, 0.0,0.0,0.0);");
@@ -1267,8 +1271,12 @@ System.out.println(day_1);
                     button.set_time_in(flight.time_from);
                     button.set_time_out(flight.time_where);
                     button.set_transfer(Integer.toString(flight.transfers.size()-1));
-                    if (flight.transfers.size()!=1){
+
+                    if (flight.transfers.size()>1){
+                        System.out.println(flight.transfers.size()+"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
                         button.set_action(flight.transfers);
+                    }else {
+                        button.setMapAction(flight.transfers);
                     }
 
 
@@ -1462,7 +1470,10 @@ public void map_search(){
     text_in.setLayoutX(104);
     text_in.setEditable(false);
 
-
+Text z = new Text();
+z.setText("");
+z.setLayoutY(1440);
+z.setLayoutX(2550);
      text_out = new TextField("");
     text_out .setPrefWidth(335);
     text_out .setPrefHeight(25);
@@ -1531,9 +1542,11 @@ pane_up.getChildren().add(min_in);
 
 AnchorPane paneMap = new AnchorPane();
      ScrollPane scrollPane = new ScrollPane(paneMap);
+
 scrollPane.setPrefWidth(1280);
 scrollPane.setPrefHeight(710);
-
+scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 scrollPane.setLayoutX(0);
 scrollPane.setLayoutY(92);
         ImageView imageMap = new ImageView(new File("src/YAROSLAV/map.jpg").toURI().toURL().toString());

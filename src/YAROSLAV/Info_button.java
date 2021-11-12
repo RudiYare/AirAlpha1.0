@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Info_button {
+
     private Button button;
     private String info_out;
     private String info_in;
@@ -26,6 +28,7 @@ public class Info_button {
     private String transfer;
     private String time_in;
     private String time_out;
+    public Button mapButton;
     private String time_fly;
     private static Stage stage2;
     private double  y;
@@ -81,32 +84,60 @@ return  y;
     public Button get_button() {
         return button;
     }
-    public void setMap(boolean info){
+    public void setMap(ArrayList<Flight> flights){
         try {
+
             Stage stage3 = new Stage();
             Group group = new Group();
-            Scene scene = new Scene(group, 500, 274);
-            Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\map_search.fxml").toURI().toURL()));
+            Scene scene = new Scene(group, 1280, 800);
+
             AnchorPane pane = new AnchorPane();
+            ScrollPane scrollPane = new ScrollPane(pane);
 
 
 
-            pane.setPrefWidth(1280);
-            pane.setLayoutX(0);
-            pane.setLayoutY(92);
-            pane.setPrefHeight(710);
 
-            BorderPane root = new BorderPane();
-            stage3.centerOnScreen();
-            root.setCenter(content);
+            scrollPane.setPrefWidth(1200);
+            scrollPane.setLayoutX(0);
+            scrollPane.setLayoutY(5);
+            scrollPane.setPrefHeight(710);
+            ImageView imageMap = new ImageView(new File("src/YAROSLAV/map.jpg").toURI().toURL().toString());
+            imageMap.setFitWidth(2560);
+            imageMap.setFitHeight(1440);
+            pane.getChildren().add(imageMap);
+
+
             stage3.initModality(Modality.WINDOW_MODAL);
-            if (info){
+            double finishX = -500, finishY = -500 ;
+
+            for (Flight flight : flights){
+                Button_Map_Result but = new Button_Map_Result(0);
+                but.get_button().setLayoutX(but.get_x());
+                but.get_button().setLayoutY(but.get_y());
+            but.set_XY(flight.from_x,flight.from_y);
+                but.set_line(pane,flight.where_x, flight.where_y);
+pane.getChildren().add(but.get_button());
+finishX = flight.where_x;
+finishY=flight.where_y;
+            }
+            if (Double.compare(finishX,-500)!=0 && Double.compare(finishY,-500)!=0 ){
+                Button_Map_Result button_map_result = new Button_Map_Result(0);
+                button_map_result.get_button().setLayoutX( finishX);
+                button_map_result.get_button().setLayoutY(finishY);
+                pane.getChildren().add(button_map_result.get_button());
+            }
+            if (Integer.parseInt(transfer)!=1){
+
                 stage3.initOwner(stage2);
             }else{
+
                 stage3.initOwner(MyController.stage1);
             }
-            group.getChildren().add(root);
+
+            group.getChildren().add(scrollPane);
+            stage3.setScene(scene);
             stage3.setResizable(false);
+            stage3.show();
         }
        catch (Exception e){
             System.out.println(e);
@@ -118,10 +149,40 @@ return  y;
             button.setOnAction(actionEvent -> {
 
                 try {
-
-
+                    mapButton = new Button("Карта");
+                    mapButton.setLayoutX(50);
+                    mapButton.setLayoutY(5);
+                    mapButton.setStyle("    \n" +
+                            "    -fx-background-insets: 0,1,2,3;\n" +
+                            "    -fx-background-radius: 30;\n" +
+                            "   \n" +
+                            "\n" +
+                            "    -fx-transition:0.5s;\n" +
+                            "-fx-background-color: \n" +
+                            "#4569d6;");
+                    mapButton.setOnMouseEntered(actionEvent5->{
+                        mapButton.setStyle("    \n" +
+                                "    -fx-background-insets: 0,1,2,3;\n" +
+                                "    -fx-background-radius: 30;\n" +
+                                "   \n" +
+                                "\n" +
+                                "    -fx-transition:0.5s;\n" +
+                                "-fx-background-color: \n" +
+                                "#4569d6;-fx-effect: dropshadow( three-pass-box, black , 10.0, 0.0,0.0,0.0);");
+                    });
+                    mapButton.setOnMouseExited(actionEvent7->{
+                        mapButton.setStyle("    \n" +
+                                "    -fx-background-insets: 0,1,2,3;\n" +
+                                "    -fx-background-radius: 30;\n" +
+                                "   \n" +
+                                "\n" +
+                                "    -fx-transition:0.5s;\n" +
+                                "-fx-background-color: \n" +
+                                "#4569d6;");
+                    });
                     stage2 = new Stage();
                     Group group = new Group();
+
                     Scene scene = new Scene(group, 500, 274);
                     Parent content = FXMLLoader.load((new File("src\\YAROSLAV\\info.fxml").toURI().toURL()));
                     BorderPane root = new BorderPane();
@@ -156,7 +217,9 @@ return  y;
                         t += "Стоимость: " + flight.price + "\n";  t += "\n";
                         i++;
                     }
-
+                    mapButton.setOnAction(actionEvent1 -> {
+                        setMap(flights);
+                    });
                     text.setText(t);
                     text.setLayoutY(25);
                     text.setLayoutX(10);
@@ -164,7 +227,7 @@ return  y;
                     text.setWrappingWidth(470);
                     pane.getChildren().add(text);
                     scrollPane.setContent(pane);
-                    group.getChildren().add(scrollPane);
+                    group.getChildren().add(scrollPane);group.getChildren().add(mapButton);
                     stage2.setScene(scene);
                     stage2.show();
                 } catch (Exception e) {
@@ -172,7 +235,11 @@ return  y;
                 }
             });
         }
-
+    public void setMapAction(ArrayList<Flight> flights){
+        button.setOnAction(actionEvent -> {
+            setMap(flights);
+        });
+    }
     public void set_text() {
         AnchorPane pane = new AnchorPane();
         pane.setMaxWidth(550);

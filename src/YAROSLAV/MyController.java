@@ -1015,7 +1015,7 @@ System.out.println(day_1);
         if ((cbox_city_in==null)||(!Main.net.getAllCities(cbox_country_in.getValue()).contains(cbox_city_in.getValue()))){
             return  false;
         }
-        if ((cbox_port_in == null)||(!Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){
+        if ((cbox_port_in == null)||(!Main.net.getAllTitles(cbox_country_in.getValue(),cbox_city_in.getValue()).contains(cbox_port_in.getValue()))){ //TODO:ERROR ARTEMIUS BALBES
             return  false;
         }
 
@@ -1200,7 +1200,7 @@ System.out.println(day_1);
                     button.set_time_in(flight.time_from);
                     button.set_time_out(flight.time_where);
                     button.set_transfer(Integer.toString(flight.transfers.size()-1));
-                    if (flight.transfers.size()!=1){
+                    if (flight.transfers.size()!=0){
                         button.set_action(flight.transfers);
                     }
 

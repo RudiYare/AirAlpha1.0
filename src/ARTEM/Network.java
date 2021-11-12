@@ -197,6 +197,46 @@ public class Network {
 
         return titles;
     }
+    public ArrayList<String> getAllTitlesString(String country, String city) {
+        ArrayList<String> titles = new ArrayList();
+        Tree actual_country = new Tree((Tree)null, country);
+        boolean isFound = false;
+        Iterator var6 = this.countries.iterator();
+
+        while(var6.hasNext()) {
+            Tree k = (Tree)var6.next();
+            if (k.title.equals(country)) {
+                actual_country = k;
+                isFound = true;
+            }
+        }
+
+        if (isFound) {
+            isFound = false;
+            Tree actual_city = new Tree((Tree)null, country);
+            Iterator var10 = actual_country.children.iterator();
+
+            Tree k;
+            while(var10.hasNext()) {
+                k = (Tree)var10.next();
+                if (k.title.equals(city)) {
+                    actual_city = k;
+                    isFound = true;
+                }
+            }
+
+            if (isFound) {
+                var10 = actual_city.children.iterator();
+
+                while(var10.hasNext()) {
+                    k = (Tree)var10.next();
+                    titles.add(k.title);
+                }
+            }
+        }
+
+        return titles;
+    }
     public int getIDByParams(String title, String city, String country) {
         int ID = -1;
         Tree actual_country = null;

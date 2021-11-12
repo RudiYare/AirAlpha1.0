@@ -106,8 +106,7 @@ public class RouteInformation {
             t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getKey()));
             t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue()));
             t.price = Double.toString(Math.round((transfers.get(transfer).getPrice() * 100) / 100.0));
-            flight.transfers.add(flight);
-
+            flight.transfers.add(t);
         }
         return flight;
 

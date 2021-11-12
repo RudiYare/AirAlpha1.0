@@ -319,6 +319,9 @@ public class Network {
 
         return null;
     }
+    public Tree getElementByID(int ID) {
+        return airports.get(ID);
+    }
     public boolean removeAirport(String title, String city, String country) {
         if (this.getIDByParams(title, city, country) != -1) {
             Tree current_airport = this.getElementByParams(title, city, country);

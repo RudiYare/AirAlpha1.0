@@ -9,6 +9,10 @@ public class Flight {
     public String time_where;
     public String price;
     public String flight_time;
+    public Double from_x;
+    public Double from_y;
+    public Double where_x;
+    public Double where_y;
     public ArrayList<Flight> transfers;
     public void print() {
         System.out.println("FROM: " + from);

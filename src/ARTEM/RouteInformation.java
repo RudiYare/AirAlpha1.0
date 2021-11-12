@@ -103,6 +103,10 @@ public class RouteInformation {
             Flight t = new Flight();
             t.from = net.getAirportInformationAsString(transfers.get(transfer).getStartingAirport());
             t.where = net.getAirportInformationAsString(transfers.get(transfer).getFinishingAirport());
+            t.from_x = net.getElementByID(transfers.get(transfer).getStartingAirport()).x;
+            t.from_y = net.getElementByID(transfers.get(transfer).getStartingAirport()).y;
+            t.where_x = net.getElementByID(transfers.get(transfer).getFinishingAirport()).x;
+            t.where_y = net.getElementByID(transfers.get(transfer).getFinishingAirport()).y;
             t.time_from = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getKey()));
             t.time_where = addNewDateToRoute(new Timestamp(transfer_time.get(transfer_time.size() - transfer - 1).getValue()));
             t.price = Double.toString(Math.round((transfers.get(transfer).getPrice() * 100) / 100.0));
